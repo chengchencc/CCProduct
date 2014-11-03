@@ -1,0 +1,13 @@
+﻿@model List<WebCarManagement.Models.UserProfile>
+
+@{
+    ViewBag.Title = "UserList";
+}
+
+<h2>UserList</h2>
+<ul>
+@foreach (var user in Model)
+{
+    <li>@user.UserName</li>
+}
+    </ul>

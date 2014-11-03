@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1ADCD0A3-18BB-4EC6-B03A-B51A411AD811}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CC.Product.Models</RootNamespace>
+    <AssemblyName>CC.Product.Models</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account\LinkedType.cs" />
+    <Compile Include="Account\LoginLog.cs" />
+    <Compile Include="Account\Role.cs" />
+    <Compile Include="Account\UserRole.cs" />
+    <Compile Include="Account\User.cs" />
+    <Compile Include="CarPooling\CarInfo.cs" />
+    <Compile Include="CarPooling\CarpoolingInfo.cs" />
+    <Compile Include="CarPooling\CarType.cs" />
+    <Compile Include="CarPooling\CarPoolingType.cs" />
+    <Compile Include="CarPooling\Contact.cs" />
+    <Compile Include="CarPooling\MainBusiness.cs" />
+    <Compile Include="CarPooling\Tag.cs" />
+    <Compile Include="CarPooling\TakeIn.cs" />
+    <Compile Include="Common\ConnectionStringKeys.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Cores\src\BlackMamba.Framework.SubSonic.Extension\BlackMamba.Framework.SubSonic.Extension.csproj">
+      <Project>{31962d40-25a6-46b8-a9be-0a8e647dfba4}</Project>
+      <Name>BlackMamba.Framework.SubSonic.Extension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Cores\src\SubSonic-3.0-master\SubSonic.Core\SubSonic.Core.csproj">
+      <Project>{53ff90b2-2d33-4ec0-91b6-a30fdf1b3374}</Project>
+      <Name>SubSonic.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

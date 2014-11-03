@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6E6FA9CB-057A-440E-B8B6-933828BFEA97}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CC.Product.Domain</RootNamespace>
+    <AssemblyName>CC.Product.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\StructureMap2.6.1\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonHelper\ConfigurationManagerHelpers.cs" />
+    <Compile Include="CommonHelper\VerificationText.cs" />
+    <Compile Include="DI\Bootstrapper.cs" />
+    <Compile Include="DI\ControllerRegistry.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CarPoolingService.cs" />
+    <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\AccountServiceEF.cs" />
+    <Compile Include="Interfaces\IAccountServiceEF.cs" />
+    <Compile Include="Services\IAccountService.cs" />
+    <Compile Include="Services\ICarPoolingService.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CC.Product.Core\CC.Product.Core.csproj">
+      <Project>{fee405da-08c4-4840-96ca-49ee941bea6d}</Project>
+      <Name>CC.Product.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.Product.Data\CC.Product.Data.csproj">
+      <Project>{c304d56c-e123-4ae4-b681-95f3420e1ee0}</Project>
+      <Name>CC.Product.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.Product.Models\CC.Product.Models.csproj">
+      <Project>{1adcd0a3-18bb-4ec6-b03a-b51a411ad811}</Project>
+      <Name>CC.Product.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.Product.ViewModels\CC.Product.ViewModels.csproj">
+      <Project>{629a3f75-829d-4523-af8f-d50f105e49c2}</Project>
+      <Name>CC.Product.ViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Cores\src\BlackMamba.Framework.SubSonic.Extension\BlackMamba.Framework.SubSonic.Extension.csproj">
+      <Project>{31962d40-25a6-46b8-a9be-0a8e647dfba4}</Project>
+      <Name>BlackMamba.Framework.SubSonic.Extension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Cores\src\SubSonic-3.0-master\SubSonic.Core\SubSonic.Core.csproj">
+      <Project>{53ff90b2-2d33-4ec0-91b6-a30fdf1b3374}</Project>
+      <Name>SubSonic.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

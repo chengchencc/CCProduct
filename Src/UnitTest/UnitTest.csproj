@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{01AFCA29-6A74-4570-A523-131D47E3895C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UnitTest</RootNamespace>
+    <AssemblyName>UnitTest</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="xunit">
+      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EFConnectionTest.cs" />
+    <Compile Include="ExpressionTest.cs" />
+    <Compile Include="FileTest.cs" />
+    <Compile Include="LinqTest.cs" />
+    <Compile Include="NLogTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpeechRecognizerTest.cs" />
+    <Compile Include="SubsonicTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CC.Product.Core\CC.Product.Core.csproj">
+      <Project>{fee405da-08c4-4840-96ca-49ee941bea6d}</Project>
+      <Name>CC.Product.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.Product.Data\CC.Product.Data.csproj">
+      <Project>{c304d56c-e123-4ae4-b681-95f3420e1ee0}</Project>
+      <Name>CC.Product.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.Product.Domain\CC.Product.Domain.csproj">
+      <Project>{6e6fa9cb-057a-440e-b8b6-933828bfea97}</Project>
+      <Name>CC.Product.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.Product.Models\CC.Product.Models.csproj">
+      <Project>{1adcd0a3-18bb-4ec6-b03a-b51a411ad811}</Project>
+      <Name>CC.Product.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.Product.TestWebsite\CC.Product.TestWebsite.csproj">
+      <Project>{301cd0dd-4111-4e19-9bdb-99e82027980d}</Project>
+      <Name>CC.Product.TestWebsite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.Product.ViewModels\CC.Product.ViewModels.csproj">
+      <Project>{629a3f75-829d-4523-af8f-d50f105e49c2}</Project>
+      <Name>CC.Product.ViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cores\src\BlackMamba.Framework.SubSonic.Extension\BlackMamba.Framework.SubSonic.Extension.csproj">
+      <Project>{31962d40-25a6-46b8-a9be-0a8e647dfba4}</Project>
+      <Name>BlackMamba.Framework.SubSonic.Extension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cores\src\SubSonic-3.0-master\SubSonic.Core\SubSonic.Core.csproj">
+      <Project>{53ff90b2-2d33-4ec0-91b6-a30fdf1b3374}</Project>
+      <Name>SubSonic.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\CC.Product.Website\CC.Product.Website.csproj">
+      <Project>{ce90bde3-0ec4-4c7a-b820-5c0cbde24c68}</Project>
+      <Name>CC.Product.Website</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NLog.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

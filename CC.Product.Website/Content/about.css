@@ -1,0 +1,41 @@
+﻿body{
+    padding-top: 37px;
+}
+
+header {
+    background: #006DCC url(Images/header-bg.png) repeat;
+    margin-bottom: 30px;
+    padding: 0px 0 20px;
+    -webkit-box-shadow: 0 1px 300px rgba(0, 0, 0, 0.9);
+    -moz-box-shadow: 0 1px 300px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 1px 300px rgba(0, 0, 0, 0.9);
+}
+
+    header .brand {
+        font-size: 100px;
+        line-height: 80px;
+        margin: 0 0 30px;
+        color: #fff;
+        line-height: 1;
+        font-weight: normal;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+        position: relative;
+        left: -10px;
+        padding-top: 10px;
+    }
+
+    header p {
+        color: #fff;
+        font-size: 30px;
+        line-height: 1.2em;
+        margin-bottom: 30px;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    }
+
+.partnerrow {
+    margin-bottom: 5px;
+}
+
+.hr-width-10 {
+    border-top-width: 10px;
+}

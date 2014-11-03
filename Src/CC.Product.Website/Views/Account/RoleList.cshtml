@@ -1,0 +1,80 @@
+﻿@model string[]
+
+@{
+    ViewBag.Title = "RoleList";
+}
+
+<h2>RoleList</h2>
+<table class="tableContent">
+    <tr>
+        <th>
+            Role
+        </th>
+        <th>
+            Members
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+    @foreach (var role in Model)
+    {
+        var users = Roles.GetUsersInRole(role).ToList();
+        if (users == null) { users = new List<string>(); }
+        
+        <tr>
+            <td>
+                @role
+                @if (users.Count == 0)
+                { 
+                    <a class="deleteRole delete" role="@role" title="删除">
+                        X</a>
+                }
+            </td>
+            <td style="width: 200px; line-height: 20px;">
+                @foreach (var u in users)
+                {
+                    <div id="@role-@u-div">@u <a class="removeUserFromRole delete" id="@role-@u" user="@u" role="@role" title="删除">
+                        X</a><br />
+                    </div>
+                }
+            </td>
+            <td>@Html.ActionLink("Add", "AddUserToRole", new RouteValueDictionary { { "role", role } })
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<br />
+@*<h2>Add Role</h2>*@
+@*<p>
+    @Html.ActionLink("Add Role", "AddRole", "Account")
+</p>*@
+
+<script type="text/javascript">
+    $(function () {
+        $(".removeUserFromRole").live("click", function () {
+            var user = $(this).attr("user");
+            var role = $(this).attr("role");
+            var id = $(this).attr("id");
+
+            var c = confirm('确定要删除?');
+            if (c == true) {
+                $.get("/account/DeleteUserFromRole?user=" + user + "&role=" + role, null, function (ret) {
+                    $("#" + id + "-div").hide();
+                });
+            }
+
+        });
+
+        $(".deleteRole").live("click", function () {
+            var role = $(this).attr("role");
+            var c = confirm('确定要删除？');
+            if (c == true) {
+                $.get("/Account/DeleteRole?roleName=" + role, null, function () {
+                    location.reload();
+                });
+            }
+        });
+    });
+</script>

@@ -1,0 +1,3 @@
+[submodule "Cores"]
+	path = Cores
+	url = https://bitbucket.org/chengchen/core

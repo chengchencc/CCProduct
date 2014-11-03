@@ -1,0 +1,476 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Image Wall with jQuery and CSS3</title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Image Wall with jQuery and CSS3" />
+    <meta name="keywords" content="jquery, css3, images, wall, thumbnails, slide, animate" />
+    <meta name="author" content="ChengChen" />
+    <link href="Content/ImageWall/css/style.css" rel="stylesheet" />
+    <!--<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow' rel='stylesheet' type='text/css' />
+     <link href='http://fonts.googleapis.com/css?family=Wire+One' rel='stylesheet' type='text/css' />-->
+    <style type="text/css">
+        .roseCenter {
+            top: 50%;
+            left: 50%;
+            margin-top: -300px;
+            margin-left: -300px;
+            position: fixed;
+            z-index: 1000;
+            overflow: hidden;
+        }
+    </style>
+
+</head>
+<body>
+    <div style="width:100%;background-color: pink ;height: 1500px;text-align: center;padding-top: 100px;font-size: 30px;" id="jdt">
+        <div>
+            <h1>给你十秒钟，赶紧找耳机戴上耳机，或者开音响也行。要不会后悔的哦 ^_^！</h1>
+            <!--<h1 id="progress">已加载 0%</h1>-->
+        </div>
+    </div>
+    <div id="all" style="display:none;">
+        <div class="content">
+            <header>
+                <h1>生活点滴</h1>
+                <span>cc Love gn Forever!!</span>
+            </header>
+            <div class="iw_wrapper">
+
+            </div>
+            <div id="iw_ribbon" class="iw_ribbon">
+                <span class="iw_close"></span>
+                <span class="iw_zoom">点击图片放大</span>
+            </div>
+        </div>
+
+        <div class="roseCenter" id="rose" style="">
+            <img id="roseImg" src="Content/ImageWall/images/rose.png" style="height: 0px;width: 0px;" />
+            <div id="roseText" style="font-size:30px;text-align:center;font-family:'Microsoft YaHei'">
+                <span style="color: mediumpurple">老</span> <span style="color:orange">婆</span><span style="color:yellow">生</span><span style="color:green">日</span><span style="color: cyan">快</span><span style="color:violet">乐</span><span style="color: orangered">!</span><span style='color:mediumpurple'>永远爱你</span>
+            </div>
+        </div>
+        <div id="coverDiv" style="width:100%;height:100%;background-color:pink;opacity:0.95;position:fixed;z-index:999;top:0px;">
+
+        </div>
+    </div>
+    <audio controls="controls" id="bgMusic" hidden="hidden" onloadeddata="">
+        <source src="Content/ImageWall/AThousandYears.mp3" type="audio/mpeg" />
+    </audio>
+    <script src="Content/ImageWall/js/jquery161.js"></script>
+    <script src="Content/ImageWall/js/jquery.masonry.min.js"></script>
+    <script src="Content/ImageWall/js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            var content = '<ul class="iw_thumbs" id="iw_thumbs">';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%98%9f%e5%98%b4.png" data-img="Content/ImageWall/images/photo/%e5%98%9f%e5%98%b4.png" alt="Thumb1" /><div><h2>嘟嘴</h2><p>连嘟嘴都嘟的这么漂亮，爱死你了.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e9%a3%8e%e8%bd%a6.png" data-img="Content/ImageWall/images/photo/%e9%a3%8e%e8%bd%a6.png" alt="Thumb2" /><div><h2>小风车</h2><p>Separated they live in Bookmarksgrove right at the coast of the Semantics.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e8%bf%87%e5%b9%b4.png" data-img="Content/ImageWall/images/photo/%e8%bf%87%e5%b9%b4.png" alt="Thumb3" /><div><h2>过年</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%9b%9e%e5%ad%a6%e6%a0%a1.png" data-img="Content/ImageWall/images/photo/%e5%9b%9e%e5%ad%a6%e6%a0%a1.png" alt="Thumb8" /><div><h2>回学校</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%a9%9a%e7%ba%b1%e7%85%a7.png" data-img="Content/ImageWall/images/photo/%e5%a9%9a%e7%ba%b1%e7%85%a7.png" alt="Thumb9" /><div><h2>婚纱照</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e9%87%91%e9%b8%a1%e6%b9%96.png" data-img="Content/ImageWall/images/photo/%e9%87%91%e9%b8%a1%e6%b9%96.png" alt="Thumb10" /><div><h2>金鸡湖</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%8d%a1%e9%80%9a.png" data-img="Content/ImageWall/images/photo/%e5%8d%a1%e9%80%9a.png" alt="Thumb6" /><div><h2>卡通</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e7%be%8e%e5%a5%b3.png" data-img="Content/ImageWall/images/photo/%e7%be%8e%e5%a5%b3.png" alt="Thumb7" /><div><h2>美丽</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e6%bc%82%e4%ba%ae%e5%a9%9a%e7%ba%b1.png" data-img="Content/ImageWall/images/photo/%e6%bc%82%e4%ba%ae%e5%a9%9a%e7%ba%b1.png" alt="Thumb8" /><div><h2>漂亮婚纱</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e6%b1%82%e5%a9%9a.png" data-img="Content/ImageWall/images/photo/%e6%b1%82%e5%a9%9a.png" alt="Thumb12" /><div><h2>求婚</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e6%b0%b4%e6%99%b6%e5%ae%ab.png" data-img="Content/ImageWall/images/photo/%e6%b0%b4%e6%99%b6%e5%ae%ab.png" alt="Thumb4" /><div><h2>水晶宫</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e6%b3%b0%e5%b1%b1.png" data-img="Content/ImageWall/images/photo/%e6%b3%b0%e5%b1%b1.png" alt="Thumb5" /><div><h2>泰山</h2><p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%a4%a9%e5%a4%96%e6%9d%91.png" data-img="Content/ImageWall/images/photo/%e5%a4%a9%e5%a4%96%e6%9d%91.png" alt="Thumb6" /><div><h2>天外村</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e7%8e%a9%e7%9b%b8%e6%9c%ba.png" data-img="Content/ImageWall/images/photo/%e7%8e%a9%e7%9b%b8%e6%9c%ba.png" alt="Thumb7" /><div><h2>玩相机</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/I-DO.png" data-img="Content/ImageWall/images/photo/I-DO.png" alt="Thumb3" /><div><h2>I-DO</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%a4%a7%e9%bb%84%e9%b8%ad.png" data-img="Content/ImageWall/images/photo/%e5%a4%a7%e9%bb%84%e9%b8%ad.png" alt="Thumb3" /><div><h2>大黄鸭</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%a4%a7%e8%80%81%e8%87%ad.png" data-img="Content/ImageWall/images/photo/%e5%a4%a7%e8%80%81%e8%87%ad.png" alt="Thumb3" /><div><h2>大老臭</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%a4%a7%e7%94%9c%e7%ad%92.png" data-img="Content/ImageWall/images/photo/%e5%a4%a7%e7%94%9c%e7%ad%92.png" alt="Thumb3" /><div><h2>大甜筒</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%a4%a7%e6%a1%b6%e6%9e%9c%e6%b1%81.png" data-img="Content/ImageWall/images/photo/%e5%a4%a7%e6%a1%b6%e6%9e%9c%e6%b1%81.png" alt="Thumb3" /><div><h2>大桶果汁</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e9%ba%a6%e7%94%b0.png" data-img="Content/ImageWall/images/photo/%e9%ba%a6%e7%94%b0.png" alt="Thumb3" /><div><h2>麦田</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += ' <li><img src="Content/ImageWall/images/photo/%e5%8d%97%e7%bf%94%e5%b0%8f%e8%92%b8%e5%8c%85.png" data-img="Content/ImageWall/images/photo/%e5%8d%97%e7%bf%94%e5%b0%8f%e8%92%b8%e5%8c%85.png" alt="Thumb3" /><div><h2>南翔小笼包</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e4%bd%a0%e8%87%aa%e5%b7%b1.png" data-img="Content/ImageWall/images/photo/%e4%bd%a0%e8%87%aa%e5%b7%b1.png" alt="Thumb3" /><div><h2>你自己</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%b9%b4%e8%bd%bb.png" data-img="Content/ImageWall/images/photo/%e5%b9%b4%e8%bd%bb.png" alt="Thumb3" /><div><h2>年轻的我们</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e7%94%9f%e6%97%a5%e8%9b%8b%e7%b3%95.png" data-img="Content/ImageWall/images/photo/%e7%94%9f%e6%97%a5%e8%9b%8b%e7%b3%95.png" alt="Thumb3" /><div><h2>生日蛋糕</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%94%af%e7%be%8e.png" data-img="Content/ImageWall/images/photo/%e5%94%af%e7%be%8e.png" alt="Thumb3" /><div><h2>唯美</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e6%88%91%e5%ad%a6%e6%a0%a1.png" data-img="Content/ImageWall/images/photo/%e6%88%91%e5%ad%a6%e6%a0%a1.png" alt="Thumb3" /><div><h2>我学校</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%b0%8f%e7%86%8a.png" data-img="Content/ImageWall/images/photo/%e5%b0%8f%e7%86%8a.png" alt="Thumb3" /><div><h2>小熊</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%b0%8f%e7%86%8a%e7%86%8a.png" data-img="Content/ImageWall/images/photo/%e5%b0%8f%e7%86%8a%e7%86%8a.png" alt="Thumb3" /><div><h2>小熊熊</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/photo/%e5%ae%9c%e5%ae%b6.png" data-img="Content/ImageWall/images/photo/%e5%ae%9c%e5%ae%b6.png" alt="Thumb3" /><div><h2>宜家</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/12.jpg" data-img="Content/ImageWall/images/full/12.jpg" alt="Thumb1" /><div><h2>Serenity</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/2.jpg" data-img="Content/ImageWall/images/full/2.jpg" alt="Thumb2" /><div><h2>Silence</h2><p>Separated they live in Bookmarksgrove right at the coast of the Semantics.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/3.jpg" data-img="Content/ImageWall/images/full/3.jpg" alt="Thumb3" /><div><h2>Abstraction</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/4.jpg" data-img="Content/ImageWall/images/full/4.jpg" alt="Thumb4" /><div><h2>Attraction</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/5.jpg" data-img="Content/ImageWall/images/full/5.jpg" alt="Thumb5" /><div><h2>Growth</h2><p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/6.jpg" data-img="Content/ImageWall/images/full/6.jpg" alt="Thumb6" /><div><h2>Virtue</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/7.jpg" data-img="Content/ImageWall/images/full/7.jpg" alt="Thumb7" /><div><h2>Beauty</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/8.jpg" data-img="Content/ImageWall/images/full/8.jpg" alt="Thumb8" /><div><h2>Happiness</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/9.jpg" data-img="Content/ImageWall/images/full/9.jpg" alt="Thumb9" /><div><h2>Greatness</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/10.jpg" data-img="Content/ImageWall/images/full/10.jpg" alt="Thumb10" /><div><h2>Abstraction</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/11.jpg" data-img="Content/ImageWall/images/full/11.jpg" alt="Thumb11" /><div><h2>Attraction</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/1.jpg" data-img="Content/ImageWall/images/full/1.jpg" alt="Thumb12" /><div><h2>Virtue</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/13.jpg" data-img="Content/ImageWall/images/full/13.jpg" alt="Thumb13" /><div><h2>Happiness</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/14.jpg" data-img="Content/ImageWall/images/full/14.jpg" alt="Thumb14" /><div><h2>Serenity</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/2.jpg" data-img="Content/ImageWall/images/full/2.jpg" alt="Thumb1" /><div><h2>Virtue</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/4.jpg" data-img="Content/ImageWall/images/full/4.jpg" alt="Thumb2" /><div><h2>Serenity</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '<li><img src="Content/ImageWall/images/full/6.jpg" data-img="Content/ImageWall/images/full/6.jpg" alt="Thumb3" /><div><h2>Attraction</h2><p>Love you for a thousand years!I will with you for all my life.</p></div></li>';
+            content += '</ul>';
+            var imgCount = $("img").length;
+            //$("#progress").attr("max",imgCount);
+            // var index = 0;
+            //$("img").load(function () {
+            //    index++;
+            //    $("#progress").text("已加载 "+index/imgCount*100+"%");
+
+            //    if (index == imgCount) {
+            // alert('I loaded!');
+            setTimeout(function () {
+                $("#jdt").hide();
+                $("#all").show();
+
+                var audio = document.getElementById("bgMusic");
+                audio.play();
+
+                var a = false;
+                $("#roseText").hide();
+
+                setTimeout(function () {
+                    $("#roseImg").animate({
+                        "height": "600px",
+                        "width": "600px"
+                    }
+                , 2000, "", function () {
+                    setInterval(function () {
+                        if (a) {
+                            $("#roseText").hide();
+                            a = false;
+                        } else {
+                            $("#roseText").show();
+                            a = true;
+                        }
+                    }, 500);
+                })
+                }, 1000);
+
+                setTimeout(function () {
+                    //$("#rose").hide(2000);
+                    $("#roseImg").animate({
+                        "height": "200px",
+                        "width": "200px"
+                    }, 2000)
+                    $("#rose").animate({
+                        "top": "300px",
+                        "left": "100%",
+                        "margin-left": "-200px"
+                    }, 2000);
+                    $("#rose").css("z-index", "0");
+                    //$("#rose").hide();
+                    $("#coverDiv").hide();
+                    $(".iw_wrapper").html(content);
+                    initialImage();
+                }, 8000);
+            }, 10000)
+
+        });
+        //}).each(function () {
+        //    if (this.complete) {
+        //        $(this).load();
+        //    }
+        //});
+
+
+        function initialImage() {
+            var $iw_thumbs = $('#iw_thumbs'),
+                $iw_ribbon = $('#iw_ribbon'),
+                $iw_ribbon_close = $iw_ribbon.children('span.iw_close'),
+                $iw_ribbon_zoom = $iw_ribbon.children('span.iw_zoom');
+
+            ImageWall = (function () {
+                // window width and height
+                var w_dim,
+                    // index of current image
+                    current = -1,
+                    isRibbonShown = false,
+                    isFullMode = false,
+                    // ribbon / images animation settings
+                    ribbonAnim = { speed: 500, easing: 'easeOutExpo' },
+                    imgAnim = { speed: 400, easing: 'jswing' },
+                    // init function : call masonry, calculate window dimentions, initialize some events
+                    init = function () {
+                        $iw_thumbs.imagesLoaded(function () {
+                            $iw_thumbs.masonry({
+                                isAnimated: true
+                            });
+                        });
+                        getWindowsDim();
+                        initEventsHandler();
+                    },
+                    // calculate window dimentions
+                    getWindowsDim = function () {
+                        w_dim = {
+                            width: $(window).width(),
+                            height: $(window).height()
+                        };
+                    },
+                    // initialize some events
+                    initEventsHandler = function () {
+
+                        // click on a image
+                        $iw_thumbs.delegate('li', 'click', function () {
+                            if ($iw_ribbon.is(':animated')) return false;
+
+                            var $el = $(this);
+
+                            if ($el.data('ribbon')) {
+                                showFullImage($el);
+                            }
+                            else if (!isRibbonShown) {
+                                isRibbonShown = true;
+
+                                $el.data('ribbon', true);
+
+                                // set the current
+                                current = $el.index();
+
+                                showRibbon($el);
+                            }
+                        });
+
+                        // click ribbon close
+                        $iw_ribbon_close.bind('click', closeRibbon);
+
+                        // on window resize we need to recalculate the window dimentions
+                        $(window).bind('resize', function () {
+                            getWindowsDim();
+                            if ($iw_ribbon.is(':animated'))
+                                return false;
+                            closeRibbon();
+                        })
+                                 .bind('scroll', function () {
+                                     if ($iw_ribbon.is(':animated'))
+                                         return false;
+                                     closeRibbon();
+                                 });
+
+                    },
+                    showRibbon = function ($el) {
+                        var $img = $el.children('img'),
+                            $descrp = $img.next();
+
+                        // fadeOut all the other images
+                        $iw_thumbs.children('li').not($el).animate({ opacity: 0.2 }, imgAnim.speed);
+
+                        // increase the image z-index, and set the height to 100px (default height)
+                        $img.css('z-index', 100)
+                            .data('originalHeight', $img.height())
+                            .stop()
+                            .animate({
+                                height: '100px'
+                            }, imgAnim.speed, imgAnim.easing);
+
+                        // the ribbon will animate from the left or right
+                        // depending on the position of the image
+                        var ribbonCssParam = {
+                            top: $el.offset().top - $(window).scrollTop() - 6 + 'px'
+                        },
+                            descriptionCssParam,
+                            dir;
+
+                        if ($el.offset().left < (w_dim.width / 2)) {
+                            dir = 'left';
+                            ribbonCssParam.left = 0;
+                            ribbonCssParam.right = 'auto';
+                        }
+                        else {
+                            dir = 'right';
+                            ribbonCssParam.right = 0;
+                            ribbonCssParam.left = 'auto';
+                        }
+
+                        $iw_ribbon.css(ribbonCssParam)
+                                  .show()
+                                  .stop()
+                                  .animate({ width: '100%' }, ribbonAnim.speed, ribbonAnim.easing, function () {
+                                      switch (dir) {
+                                          case 'left':
+                                              descriptionCssParam = {
+                                                  'left': $img.outerWidth(true) + 'px',
+                                                  'text-align': 'left'
+                                              };
+                                              break;
+                                          case 'right':
+                                              descriptionCssParam = {
+                                                  'left': '-200px',
+                                                  'text-align': 'right'
+                                              };
+                                              break;
+                                      };
+                                      $descrp.css(descriptionCssParam).fadeIn();
+                                      // show close button and zoom
+                                      $iw_ribbon_close.show();
+                                      $iw_ribbon_zoom.show();
+                                  });
+
+                    },
+                    // close the ribbon
+                    // when in full mode slides in the middle of the page
+                    // when not slides left
+                    closeRibbon = function () {
+                        isRibbonShown = false
+
+                        $iw_ribbon_close.hide();
+                        $iw_ribbon_zoom.hide();
+
+                        if (!isFullMode) {
+
+                            // current wall image
+                            var $el = $iw_thumbs.children('li').eq(current);
+
+                            resetWall($el);
+
+                            // slide out ribbon
+                            $iw_ribbon.stop()
+                                      .animate({ width: '0%' }, ribbonAnim.speed, ribbonAnim.easing);
+
+                        }
+                        else {
+                            $iw_ribbon.stop().animate({
+                                opacity: 0.8,
+                                height: '0px',
+                                marginTop: w_dim.height / 2 + 'px' // half of window height
+                            }, ribbonAnim.speed, function () {
+                                $iw_ribbon.css({
+                                    'width': '0%',
+                                    'height': '126px',
+                                    'margin-top': '0px'
+                                }).children('img').remove();
+                            });
+
+                            isFullMode = false;
+                        }
+                    },
+                    resetWall = function ($el) {
+                        var $img = $el.children('img'),
+                            $descrp = $img.next();
+
+                        $el.data('ribbon', false);
+
+                        // reset the image z-index and height
+                        $img.css('z-index', 1).stop().animate({
+                            height: $img.data('originalHeight')
+                        }, imgAnim.speed, imgAnim.easing);
+
+                        // fadeOut the description
+                        $descrp.fadeOut();
+
+                        // fadeIn all the other images
+                        $iw_thumbs.children('li').not($el).animate({ opacity: 1 }, imgAnim.speed);
+                    },
+                    showFullImage = function ($el) {
+                        isFullMode = true;
+
+                        $iw_ribbon_close.hide();
+
+                        var $img = $el.children('img'),
+                            large = $img.data('img'),
+
+                            // add a loading image on top of the image
+                            $loading = $('<span class="iw_loading"></span>');
+
+                        $el.append($loading);
+
+                        // preload large image
+                        $('<img/>').load(function () {
+                            var $largeImage = $(this);
+
+                            $loading.remove();
+
+                            $iw_ribbon_zoom.hide();
+
+                            resizeImage($largeImage);
+
+                            // reset the current image in the wall
+                            resetWall($el);
+
+                            // animate ribbon in and out
+                            $iw_ribbon.stop().animate({
+                                opacity: 1,
+                                height: '0px',
+                                marginTop: '63px' // half of ribbons height
+                            }, ribbonAnim.speed, function () {
+                                // add the large image to the DOM
+                                $iw_ribbon.prepend($largeImage);
+
+                                $iw_ribbon_close.show();
+
+                                $iw_ribbon.animate({
+                                    height: '100%',
+                                    marginTop: '0px',
+                                    top: '0px'
+                                }, ribbonAnim.speed);
+                            });
+                        }).attr('src', large);
+
+                    },
+                    resizeImage = function ($image) {
+                        var widthMargin = 100,
+                            heightMargin = 100,
+
+                            windowH = w_dim.height - heightMargin,
+                            windowW = w_dim.width - widthMargin,
+                            theImage = new Image();
+
+                        theImage.src = $image.attr("src");
+
+                        var imgwidth = $image[0].width,
+                            imgheight = $image[0].height;
+                        theImage.width = imgwidth;
+                        theImage.height = imgheight;
+                        if ((imgwidth > windowW) || (imgheight > windowH)) {
+                            if (imgwidth > imgheight) {
+                                var newwidth = windowW,
+                                    ratio = imgwidth / windowW,
+                                    newheight = imgheight / ratio;
+
+                                theImage.height = newheight;
+                                theImage.width = newwidth;
+
+                                if (newheight > windowH) {
+                                    var newnewheight = windowH,
+                                        newratio = newheight / windowH,
+                                        newnewwidth = newwidth / newratio;
+
+                                    theImage.width = newnewwidth;
+                                    theImage.height = newnewheight;
+                                }
+                            }
+                            else {
+                                var newheight = windowH,
+                                    ratio = imgheight / windowH,
+                                    newwidth = imgwidth / ratio;
+
+                                theImage.height = newheight;
+                                theImage.width = newwidth;
+
+                                if (newwidth > windowW) {
+                                    var newnewwidth = windowW,
+                                        newratio = newwidth / windowW,
+                                        newnewheight = newheight / newratio;
+
+                                    theImage.height = newnewheight;
+                                    theImage.width = newnewwidth;
+                                }
+                            }
+                        }
+
+                        $image.css({
+                            'width': theImage.width + 'px',
+                            'height': theImage.height + 'px',
+                            'margin-left': -theImage.width / 2 + 'px',
+                            'margin-top': -theImage.height / 2 + 'px'
+                        });
+                    };
+                return { init: init };
+            })();
+
+            ImageWall.init();
+        }
+    </script>
+</body>
+</html>

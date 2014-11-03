@@ -1,0 +1,41 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "AddUserToRole";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var currentRole = Request.QueryString["role"];
+    var usersInRole = ViewBag.UsersInRole as string[];
+}
+Current Role: <b>@currentRole</b><br />
+<br />
+@using (Html.BeginForm("AddUserToRole", "Account", new RouteValueDictionary { { "role", currentRole } }, FormMethod.Post))
+{
+    <fieldset>
+        <legend>Available Users(Not in this role)</legend>
+        @foreach (var user in Model)
+        {
+            <p>
+                <input type="checkbox" id="@user" name="@user" />
+                <label for="@user">@user</label>
+            </p>
+        }
+    </fieldset>
+    
+        if (usersInRole != null && usersInRole.Length > 0)
+        { 
+    <fieldset>
+        <legend>Users In Role</legend>
+        @foreach (var user in usersInRole)
+        {
+            <p>
+                <input type="checkbox" checked="checked" id="@user" name="@user" />
+                <label for="@user">@user</label>
+            </p>
+        }
+    </fieldset>
+        }
+    <p>
+    </p>
+    <input type="submit" value="Save" />
+}
+<p></p>
+<p></p>

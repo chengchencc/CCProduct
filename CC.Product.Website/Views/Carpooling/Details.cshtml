@@ -1,0 +1,106 @@
+﻿@model ZPLife.Website.Models.Carpooling.CarpoolingInfo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CarpoolingInfo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.No)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.No)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartSite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartSite)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Destination)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Destination)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PublishUserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PublishUserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalSeatCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalSeatCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HasCar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HasCar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PassingBySite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PassingBySite)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
