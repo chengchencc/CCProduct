@@ -36,5 +36,10 @@ namespace CC.Product.Website.Controllers
         {
             return Content("请到邮箱验证你的用户信息！");
         }
+
+        public ActionResult Map()
+        {
+            return View();
+        }
     }
 }

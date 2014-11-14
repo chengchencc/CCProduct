@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CC.Product.TestWebsite;
-using CC.Product.TestWebsite.Controllers;
-using CC.Product.TestWebsite.Models;
+
 using Xunit;
 
 namespace UnitTest

@@ -676,6 +676,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\EasyUI\themes\bootstrap\images\Thumbs.db" />
+    <None Include="Properties\PublishProfiles\aa.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -689,8 +690,10 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toolbar.js" />
     <Content Include="Scripts\site.js" />
-    <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -733,6 +736,8 @@
     <Content Include="Views\Home\CompanyIndex.cshtml" />
     <Content Include="Views\Shared\_PartialNav.cshtml" />
     <Content Include="Views\Shared\_PartialToolbar.cshtml" />
+    <Content Include="Views\Test\MultiTextbox.cshtml" />
+    <Content Include="Views\Home\Map.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -745,6 +750,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Src\CC.Product.Data\CC.Product.Data.csproj">
+      <Project>{c304d56c-e123-4ae4-b681-95f3420e1ee0}</Project>
+      <Name>CC.Product.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Src\CC.Product.Domain\CC.Product.Domain.csproj">
       <Project>{6e6fa9cb-057a-440e-b8b6-933828bfea97}</Project>
       <Name>CC.Product.Domain</Name>

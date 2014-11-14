@@ -31,7 +31,7 @@ namespace CC.Product.Domain.DI
                     {
                         return null;
                     }
-                }, s => ObjectFactory.GetAllInstances<object>().Where(t => t.GetType() == s));
+                }, s =>  ObjectFactory.GetAllInstances<object>().Where(t => t.GetType() == s));
 
             ObjectFactory.Configure(s => s.AddRegistry(new ControllerRegistry()));
         }

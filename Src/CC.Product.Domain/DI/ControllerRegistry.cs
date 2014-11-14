@@ -23,6 +23,7 @@ namespace CC.Product.Domain.DI
             For<IAccountServiceEF>().Use<AccountServiceEF>();
             For<IAccountService>().Use<AccountService>();
             For<ICarPoolingService>().Use<CarPoolingService>();
+            For<IIocTest>().Use<IocTest>();
         }
 
     }

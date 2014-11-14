@@ -49,22 +49,26 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="xunit">
-      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    <Reference Include="xunit, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\xunit.1.9.2\lib\net\xunit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeTest\ActivitorTest.cs" />
     <Compile Include="EFConnectionTest.cs" />
-    <Compile Include="ExpressionTest.cs" />
-    <Compile Include="FileTest.cs" />
-    <Compile Include="LinqTest.cs" />
+    <Compile Include="CodeTest\ExpressionTest.cs" />
+    <Compile Include="CodeTest\FileTest.cs" />
     <Compile Include="NLogTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpeechRecognizerTest.cs" />
     <Compile Include="SubsonicTest.cs" />
+    <Compile Include="CodeTest\XmlSerializerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -87,25 +91,17 @@
       <Project>{1adcd0a3-18bb-4ec6-b03a-b51a411ad811}</Project>
       <Name>CC.Product.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CC.Product.TestWebsite\CC.Product.TestWebsite.csproj">
-      <Project>{301cd0dd-4111-4e19-9bdb-99e82027980d}</Project>
-      <Name>CC.Product.TestWebsite</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CC.Product.ViewModels\CC.Product.ViewModels.csproj">
       <Project>{629a3f75-829d-4523-af8f-d50f105e49c2}</Project>
       <Name>CC.Product.ViewModels</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Cores\src\BlackMamba.Framework.SubSonic.Extension\BlackMamba.Framework.SubSonic.Extension.csproj">
+    <ProjectReference Include="..\..\Cores\src\BlackMamba.Framework.SubSonic.Extension\BlackMamba.Framework.SubSonic.Extension.csproj">
       <Project>{31962d40-25a6-46b8-a9be-0a8e647dfba4}</Project>
       <Name>BlackMamba.Framework.SubSonic.Extension</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Cores\src\SubSonic-3.0-master\SubSonic.Core\SubSonic.Core.csproj">
+    <ProjectReference Include="..\..\Cores\src\SubSonic-3.0-master\SubSonic.Core\SubSonic.Core.csproj">
       <Project>{53ff90b2-2d33-4ec0-91b6-a30fdf1b3374}</Project>
       <Name>SubSonic.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\src\CC.Product.Website\CC.Product.Website.csproj">
-      <Project>{ce90bde3-0ec4-4c7a-b820-5c0cbde24c68}</Project>
-      <Name>CC.Product.Website</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

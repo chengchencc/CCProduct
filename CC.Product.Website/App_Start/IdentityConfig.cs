@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Configuration;
+using System.Net;
+using System.Net.Mail;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -59,9 +62,52 @@ namespace CC.Product.Website
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            return configSendGridasync(message);
         }
+        private Task configSendGridasync(IdentityMessage message)
+        {
+            var mailMessage = new MailMessage();
+            mailMessage.To.Add(message.Destination);
+            mailMessage.From = new System.Net.Mail.MailAddress(
+                                "123439887@qq.com", "项目名称.");
+            mailMessage.Subject = message.Subject;
+            mailMessage.Body = message.Body;
+            mailMessage.IsBodyHtml = true;
+
+            var credentials = new NetworkCredential(
+                       ConfigurationManager.AppSettings["mailAccount"],
+                       ConfigurationManager.AppSettings["mailPassword"]
+                       );
+
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.qq.com";
+            smtp.Credentials = credentials;
+            smtp.Port = 25;
+            smtp.EnableSsl = false;
+            smtp.SendCompleted += smtp_SendCompleted;
+
+            return smtp.SendMailAsync(mailMessage);
+        }
+
+        void smtp_SendCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            //MailMessage mailMsg = (MailMessage)e.UserState;
+            //string subject = mailMsg.Subject;
+            var result = string.Empty;
+            if (e.Cancelled) // 邮件被取消 
+            {
+                result = " 被取消。";
+            }
+            if (e.Error != null)
+            {
+                result = "错误：" + e.Error.ToString();
+            }
+            else
+            {
+                result = "发送完成。";
+            }
+        }
+
     }
 
     public class SmsService : IIdentityMessageService

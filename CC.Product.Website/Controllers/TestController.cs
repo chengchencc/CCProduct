@@ -4,16 +4,24 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using CC.Product.Domain.Services;
 using Newtonsoft.Json;
 
 namespace CC.Product.Website.Controllers
 {
     public class TestController : Controller
     {
+        public IIocTest IocTestService { get; set; }
         // GET: Test
+        public TestController(IIocTest iocTest)
+        {
+            IocTestService = iocTest;
+        }
         public ActionResult Index()
         {
-            return View();
+            var name = IocTestService.GetName();
+            return Content(name);
+                //return View();
         }
         public ActionResult DSZMail()
         {
@@ -47,6 +55,11 @@ namespace CC.Product.Website.Controllers
             d.Add(new DSZMailModel() { UserName = "张三", Subject = "关于某某某通知的意见", SendDate = "2014-09-10", State = "已批", Content = "关于某某某通知的意见", CreateDate = "2014-09-10", ReplyDate = "2014-09-20", ReplyContent = "同意" });
 
             return Content(JsonConvert.SerializeObject(d));
+        }
+
+        public ActionResult MultiTextbox()
+        {
+            return View();
         }
 
         private class DSZMailModel
