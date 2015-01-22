@@ -10,6 +10,8 @@ namespace CC.Product.Website.Controllers
     {
         public ActionResult Index()
         {
+            
+            //return Content("");
             return View();
         }
 

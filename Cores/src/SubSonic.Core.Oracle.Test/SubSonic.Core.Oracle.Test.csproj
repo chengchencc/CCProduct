@@ -54,9 +54,9 @@
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SubSonic.Core.Oracle\SubSonic.Core.Oracle.csproj">
+    <ProjectReference Include="..\SubSonic-3.0-master\SubSonic.Core\SubSonic.Core.csproj">
       <Project>{53FF90B2-2D33-4EC0-91B6-A30FDF1B3374}</Project>
-      <Name>SubSonic.Core.Oracle</Name>
+      <Name>SubSonic.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

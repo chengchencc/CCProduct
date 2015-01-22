@@ -24,6 +24,14 @@ namespace UnitTest
 
 
         }
+
+        [Fact]
+        public void string_test()
+        {
+            var str = "http://10.24.15.5:9090/cwbase/WebFramework/mainHJ.htm?gnd=JGXT_WPRY&gndCode=JGXT_WPRY";
+            var gndindex = str.IndexOf("gndCode=");
+            var res = str.Substring(gndindex+8);
+        }
     }
     public class ClassA
     {

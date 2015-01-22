@@ -23,6 +23,18 @@ namespace CC.Product.Website.Controllers
             return Content(name);
                 //return View();
         }
+        public ActionResult LoginTest()
+        {
+            string URI = "http://jgxt/cwbase/WebFramework/loginsso.aspx";
+            string myParameters = "usercode=chengch&password=aaaaaa&slmc=gzjg&slbh=gzjg&url=main.htm";
+
+            using (WebClient wc = new WebClient())
+            {
+                wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                string HtmlResult = wc.UploadString(URI, myParameters);
+                return Content(HtmlResult);
+            }
+        }
         public ActionResult DSZMail()
         {
             return View();
@@ -33,17 +45,6 @@ namespace CC.Product.Website.Controllers
         }
         public ActionResult Add()
         {
-
-            string URI = "http://jgxt/cwbase/WebFramework/loginsso.aspx";
-            string myParameters = "usercode=chengch&password=aaaaaa&slmc=gzjg&slbh=gzjg&url=main.htm";
-
-            using (WebClient wc = new WebClient())
-            {
-                wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                string HtmlResult = wc.UploadString(URI, myParameters);
-            }
-
-
             return View();
         }
         public ActionResult GetDSZMails()

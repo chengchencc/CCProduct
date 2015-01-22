@@ -163,6 +163,7 @@
     <Compile Include="Controllers\CarpoolingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\ToolsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -681,6 +682,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ColPicker\css\colpick.css" />
     <Content Include="Scripts\ColPicker\js\colpick.js" />
+    <Content Include="Scripts\GridView.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -742,6 +744,8 @@
     <Content Include="Views\Test\MultiTextbox.cshtml" />
     <Content Include="Views\Home\Map.cshtml" />
     <Content Include="Views\Home\ShoppingIndex.cshtml" />
+    <Content Include="Views\Tools\Index.cshtml" />
+    <Content Include="Views\Tools\ColPicker.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
