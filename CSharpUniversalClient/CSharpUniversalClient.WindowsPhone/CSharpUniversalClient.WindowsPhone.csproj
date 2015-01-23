@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>29e4582f-f58d-47ec-ac53-76849058ac9c</ProjectGuid>
+    <ProjectGuid>{DA8EF368-A437-4171-B64A-3679324978A4}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CSharpUniversalClient</RootNamespace>
