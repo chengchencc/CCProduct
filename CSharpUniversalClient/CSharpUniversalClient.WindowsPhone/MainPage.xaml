@@ -9,6 +9,25 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="46*"/>
+            <RowDefinition Height="24*"/>
+            <RowDefinition Height="600*"/>
 
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Background="WhiteSmoke">
+            <TextBlock Name="Title" Text="List" Foreground="#FF939393" Margin="0" FontSize="36" LineHeight="6" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Background="#FF4564F1"/>
+        <StackPanel Grid.Row="2" Background="WhiteSmoke" >
+            <ListBox x:Name="ListBoxControl" BorderBrush="Red"  VerticalAlignment="Top" >
+                <ListBox.ItemTemplate >
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" Foreground="Black" FontSize="20" Margin="10,0,0,0" FontFamily="Microsoft YaHei" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
     </Grid>
 </Page>

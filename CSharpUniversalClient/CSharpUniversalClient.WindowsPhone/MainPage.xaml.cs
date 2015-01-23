@@ -37,12 +37,27 @@ namespace CSharpUniversalClient
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             // TODO: Prepare page for display here.
+            List<ListItemModel> models = new List<ListItemModel>();
 
+            for (int i = 0; i < 40; i++)
+            {
+                models.Add(new ListItemModel() { Code = "1", Name = "Item1", Date = "1111" });                
+            }
+
+           
+            ListBoxControl.ItemsSource = models;
             // TODO: If your application contains multiple pages, ensure that you are
             // handling the hardware Back button by registering for the
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
         }
+        
+    }
+    public class ListItemModel
+    {
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string Date { get; set; }
     }
 }
