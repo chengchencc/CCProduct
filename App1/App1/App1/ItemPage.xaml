@@ -9,7 +9,7 @@
     x:Class="App1.ItemPage"
     mc:Ignorable="d"
     DataContext="{Binding DefaultViewModel.Item, RelativeSource={RelativeSource Mode=Self}}"
-    d:DataContext="{Binding Groups[0].Items[0], Source={d:DesignData Source=/DataModel/SampleData.json, Type=data:SampleDataSource}}" Background="#FFE5E5E5">
+    d:DataContext="{Binding Groups[0].Items[0], Source={d:DesignData Source=/DataModel/SampleData.json, Type=data:SampleDataSource}}" Background="#FFCBCBCB">
     <Page.Transitions>
         <TransitionCollection>
             <NavigationThemeTransition>
@@ -132,9 +132,9 @@
     </ScrollViewer>
 
     <Page.BottomAppBar>
-        <CommandBar>
-            <AppBarButton x:Uid="AddAppBarButton" x:Name="AddPurchase" Label="支出" Icon="Import" Click="AddAppBarButton_Click" />
-            <AppBarButton x:Uid="AddAppBarButton" x:Name="AddIncome" Label="收入" Icon="Next" Click="AddAppBarButton_Click" />
+        <CommandBar Background="#FF225120">
+            <AppBarButton  x:Name="AddPurchase" Label="支出" Icon="Import" Click="AddAppBarButton_Click" />
+            <AppBarButton x:Name="AddIncome" Label="收入" Icon="Next" Click="AddAppBarButton_Click" Background="#FFE25454" Foreground="#FFCB5B5B" BorderBrush="#FF8F2525" />
         </CommandBar>
     </Page.BottomAppBar>
 </Page>
