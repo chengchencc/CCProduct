@@ -71,13 +71,17 @@ namespace App1
         {
             // TODO: Create an appropriate data model for your problem domain to replace the sample data.
             var itemId = ((int)e.NavigationParameter);
-            var localDBPath = "db.sdf";
-            var conn = new SQLiteAsyncConnection(localDBPath);
+            //var localDBPath = "db.sdf";
+            //var conn = new SQLiteAsyncConnection(localDBPath);
             //var all = await conn.Table<RecorderItem>().ToListAsync();
-            var item = await conn.FindAsync<RecorderItem>(itemId);
+            var item = await DbContext.GetInstance().Conn.FindAsync<RecorderItem>(itemId);
             this.DefaultViewModel["Item"] = item;
-
-            content.Text = string.Format( "{0}利润{1}元，其中收购单价：{2}元/kg，收购总重量为：{3}kg，收购花费为{4}元。卖出单价为：{5}元/kg，卖出重量为：{6}kg，卖出得{7}元。",
+            List<RecorderItem> aa = new List<RecorderItem>();
+            aa.Add(new RecorderItem() { Id = 1, HappenDate = DateTime.Now });
+            aa.Add(new RecorderItem() { Id = 1, HappenDate = DateTime.Now });
+            aa.Add(new RecorderItem() { Id = 1, HappenDate = DateTime.Now });
+            //PurchaseList.ItemsSource = aa;
+          var content = string.Format( "{0}利润{1}元，其中收购单价：{2}元/kg，收购总重量为：{3}kg，收购花费为{4}元。卖出单价为：{5}元/kg，卖出重量为：{6}kg，卖出得{7}元。",
                 item.HappenDate.ToString("yyyy年MM月dd日"), item.Income.ToString("F2"), item.PurchaseUnitPrice.ToString("F2"), item.PurchaseWeight.ToString("F2"), item.PurchaseTotalPrice.ToString("F2"), item.SellUnitPrice.ToString("F2"), item.SellWeight.ToString("F2"), item.SellTotalPrice.ToString("F2"));
 
         }
@@ -127,10 +131,15 @@ namespace App1
             RecorderItem recorder = new RecorderItem();
             recorder.CreatedDate = DateTime.Now;
             //var conn = await recorder.CreateRecorderTableAsync();
-            var localDBPath = "db.sdf";
-            var conn = new SQLiteAsyncConnection(localDBPath);
+            //var localDBPath = "db.sdf";
+            //var conn = new SQLiteAsyncConnection(localDBPath);
             //var createTableResult = await conn.CreateTableAsync<RecorderItem>();
-            var id = await conn.InsertAsync(recorder);
+            var id = await DbContext.GetInstance().Conn.InsertAsync(recorder);
+        }
+
+        private void AddAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

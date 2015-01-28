@@ -14,12 +14,15 @@
 
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="517" Margin="0,0,-0.333,0">
         <DatePicker x:Name="HappenDate" Header="收玉米日期"/>
-        <TextBox Name="PurchaseUnitPrice" Header="收入每斤价格" InputScope="Number" Margin="0,0,-0.333,0" Text="0"/>
+        <TextBox Name="PurchaseUnitPrice" Header="收入每斤价格" InputScope="Number" Margin="0,0,-0.333,0" Text="0" AcceptsReturn="True"/>
         <TextBox Name="PurchaseWeight" Header="收入总重量" InputScope="Number" Margin="0,0,-0.333,0" Text="0"/>
-        <TextBox Name="PurchaseTotalPrice" Header="收入总支出" InputScope="Number" Margin="0,0,-0.333,0" Text="0"/>
-        <TextBox Name="SellUnitPrice" Header="卖出每斤价格" InputScope="Number" Margin="0,0,-0.333,0" Text="0"/>
-        <TextBox Name="SellWeight" Header="卖出总重量" InputScope="Number" Text="0"/>
-        <TextBox Name="SellTotalPrice" Header="卖出总支出" InputScope="Number" Text="0"/>
+        <TextBox Name="PurchaseTotalPrice" Header="收入总支出" InputScope="Number" Margin="0,0,-0.333,0" Text="0" AcceptsReturn="True"/>
+        <TextBox Name="SellUnitPrice" Header="卖出每斤价格" InputScope="Number" Margin="0,0,-0.333,0" Text="0" AcceptsReturn="True"/>
+        <TextBox Name="SellWeight" Header="卖出总重量" InputScope="Number" Text="0" AcceptsReturn="True"/>
+        <TextBox Name="SellTotalPrice" Header="卖出总支出" InputScope="Number" Text="0" AcceptsReturn="True"/>
+        <TextBox Name="SellTotalPrice1" Header="卖出总支出" InputScope="Number" Text="0" AcceptsReturn="True"/>
+        <TextBox Name="SellTotalPrice2" Header="卖出总支出" InputScope="Number" Text="0" AcceptsReturn="True"/>
+        <TextBox Name="SellTotalPrice3" Header="卖出总支出" InputScope="Number" Text="0" AcceptsReturn="True"/>
 
         <!-- Content body -->
     </StackPanel>

@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ax21="http://webservice.oa.newsoft.com/xsd" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ns="http://impl.webservice.oa.newsoft.com" xmlns:ns1="http://org.apache.axis2/xsd" targetNamespace="http://impl.webservice.oa.newsoft.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation>OAWebService</wsdl:documentation>
+  <wsdl:types>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://webservice.oa.newsoft.com/xsd">
+      <xs:complexType name="IOAWebService">
+        <xs:sequence />
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns:ax22="http://webservice.oa.newsoft.com/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://impl.webservice.oa.newsoft.com">
+      <xs:import namespace="http://webservice.oa.newsoft.com/xsd" />
+      <xs:element name="setWebServiceImpl">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="webServiceImpl" nillable="true" type="ax22:IOAWebService" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getWebServiceImplResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="ax22:IOAWebService" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getTaskList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getTaskListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getOaUsers">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="unitName" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getOaUsersResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getOaDepts">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="unitName" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getOaDeptsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getNoticeList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getNoticeListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getMoreTask">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getMoreTaskResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getMoreNotice">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getMoreNoticeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getMoreEncyclic">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getMoreEncyclicResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getEncyclicList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getEncyclicListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addSynchronous">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="adminName" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="adminPwd" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="fullName" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="passwd" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="types" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addSynchronousResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="setWebServiceImplRequest">
+    <wsdl:part name="parameters" element="ns:setWebServiceImpl" />
+  </wsdl:message>
+  <wsdl:message name="getNoticeListRequest">
+    <wsdl:part name="parameters" element="ns:getNoticeList" />
+  </wsdl:message>
+  <wsdl:message name="getNoticeListResponse">
+    <wsdl:part name="parameters" element="ns:getNoticeListResponse" />
+  </wsdl:message>
+  <wsdl:message name="getMoreTaskRequest">
+    <wsdl:part name="parameters" element="ns:getMoreTask" />
+  </wsdl:message>
+  <wsdl:message name="getMoreTaskResponse">
+    <wsdl:part name="parameters" element="ns:getMoreTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="getMoreEncyclicRequest">
+    <wsdl:part name="parameters" element="ns:getMoreEncyclic" />
+  </wsdl:message>
+  <wsdl:message name="getMoreEncyclicResponse">
+    <wsdl:part name="parameters" element="ns:getMoreEncyclicResponse" />
+  </wsdl:message>
+  <wsdl:message name="getEncyclicListRequest">
+    <wsdl:part name="parameters" element="ns:getEncyclicList" />
+  </wsdl:message>
+  <wsdl:message name="getEncyclicListResponse">
+    <wsdl:part name="parameters" element="ns:getEncyclicListResponse" />
+  </wsdl:message>
+  <wsdl:message name="getWebServiceImplRequest" />
+  <wsdl:message name="getWebServiceImplResponse">
+    <wsdl:part name="parameters" element="ns:getWebServiceImplResponse" />
+  </wsdl:message>
+  <wsdl:message name="getTaskListRequest">
+    <wsdl:part name="parameters" element="ns:getTaskList" />
+  </wsdl:message>
+  <wsdl:message name="getTaskListResponse">
+    <wsdl:part name="parameters" element="ns:getTaskListResponse" />
+  </wsdl:message>
+  <wsdl:message name="getOaDeptsRequest">
+    <wsdl:part name="parameters" element="ns:getOaDepts" />
+  </wsdl:message>
+  <wsdl:message name="getOaDeptsResponse">
+    <wsdl:part name="parameters" element="ns:getOaDeptsResponse" />
+  </wsdl:message>
+  <wsdl:message name="addSynchronousRequest">
+    <wsdl:part name="parameters" element="ns:addSynchronous" />
+  </wsdl:message>
+  <wsdl:message name="addSynchronousResponse">
+    <wsdl:part name="parameters" element="ns:addSynchronousResponse" />
+  </wsdl:message>
+  <wsdl:message name="getOaUsersRequest">
+    <wsdl:part name="parameters" element="ns:getOaUsers" />
+  </wsdl:message>
+  <wsdl:message name="getOaUsersResponse">
+    <wsdl:part name="parameters" element="ns:getOaUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="getMoreNoticeRequest">
+    <wsdl:part name="parameters" element="ns:getMoreNotice" />
+  </wsdl:message>
+  <wsdl:message name="getMoreNoticeResponse">
+    <wsdl:part name="parameters" element="ns:getMoreNoticeResponse" />
+  </wsdl:message>
+  <wsdl:portType name="OAWebServicePortType">
+    <wsdl:operation name="setWebServiceImpl">
+      <wsdl:input wsaw:Action="urn:setWebServiceImpl" message="ns:setWebServiceImplRequest" />
+    </wsdl:operation>
+    <wsdl:operation name="getNoticeList">
+      <wsdl:input wsaw:Action="urn:getNoticeList" message="ns:getNoticeListRequest" />
+      <wsdl:output wsaw:Action="urn:getNoticeListResponse" message="ns:getNoticeListResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getMoreTask">
+      <wsdl:input wsaw:Action="urn:getMoreTask" message="ns:getMoreTaskRequest" />
+      <wsdl:output wsaw:Action="urn:getMoreTaskResponse" message="ns:getMoreTaskResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getMoreEncyclic">
+      <wsdl:input wsaw:Action="urn:getMoreEncyclic" message="ns:getMoreEncyclicRequest" />
+      <wsdl:output wsaw:Action="urn:getMoreEncyclicResponse" message="ns:getMoreEncyclicResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getEncyclicList">
+      <wsdl:input wsaw:Action="urn:getEncyclicList" message="ns:getEncyclicListRequest" />
+      <wsdl:output wsaw:Action="urn:getEncyclicListResponse" message="ns:getEncyclicListResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getWebServiceImpl">
+      <wsdl:input wsaw:Action="urn:getWebServiceImpl" message="ns:getWebServiceImplRequest" />
+      <wsdl:output wsaw:Action="urn:getWebServiceImplResponse" message="ns:getWebServiceImplResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getTaskList">
+      <wsdl:input wsaw:Action="urn:getTaskList" message="ns:getTaskListRequest" />
+      <wsdl:output wsaw:Action="urn:getTaskListResponse" message="ns:getTaskListResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getOaDepts">
+      <wsdl:input wsaw:Action="urn:getOaDepts" message="ns:getOaDeptsRequest" />
+      <wsdl:output wsaw:Action="urn:getOaDeptsResponse" message="ns:getOaDeptsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="addSynchronous">
+      <wsdl:input wsaw:Action="urn:addSynchronous" message="ns:addSynchronousRequest" />
+      <wsdl:output wsaw:Action="urn:addSynchronousResponse" message="ns:addSynchronousResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getOaUsers">
+      <wsdl:input wsaw:Action="urn:getOaUsers" message="ns:getOaUsersRequest" />
+      <wsdl:output wsaw:Action="urn:getOaUsersResponse" message="ns:getOaUsersResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getMoreNotice">
+      <wsdl:input wsaw:Action="urn:getMoreNotice" message="ns:getMoreNoticeRequest" />
+      <wsdl:output wsaw:Action="urn:getMoreNoticeResponse" message="ns:getMoreNoticeResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OAWebServiceSoap11Binding" type="ns:OAWebServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="setWebServiceImpl">
+      <soap:operation soapAction="urn:setWebServiceImpl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="getNoticeList">
+      <soap:operation soapAction="urn:getNoticeList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMoreTask">
+      <soap:operation soapAction="urn:getMoreTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMoreEncyclic">
+      <soap:operation soapAction="urn:getMoreEncyclic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEncyclicList">
+      <soap:operation soapAction="urn:getEncyclicList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getWebServiceImpl">
+      <soap:operation soapAction="urn:getWebServiceImpl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTaskList">
+      <soap:operation soapAction="urn:getTaskList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOaDepts">
+      <soap:operation soapAction="urn:getOaDepts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOaUsers">
+      <soap:operation soapAction="urn:getOaUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addSynchronous">
+      <soap:operation soapAction="urn:addSynchronous" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMoreNotice">
+      <soap:operation soapAction="urn:getMoreNotice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="OAWebServiceSoap12Binding" type="ns:OAWebServicePortType">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="setWebServiceImpl">
+      <soap12:operation soapAction="urn:setWebServiceImpl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="getNoticeList">
+      <soap12:operation soapAction="urn:getNoticeList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMoreTask">
+      <soap12:operation soapAction="urn:getMoreTask" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMoreEncyclic">
+      <soap12:operation soapAction="urn:getMoreEncyclic" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEncyclicList">
+      <soap12:operation soapAction="urn:getEncyclicList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getWebServiceImpl">
+      <soap12:operation soapAction="urn:getWebServiceImpl" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTaskList">
+      <soap12:operation soapAction="urn:getTaskList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOaDepts">
+      <soap12:operation soapAction="urn:getOaDepts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOaUsers">
+      <soap12:operation soapAction="urn:getOaUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addSynchronous">
+      <soap12:operation soapAction="urn:addSynchronous" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMoreNotice">
+      <soap12:operation soapAction="urn:getMoreNotice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="OAWebServiceHttpBinding" type="ns:OAWebServicePortType">
+    <http:binding verb="POST" />
+    <wsdl:operation name="setWebServiceImpl">
+      <http:operation location="OAWebService/setWebServiceImpl" />
+      <wsdl:input>
+        <mime:content part="setWebServiceImpl" type="text/xml" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="getNoticeList">
+      <http:operation location="OAWebService/getNoticeList" />
+      <wsdl:input>
+        <mime:content part="getNoticeList" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getNoticeList" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMoreTask">
+      <http:operation location="OAWebService/getMoreTask" />
+      <wsdl:input>
+        <mime:content part="getMoreTask" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getMoreTask" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMoreEncyclic">
+      <http:operation location="OAWebService/getMoreEncyclic" />
+      <wsdl:input>
+        <mime:content part="getMoreEncyclic" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getMoreEncyclic" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEncyclicList">
+      <http:operation location="OAWebService/getEncyclicList" />
+      <wsdl:input>
+        <mime:content part="getEncyclicList" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getEncyclicList" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getWebServiceImpl">
+      <http:operation location="OAWebService/getWebServiceImpl" />
+      <wsdl:input>
+        <mime:content part="getWebServiceImpl" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getWebServiceImpl" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTaskList">
+      <http:operation location="OAWebService/getTaskList" />
+      <wsdl:input>
+        <mime:content part="getTaskList" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getTaskList" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOaDepts">
+      <http:operation location="OAWebService/getOaDepts" />
+      <wsdl:input>
+        <mime:content part="getOaDepts" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getOaDepts" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOaUsers">
+      <http:operation location="OAWebService/getOaUsers" />
+      <wsdl:input>
+        <mime:content part="getOaUsers" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getOaUsers" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addSynchronous">
+      <http:operation location="OAWebService/addSynchronous" />
+      <wsdl:input>
+        <mime:content part="addSynchronous" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="addSynchronous" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMoreNotice">
+      <http:operation location="OAWebService/getMoreNotice" />
+      <wsdl:input>
+        <mime:content part="getMoreNotice" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="getMoreNotice" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OAWebService">
+    <wsdl:port name="OAWebServiceHttpSoap11Endpoint" binding="ns:OAWebServiceSoap11Binding">
+      <soap:address location="http://192.168.0.13:8080/services/OAWebService.OAWebServiceHttpSoap11Endpoint/" />
+    </wsdl:port>
+    <wsdl:port name="OAWebServiceHttpSoap12Endpoint" binding="ns:OAWebServiceSoap12Binding">
+      <soap12:address location="http://192.168.0.13:8080/services/OAWebService.OAWebServiceHttpSoap12Endpoint/" />
+    </wsdl:port>
+    <wsdl:port name="OAWebServiceHttpEndpoint" binding="ns:OAWebServiceHttpBinding">
+      <http:address location="http://192.168.0.13:8080/services/OAWebService.OAWebServiceHttpEndpoint/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

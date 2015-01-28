@@ -102,9 +102,9 @@ namespace App1
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                var localDBPath = "db.sdf";
-                var conn = new SQLiteAsyncConnection(localDBPath);
-                var all = await conn.Table<RecorderItem>().OrderByDescending(s=>s.HappenDate).ToListAsync();
+                //var localDBPath = "db.sdf";
+                //var conn = new SQLiteAsyncConnection(localDBPath);
+                var all = await DbContext.GetInstance().Conn.Table<RecorderItem>().OrderByDescending(s=>s.HappenDate).ToListAsync();
                 recorder.ItemsSource = all;
 
             }
@@ -150,9 +150,9 @@ namespace App1
         /// </summary>
         private async void SecondPivot_Loaded(object sender, RoutedEventArgs e)
         {
-            var localDBPath = "db.sdf";
-            var conn = new SQLiteAsyncConnection(localDBPath);
-            var all = await conn.Table<RecorderItem>().OrderByDescending(s=>s.HappenDate).ToListAsync();
+            //var localDBPath = "db.sdf";
+            //var conn = new SQLiteAsyncConnection(localDBPath);
+            var all = await  DbContext.GetInstance().Conn.Table<RecorderItem>().OrderByDescending(s=>s.HappenDate).ToListAsync();
             recorder.ItemsSource = all;
             //var sampleDataGroup = await SampleDataSource.GetGroupAsync("Group-2");
             //this.DefaultViewModel[SecondGroupName] = all;//sampleDataGroup;

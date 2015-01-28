@@ -58,6 +58,10 @@
       <Project>{53FF90B2-2D33-4EC0-91B6-A30FDF1B3374}</Project>
       <Name>SubSonic.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SubSonic.Core.Oracle\SubSonic.Core.Oracle.csproj">
+      <Project>{edecac79-55bc-4aa9-a08b-9fe143d825d0}</Project>
+      <Name>SubSonic.Core.Oracle</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\common\core.snk">

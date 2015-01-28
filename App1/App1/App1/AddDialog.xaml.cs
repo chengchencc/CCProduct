@@ -35,10 +35,10 @@ namespace App1
             recorder.SellUnitPrice = Convert.ToDecimal(SellUnitPrice.Text);
             recorder.SellWeight = Convert.ToDecimal(SellWeight.Text);
             recorder.CreatedDate = DateTime.Now;
-            var localDBPath = "db.sdf";
-            var conn = new SQLiteAsyncConnection(localDBPath);
-            var createTableResult = await conn.CreateTableAsync<RecorderItem>();
-            var id = await conn.InsertAsync(recorder);
+
+            //var createTableResult = await DbContext.GetInstance().Conn.CreateTableAsync<RecorderItem>();
+            
+            var id = await DbContext.GetInstance().Conn.InsertAsync(recorder);
             //var resutl = await conn.QueryAsync<RecorderItem>("");
             //var all = await conn.Table<RecorderItem>().ToListAsync();
         }

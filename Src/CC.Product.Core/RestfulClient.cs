@@ -47,6 +47,12 @@ namespace CC.Product.Core
         /// <returns></returns>
         public string Post(string url, Dictionary<string, string> paras, int timeoutMilliSconds = 0)
         {
+            return Post(url, paras, EncodingNames.GBK, timeoutMilliSconds);
+        }
+
+
+        public string Post(string url, Dictionary<string, string> paras, string resultEncoding , int timeoutMilliSconds = 0)
+        {
 
             var content = string.Empty;
 
@@ -62,7 +68,7 @@ namespace CC.Product.Core
                 }
 
                 var response = client.Execute(request);
-                content = Encoding.GetEncoding(EncodingNames.GBK).GetString(response.RawBytes);
+                content = Encoding.GetEncoding(resultEncoding).GetString(response.RawBytes);
             }
             catch (Exception ex)
             {
