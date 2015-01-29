@@ -1,4 +1,5 @@
-﻿using App1.Common;
+﻿using App1.Api;
+using App1.Common;
 using App1.Data;
 using SQLite;
 using System;
@@ -138,11 +139,11 @@ namespace App1
         {
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
-            var itemId = ((RecorderItem)e.ClickedItem).Id;
-            if (!Frame.Navigate(typeof(ItemPage), itemId))
-            {
-                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
-            }
+            //var itemId = ((RecorderItem)e.ClickedItem).Id;
+            //if (!Frame.Navigate(typeof(ItemPage), itemId))
+            //{
+            //    throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            //}
         }
 
         /// <summary>
@@ -185,5 +186,25 @@ namespace App1
         }
 
         #endregion
+
+        bool isElectricTorchOpen = false;
+        ElectricTorch electricTorch = new ElectricTorch();
+        private void ListViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (isElectricTorchOpen)
+            {
+                electricTorch.CloseTorch();
+                electricTorch.CleanupCaptureAsync();
+                ElectricTorchState.Text = "关";
+
+            }
+            else
+            {
+                electricTorch.CreateCaptureAsync().Wait();
+                electricTorch.OpenTorch();
+                ElectricTorchState.Text = "开";
+
+            }
+        }
     }
 }

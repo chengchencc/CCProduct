@@ -44,7 +44,7 @@
 
                 <StackPanel Grid.Row="0" Background="#FFE5E5E5" ScrollViewer.HorizontalScrollBarVisibility="Visible">
                     <Border Background="#FFA5BEF5" >
-                        <TextBlock Text="支出" TextAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}" Foreground="#FF6E6E6E" Height="25"/>
+                        <TextBlock Text="支出" TextAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}" Foreground="#FF6E6E6E" Height="38" Padding="0,5,0,0"/>
                     </Border>
                     <ListView x:Name="PurchaseList" Background="#E5E5E5" Margin="10,0" Padding="0,10" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible">
                         <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0" Background="White">
