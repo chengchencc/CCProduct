@@ -13,6 +13,7 @@ using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
+using Windows.Media.Playback;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -205,6 +206,17 @@ namespace App1
                 ElectricTorchState.Text = "开";
 
             }
+        }
+
+        private void ListViewItem_Tapped_1(object sender, TappedRoutedEventArgs e)
+        {
+            if (BackgroundMediaPlayer.IsMediaPlaying())
+            {
+                BackgroundMediaPlayer.Shutdown();                
+            }
+            Capture capture = new Capture();
+            capture.InitailizeCapture().Wait();
+            capture.PhotoCaptureForCurrent();
         }
     }
 }
