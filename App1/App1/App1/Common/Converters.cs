@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using Windows.Data;
-namespace MyConverters
+namespace Converters
 {
     //[ValueConversion(typeof(DateTime), typeof(String))]
     public class DateConverter : IValueConverter

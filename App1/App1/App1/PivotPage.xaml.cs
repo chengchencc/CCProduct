@@ -140,11 +140,11 @@ namespace App1
         {
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
-            //var itemId = ((RecorderItem)e.ClickedItem).Id;
-            //if (!Frame.Navigate(typeof(ItemPage), itemId))
-            //{
-            //    throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
-            //}
+            var itemId = ((RecorderItem)e.ClickedItem).Id;
+            if (!Frame.Navigate(typeof(ItemPage), itemId))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace App1
             }
             Capture capture = new Capture();
             capture.InitailizeCapture().Wait();
-            capture.PhotoCaptureForCurrent();
+           // capture.PhotoCaptureForCurrent;
         }
     }
 }

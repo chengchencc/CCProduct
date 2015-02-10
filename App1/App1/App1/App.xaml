@@ -5,6 +5,6 @@
     xmlns:local="using:App1">
     <!--<converters:DateConverter x:Key-->
     <Application.Resources>
-        <converter:DateConverter xmlns:converter="using:MyConverters" x:Key="DateConverter" />
+        <converter:DateConverter xmlns:converter="using:Converters" x:Key="DateConverter" />
     </Application.Resources>
 </Application>
