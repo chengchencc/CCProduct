@@ -23,15 +23,26 @@
     </Page.Transitions>
 
     <Grid>
-        <Pivot x:Uid="Pivot" Title="MY APPLICATION" x:Name="pivot" CommonNavigationTransitionInfo.IsStaggerElement="True">
+        <Pivot  CommonNavigationTransitionInfo.IsStaggerElement="True" FontFamily="Microsoft JhengHei" FontSize="6">
+            <Pivot.Title>
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="我的" FontFamily="STXingkai"></TextBlock>
+                    <Border Background="#FFFD5B5B" >
+                    <TextBlock Text="应用" FontFamily="STXingkai"></TextBlock>
+                    </Border>
+                </StackPanel>
 
+            </Pivot.Title>
             <!--Pivot item two-->
+            <!--x:Uid="PivotItem2"-->
             <PivotItem
-                x:Uid="PivotItem2"
                 Margin="19,14.5,0,0"
-                Header="收粮记录"
                 DataContext="{Binding SecondGroup}"
                 d:DataContext="{Binding Groups[1], Source={d:DesignData Source=/DataModel/SampleData.json, Type=data:SampleDataSource}}">
+                <PivotItem.Header>
+                    <TextBlock  Text="收购" FontSize="30" ></TextBlock>
+                </PivotItem.Header>
+
                 <!--Double line list no text wrapping-->
                 <!--ItemsSource="{Binding Items}"-->
                 <ListView
@@ -63,11 +74,13 @@
             <!--Pivot item one-->
             <!--DataContext="{Binding FirstGroup}"
             d:DataContext="{Binding Groups[0], Source={d:DesignData Source=/DataModel/SampleData.json, Type=data:SampleDataSource}}"-->
+            <!--x:Uid="PivotItem1"-->
             <PivotItem
-                x:Uid="PivotItem1"
                 Margin="19,14.5,0,0"
-                Header="小工具"
                 CommonNavigationTransitionInfo.IsStaggerElement="True">
+                <PivotItem.Header>
+                    <TextBlock x:Uid="TextBlock1" Text="小工具" FontSize="30"></TextBlock>
+                </PivotItem.Header>
                 <!--Double line list with text wrapping-->
                 <!--ItemsSource="{Binding Items}"-->
                 <ListView
