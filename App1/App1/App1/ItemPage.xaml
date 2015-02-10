@@ -30,9 +30,9 @@
             </Grid.RowDefinitions>
 
             <!-- Title Panel -->
-            <StackPanel Grid.Row="0" Margin="10,0,10,10">
-                <TextBlock x:Uid="Header" Text="MY APPLICATION" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0" Foreground="#FF171717"/>
-                <TextBlock Text="{Binding HappenDate, Converter={StaticResource DateConverter}}" Style="{ThemeResource HeaderTextBlockStyle}" Margin="0,-6.5,0,26.5" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" Foreground="#FF080808" />
+            <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                <TextBlock x:Uid="Header" Padding="10" Text="MY APPLICATION" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0" Foreground="#FF171717"/>
+                <TextBlock Padding="10,0" Text="{Binding HappenDate, Converter={StaticResource DateConverter}}" Style="{ThemeResource HeaderTextBlockStyle}" Margin="0" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" Foreground="#FF080808" />
             </StackPanel>
 
             <Grid Grid.Row="1" x:Name="ContentRoot">

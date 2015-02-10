@@ -1,0 +1,27 @@
+﻿<ContentDialog
+    x:Class="App1.AddPurchaseContent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="新增支出"
+    PrimaryButtonText="确定"  
+    SecondaryButtonText="取消"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <TextBox Name="PurchaseUnitPrice" Header="收入每斤价格" InputScope="Number" Margin="0,0,-0.333,0" Text="0" AcceptsReturn="True"/>
+        <TextBox x:Name="PurchaseWeight" Header="收入总重量" InputScope="Number" Text="0" VerticalAlignment="Top" AcceptsReturn="True" TabNavigation="Cycle"/>
+        <TextBox Name="PurchaseTotalPrice" Header="收入总支出" InputScope="Number" Margin="0,0,-0.333,0" Text="0" AcceptsReturn="True"/>
+
+        <!-- Content body -->
+        <TextBlock Name="body" Style="{StaticResource MessageDialogContentStyle}" TextWrapping="Wrap">
+            <TextBlock.Text>
+                增加一条支出记录，总支出自动计算，也可以手动修改
+            </TextBlock.Text>
+        </TextBlock>
+    </StackPanel>
+</ContentDialog>

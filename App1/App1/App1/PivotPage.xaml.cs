@@ -99,7 +99,7 @@ namespace App1
         /// </summary>
         private async void AddAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            AddDialog dialog = new AddDialog();
+            AddItem dialog = new AddItem();
 
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
@@ -140,11 +140,11 @@ namespace App1
         {
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
-            //var itemId = ((RecorderItem)e.ClickedItem).Id;
-            //if (!Frame.Navigate(typeof(ItemPage), itemId))
-            //{
-            //    throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
-            //}
+            var itemId = ((RecorderItem)e.ClickedItem).Id;
+            if (!Frame.Navigate(typeof(ItemPage), itemId))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
         }
 
         /// <summary>
@@ -214,9 +214,9 @@ namespace App1
             {
                 BackgroundMediaPlayer.Shutdown();                
             }
-            Capture capture = new Capture();
-            capture.InitailizeCapture().Wait();
-            capture.PhotoCaptureForCurrent();
+            //Capture capture = new Capture();
+            //capture.InitailizeCapture().Wait();
+            //capture.PhotoCaptureForCurrent();
         }
     }
 }

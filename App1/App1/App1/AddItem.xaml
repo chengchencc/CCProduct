@@ -1,0 +1,26 @@
+﻿<ContentDialog
+    x:Class="App1.AddItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="新增收入"
+    PrimaryButtonText="确定"  
+    SecondaryButtonText="取消"
+    FullSizeDesired="False"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick" Height="400">
+
+    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <DatePicker x:Name="HappenDate" Header="收玉米日期"/>
+
+        <!-- Content body -->
+        <TextBlock Name="body" Style="{StaticResource MessageDialogContentStyle}" TextWrapping="Wrap">
+            <TextBlock.Text>
+                增加一条记录
+            </TextBlock.Text>
+        </TextBlock>
+    </StackPanel>
+</ContentDialog>

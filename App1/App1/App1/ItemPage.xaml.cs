@@ -128,18 +128,53 @@ namespace App1
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            RecorderItem recorder = new RecorderItem();
-            recorder.CreatedDate = DateTime.Now;
-            //var conn = await recorder.CreateRecorderTableAsync();
-            //var localDBPath = "db.sdf";
-            //var conn = new SQLiteAsyncConnection(localDBPath);
-            //var createTableResult = await conn.CreateTableAsync<RecorderItem>();
-            var id = await DbContext.GetInstance().Conn.InsertAsync(recorder);
+            AddIncomeContent dialog = new AddIncomeContent();
+
+            ContentDialogResult result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                //var localDBPath = "db.sdf";
+                //var conn = new SQLiteAsyncConnection(localDBPath);
+                //var all = await DbContext.GetInstance().Conn.Table<RecorderItem>().OrderByDescending(s => s.HappenDate).ToListAsync();
+                //recorder.ItemsSource = all;
+
+            }
+            else if (result == ContentDialogResult.Secondary)
+            {
+
+            }
+
+
+
+            //RecorderItem recorder = new RecorderItem();
+            //recorder.CreatedDate = DateTime.Now;
+            //var id = await DbContext.GetInstance().Conn.InsertAsync(recorder);
         }
 
-        private void AddAppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void AddAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            //var itemId = ((RecorderItem)e.ClickedItem).Id;
+            //var itemId = "id";
+            //if (!Frame.Navigate(typeof(AddPurchaseItem), itemId))
+            //{
+            //    throw new Exception("Navigation failed.");
+            //}
 
+            AddPurchaseContent dialog = new AddPurchaseContent();
+
+            ContentDialogResult result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                //var localDBPath = "db.sdf";
+                //var conn = new SQLiteAsyncConnection(localDBPath);
+                //var all = await DbContext.GetInstance().Conn.Table<RecorderItem>().OrderByDescending(s => s.HappenDate).ToListAsync();
+                //recorder.ItemsSource = all;
+
+            }
+            else if (result == ContentDialogResult.Secondary)
+            {
+
+            }
         }
     }
 }

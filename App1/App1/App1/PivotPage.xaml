@@ -8,8 +8,10 @@
     xmlns:data="using:App1.Data"
     mc:Ignorable="d"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     >
+    <Page.Background>
+        <ImageBrush Stretch="Fill" ImageSource="Assets/SplashScreen1.png"/>
+    </Page.Background>
     <Page.Transitions>
         <TransitionCollection>
             <NavigationThemeTransition>
