@@ -8,10 +8,11 @@
     xmlns:data="using:App1.Data"
     mc:Ignorable="d"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    
     >
-    <Page.Background>
+    <!--<Page.Background>
         <ImageBrush Stretch="Fill" ImageSource="Assets/SplashScreen1.png"/>
-    </Page.Background>
+    </Page.Background>-->
     <Page.Transitions>
         <TransitionCollection>
             <NavigationThemeTransition>
@@ -22,13 +23,13 @@
         </TransitionCollection>
     </Page.Transitions>
 
-    <Grid>
+    <Grid AllowDrop="True" >
         <Pivot  CommonNavigationTransitionInfo.IsStaggerElement="True" FontFamily="Microsoft JhengHei" FontSize="6">
             <Pivot.Title>
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Text="我的" FontFamily="STXingkai"></TextBlock>
                     <Border Background="#FFFD5B5B" >
-                    <TextBlock Text="应用" FontFamily="STXingkai"></TextBlock>
+                        <TextBlock Text="应用" FontFamily="STXingkai"></TextBlock>
                     </Border>
                 </StackPanel>
 
@@ -36,7 +37,7 @@
             <!--Pivot item two-->
             <!--x:Uid="PivotItem2"-->
             <PivotItem
-                Margin="19,14.5,0,0"
+                Margin="10,14.5,10,0"
                 DataContext="{Binding SecondGroup}"
                 d:DataContext="{Binding Groups[1], Source={d:DesignData Source=/DataModel/SampleData.json, Type=data:SampleDataSource}}">
                 <PivotItem.Header>
@@ -77,7 +78,12 @@
             <!--x:Uid="PivotItem1"-->
             <PivotItem
                 Margin="19,14.5,0,0"
-                CommonNavigationTransitionInfo.IsStaggerElement="True">
+                CommonNavigationTransitionInfo.IsStaggerElement="True" RenderTransformOrigin="0.5,0.5">
+                <PivotItem.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition/>
+                    </TransitionCollection>
+                </PivotItem.Transitions>
                 <PivotItem.Header>
                     <TextBlock x:Uid="TextBlock1" Text="小工具" FontSize="30"></TextBlock>
                 </PivotItem.Header>
@@ -87,7 +93,7 @@
                     IsItemClickEnabled="True"
                     ItemClick="ItemView_ItemClick"
                     ContinuumNavigationTransitionInfo.ExitElementContainer="True">
-                    <ListViewItem Tapped="ListViewItem_Tapped">
+                    <ListViewItem Tapped="ListViewItem_Tapped" BorderThickness="0,0,0,2" BorderBrush="#FF636262">
                         <StackPanel Margin="0,0,0,9.5">
                             <!--Text="{Binding Title}"-->
                             <TextBlock
@@ -108,7 +114,7 @@
                                     Margin="0,0,19,0"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Tapped="ListViewItem_Tapped_1">
+                    <ListViewItem Tapped="ListViewItem_Tapped_1" BorderBrush="#FF787777" BorderThickness="0,0,0,2">
                         <StackPanel Margin="0,0,0,9.5">
                             <!--Text="{Binding Title}"-->
                             <TextBlock
@@ -128,7 +134,7 @@
                                     Margin="0,0,19,0"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem>
+                    <ListViewItem BorderBrush="#FF686868" BorderThickness="0,0,0,2">
                         <StackPanel Margin="0,0,0,9.5">
                             <!--Text="{Binding Title}"-->
                             <TextBlock
@@ -148,7 +154,7 @@
                                     Margin="0,0,19,0"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem>
+                    <ListViewItem BorderBrush="#FF646464" BorderThickness="0,0,0,2">
                         <StackPanel Margin="0,0,0,9.5">
                             <!--Text="{Binding Title}"-->
                             <TextBlock
@@ -168,7 +174,7 @@
                                     Margin="0,0,19,0"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem>
+                    <ListViewItem BorderBrush="#FF636262" BorderThickness="0,0,0,2">
                         <StackPanel Margin="0,0,0,9.5">
                             <!--Text="{Binding Title}"-->
                             <TextBlock
@@ -188,7 +194,7 @@
                                     Margin="0,0,19,0"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem>
+                    <ListViewItem BorderThickness="0,0,0,2">
                         <StackPanel Margin="0,0,0,9.5">
                             <!--Text="{Binding Title}"-->
                             <TextBlock
@@ -232,6 +238,39 @@
                 </ListView>
             </PivotItem>
 
+            <PivotItem             
+                Margin="19,14.5,0,0"
+                CommonNavigationTransitionInfo.IsStaggerElement="True" RenderTransformOrigin="0.5,0.5">
+                <PivotItem.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition/>
+                    </TransitionCollection>
+                </PivotItem.Transitions>
+                <PivotItem.Header>
+                    <TextBlock x:Uid="TextBlock1" Text="特性" FontSize="30"></TextBlock>
+                </PivotItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="120*" />
+                        <RowDefinition Height="120*"/>
+                        <RowDefinition Height="120*"/>
+                        <RowDefinition Height="350*"/>
+                    </Grid.RowDefinitions>
+                    <Button Name="btnLoading" Grid.Row="0" Content="加载中" Width="50" Height="50" BorderThickness="1" Background="#FF387E1E" BorderBrush="#FF1B610B" Padding="3,0,3,2" UseLayoutRounding="False" MinHeight="80" MinWidth="80" RenderTransformOrigin="1,1" Margin="10,0,0,0" Click="Button_Click">
+                    </Button>
+                    <Button Name="btnCloseLoading" Grid.Row="0" Content="不加载" Width="50" Height="50" BorderThickness="1" Background="#FFB93434" BorderBrush="#FF610B0B" Padding="3,0,3,2" UseLayoutRounding="False" MinHeight="80" MinWidth="80" RenderTransformOrigin="1,1" Margin="100,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Click="btnCloseLoading_Click">
+                    </Button>
+                    <Button Name="btnShowStatusBar" Grid.Row="0" Content="显示" Width="50" Height="50" BorderThickness="1" Background="#FF387E1E" BorderBrush="#FF1B610B" Padding="3,0,3,2" UseLayoutRounding="False" MinHeight="80" MinWidth="80" RenderTransformOrigin="1,1" Margin="190,0,0,0" Click="btnShowStatusBar_Click" >
+                    </Button>
+                    <Button Name="btnHideStatusBar" Grid.Row="0" Content="不显示" Width="50" Height="50" BorderThickness="1" Background="#FFB93434" BorderBrush="#FF610B0B" Padding="3,0,3,2" UseLayoutRounding="False" MinHeight="80" MinWidth="80" RenderTransformOrigin="1,1" Margin="280,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Click="btnHideStatusBar_Click" >
+                    </Button>
+                    <Button Name="btnSetStatusBarRed" Grid.Row="1" Content="加颜色" Width="50" Height="50" BorderThickness="1" Background="#FF387E1E" BorderBrush="#FF0B6113" Padding="3,0,3,2" UseLayoutRounding="False" MinHeight="80" MinWidth="80" RenderTransformOrigin="1,1" Margin="10,0,0,0" Click="btnSetStatusBarRed_Click">
+                    </Button>
+                    <Button Name="btnSetStatusBarDefault" Grid.Row="1" Content="去颜色" Width="50" Height="50" BorderThickness="1" Background="#FFB93434" BorderBrush="#FF610B0B" Padding="3,0,3,2" UseLayoutRounding="False" MinHeight="80" MinWidth="80" RenderTransformOrigin="1,1" Margin="100,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Click="btnSetStatusBarDefault_Click">
+                    </Button>
+                </Grid>
+
+            </PivotItem>
         </Pivot>
     </Grid>
 

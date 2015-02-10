@@ -47,32 +47,32 @@
                         <TextBlock Text="支出" TextAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}" Foreground="#FF6E6E6E" Height="38" Padding="0,5,0,0"/>
                     </Border>
                     <ListView x:Name="PurchaseList" Background="#E5E5E5" Margin="10,0" Padding="0,10" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible">
-                        <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0" Background="White">
+                        <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0" Background="White" Padding="5">
                             <StackPanel HorizontalAlignment="Stretch" >
                                 <TextBlock Text="小标题" Style="{StaticResource ListViewItemSubheaderTextBlockStyle}" Foreground="#4E4E4E" FontFamily="Microsoft YaHei" FontSize="22" Height="39" Padding="10,5,0,0"/>
                                 <TextBlock Text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
                                            Style="{StaticResource ListViewItemContentTextBlockStyle}" Foreground="#FF6A6A6A" Padding="10,0,0,0" TextWrapping="WrapWholeWords" LineHeight="20" FontSize="16"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0" Background="White">
+                        <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0,5,0,0" Background="White">
                             <StackPanel Height="100" HorizontalAlignment="Stretch" Width="202">
                                 <TextBlock Text="小标题" Style="{StaticResource ListViewItemSubheaderTextBlockStyle}" Foreground="#4E4E4E" FontFamily="Microsoft YaHei" FontSize="20" Height="39" Padding="10,5,0,0"/>
                                 <TextBlock Text="内容内容内容" Style="{StaticResource ListViewItemContentTextBlockStyle}" Foreground="#FF6A6A6A" Padding="10,0,0,0"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0" Background="White">
+                        <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0,5,0,0" Background="White">
                             <StackPanel Height="100" HorizontalAlignment="Stretch" Width="202">
                                 <TextBlock Text="小标题" Style="{StaticResource ListViewItemSubheaderTextBlockStyle}" Foreground="#4E4E4E" FontFamily="Microsoft YaHei" FontSize="20" Height="39" Padding="10,5,0,0"/>
                                 <TextBlock Text="内容内容内容" Style="{StaticResource ListViewItemContentTextBlockStyle}" Foreground="#FF6A6A6A" Padding="10,0,0,0"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0" Background="White">
+                        <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0,5,0,0" Background="White">
                             <StackPanel Height="100" HorizontalAlignment="Stretch" Width="202">
                                 <TextBlock Text="小标题" Style="{StaticResource ListViewItemSubheaderTextBlockStyle}" Foreground="#4E4E4E" FontFamily="Microsoft YaHei" FontSize="20" Height="39" Padding="10,5,0,0"/>
                                 <TextBlock Text="内容内容内容" Style="{StaticResource ListViewItemContentTextBlockStyle}" Foreground="#FF6A6A6A" Padding="10,0,0,0"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0" Background="White">
+                        <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0,5,0,0" Background="White">
                             <StackPanel Height="100" HorizontalAlignment="Stretch" Width="202">
                                 <TextBlock Text="小标题" Style="{StaticResource ListViewItemSubheaderTextBlockStyle}" Foreground="#4E4E4E" FontFamily="Microsoft YaHei" FontSize="20" Height="39" Padding="10,5,0,0"/>
                                 <TextBlock Text="内容内容内容" Style="{StaticResource ListViewItemContentTextBlockStyle}" Foreground="#FF6A6A6A" Padding="10,0,0,0"/>
@@ -99,7 +99,7 @@
 
                 <StackPanel Grid.Row="1" Background="#FFE5E5E5">
                     <Border Background="#FFA5BEF5" >
-                        <TextBlock Text="收入" TextAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}" Foreground="#FF6E6E6E" Height="25"/>
+                        <TextBlock Text="收入" TextAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}" Foreground="#FF6E6E6E" Height="38"/>
                     </Border>
                     <ListView x:Name="IncomeList" Background="#E5E5E5" Margin="10,0" Padding="0,10">
                         <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0" Background="White">

@@ -15,7 +15,7 @@ namespace Converters
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-                   return ((DateTime)value).ToString("yyyy/MM/dd") + "收入";
+                   return ((DateTime)value).ToString("yyyy年MM月dd日") + "收入";
             //throw new NotImplementedException();
         }
 

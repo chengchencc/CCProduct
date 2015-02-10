@@ -14,8 +14,6 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
 using Windows.Media.Playback;
-using Windows.UI;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -46,19 +44,6 @@ namespace App1
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
-            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
-            ApplicationView.GetForCurrentView().VisibleBoundsChanged += PivotPage_VisibleBoundsChanged;
-        }
-
-        void PivotPage_VisibleBoundsChanged(ApplicationView sender, object args)
-        {
-            ReportVisibleBounds();
-        }
-
-        private void ReportVisibleBounds()
-        {
-            
         }
 
         /// <summary>
@@ -94,7 +79,6 @@ namespace App1
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
             var sampleDataGroup = await SampleDataSource.GetGroupAsync("Group-1");
             this.DefaultViewModel[FirstGroupName] = sampleDataGroup;
-
         }
 
         /// <summary>
@@ -230,49 +214,15 @@ namespace App1
             {
                 BackgroundMediaPlayer.Shutdown();                
             }
+<<<<<<< HEAD
             //Capture capture = new Capture();
             //capture.InitailizeCapture().Wait();
             //capture.PhotoCaptureForCurrent();
+=======
+            Capture capture = new Capture();
+            capture.InitailizeCapture().Wait();
+           // capture.PhotoCaptureForCurrent;
+>>>>>>> a74d309483a729668d6e9afc3d097b4cadd7511d
         }
-
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var progressIndicator = StatusBar.GetForCurrentView().ProgressIndicator;
-            progressIndicator.Text = "加载中";
-            await progressIndicator.ShowAsync();
-        }
-
-        private async void btnCloseLoading_Click(object sender, RoutedEventArgs e)
-        {
-            var progressIndicator = StatusBar.GetForCurrentView().ProgressIndicator;
-            progressIndicator.Text = "加载中";
-            await progressIndicator.HideAsync();
-        }
-
-        private void btnSetStatusBarRed_Click(object sender, RoutedEventArgs e)
-        {
-            StatusBar.GetForCurrentView().BackgroundColor = Colors.Red;
-            StatusBar.GetForCurrentView().BackgroundOpacity = 1;
-        }
-
-        private void btnSetStatusBarDefault_Click(object sender, RoutedEventArgs e)
-        {
-            StatusBar.GetForCurrentView().BackgroundColor = Colors.Black;
-            StatusBar.GetForCurrentView().BackgroundOpacity = 0;
-        }
-
-        private async void btnShowStatusBar_Click(object sender, RoutedEventArgs e)
-        {
-            await StatusBar.GetForCurrentView().ShowAsync();
-        }
-
-        private async void btnHideStatusBar_Click(object sender, RoutedEventArgs e)
-        {
-            await StatusBar.GetForCurrentView().HideAsync();
-            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
-
-        }
-
-
     }
 }

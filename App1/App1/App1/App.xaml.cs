@@ -36,6 +36,7 @@ namespace App1
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
+            
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace App1
 
                 rootFrame.ContentTransitions = null;
                 rootFrame.Navigated += this.RootFrame_FirstNavigated;
-
+                
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter.
