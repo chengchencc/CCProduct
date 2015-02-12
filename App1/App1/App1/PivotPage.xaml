@@ -27,9 +27,9 @@
         <Pivot  CommonNavigationTransitionInfo.IsStaggerElement="True" FontFamily="Microsoft JhengHei" FontSize="6">
             <Pivot.Title>
                 <StackPanel Orientation="Horizontal" >
-                    <TextBlock Text="我的" FontFamily="STXingkai"></TextBlock>
+                    <TextBlock Text="我的" FontFamily="Assets/STXINGKA.TTF#STXingkai"></TextBlock>
                     <Border Background="#FFFD5B5B" >
-                        <TextBlock Text="应用" FontFamily="STXingkai"></TextBlock>
+                        <TextBlock Text="应用" FontFamily="Assets/STXINGKA.TTF#STXingkai"></TextBlock>
                     </Border>
                 </StackPanel>
 
@@ -257,7 +257,9 @@
                         <RowDefinition Height="350*"/>
                     </Grid.RowDefinitions>
                     <Button Name="btnLoading" Grid.Row="0" Content="加载中" Width="50" Height="50" BorderThickness="1" Background="#FF387E1E" BorderBrush="#FF1B610B" Padding="3,0,3,2" UseLayoutRounding="False" MinHeight="80" MinWidth="80" RenderTransformOrigin="1,1" Margin="10,0,0,0" Click="Button_Click">
+
                     </Button>
+
                     <Button Name="btnCloseLoading" Grid.Row="0" Content="不加载" Width="50" Height="50" BorderThickness="1" Background="#FFB93434" BorderBrush="#FF610B0B" Padding="3,0,3,2" UseLayoutRounding="False" MinHeight="80" MinWidth="80" RenderTransformOrigin="1,1" Margin="100,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Click="btnCloseLoading_Click">
                     </Button>
                     <Button Name="btnShowStatusBar" Grid.Row="0" Content="显示" Width="50" Height="50" BorderThickness="1" Background="#FF387E1E" BorderBrush="#FF1B610B" Padding="3,0,3,2" UseLayoutRounding="False" MinHeight="80" MinWidth="80" RenderTransformOrigin="1,1" Margin="190,0,0,0" Click="btnShowStatusBar_Click" >
@@ -268,6 +270,19 @@
                     </Button>
                     <Button Name="btnSetStatusBarDefault" Grid.Row="1" Content="去颜色" Width="50" Height="50" BorderThickness="1" Background="#FFB93434" BorderBrush="#FF610B0B" Padding="3,0,3,2" UseLayoutRounding="False" MinHeight="80" MinWidth="80" RenderTransformOrigin="1,1" Margin="100,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Click="btnSetStatusBarDefault_Click">
                     </Button>
+
+                    <Border Grid.Row="2" Width="80" Height="80" CornerRadius="50" Background="#FFFF0606">
+                        <TextBlock FontSize="15" Text="DropDB" Name="DropDbBtn" Tapped="DropDbBtn_Tapped" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    </Border>
+                    <Border Background="Red" Grid.Row="3" BorderThickness="10" Width="80" Height="80" CornerRadius="10">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                                <GradientStop Color="#FF000000"/>
+                                <GradientStop Color="#FFFF0000"/>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <Button HorizontalAlignment="Center" Content="LightSensor" Name="LightSensorDemo" Width="80" BorderThickness="0" Tapped="LightSensorDemo_Tapped"/>
+                    </Border>
                 </Grid>
 
             </PivotItem>

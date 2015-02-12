@@ -13,8 +13,8 @@
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <TextBox Name="SellUnitPrice" Header="卖出每斤价格" InputScope="Number" Margin="0,0,-0.333,0" Text="0" AcceptsReturn="True"/>
-        <TextBox Name="SellWeight" Header="卖出总重量" InputScope="Number" Text="0" AcceptsReturn="True"/>
+        <TextBox Name="SellUnitPrice" Header="卖出每斤价格" InputScope="Number" Margin="0,0,-0.333,0" Text="0" AcceptsReturn="True" TextChanged="SellUnitPrice_TextChanged"/>
+        <TextBox Name="SellWeight" Header="卖出总重量" InputScope="Number" Text="0" AcceptsReturn="True" TextChanged="SellWeight_TextChanged"/>
         <TextBox Name="SellTotalPrice" Header="卖出总支出" InputScope="Number" Text="0" AcceptsReturn="True"/>
 
         <!-- Content body -->

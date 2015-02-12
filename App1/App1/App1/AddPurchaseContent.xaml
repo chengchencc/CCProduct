@@ -13,8 +13,8 @@
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <TextBox Name="PurchaseUnitPrice" Header="收入每斤价格" InputScope="Number" Margin="0,0,-0.333,0" Text="0" AcceptsReturn="True"/>
-        <TextBox x:Name="PurchaseWeight" Header="收入总重量" InputScope="Number" Text="0" VerticalAlignment="Top" AcceptsReturn="True" TabNavigation="Cycle"/>
+        <TextBox Name="PurchaseUnitPrice" Header="收入每斤价格" InputScope="Number" Margin="0,0,-0.333,0" Text="0" AcceptsReturn="True" TextChanged="PurchaseUnitPrice_TextChanged"/>
+        <TextBox x:Name="PurchaseWeight" Header="收入总重量" InputScope="Number" Text="0" VerticalAlignment="Top" AcceptsReturn="True" TabNavigation="Cycle" TextChanged="PurchaseWeight_TextChanged"/>
         <TextBox Name="PurchaseTotalPrice" Header="收入总支出" InputScope="Number" Margin="0,0,-0.333,0" Text="0" AcceptsReturn="True"/>
 
         <!-- Content body -->
@@ -24,4 +24,5 @@
             </TextBlock.Text>
         </TextBlock>
     </StackPanel>
+    
 </ContentDialog>

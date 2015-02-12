@@ -9,5 +9,7 @@
     <!--<converters:DateConverter x:Key-->
     <Application.Resources>
         <converter:DateConverter xmlns:converter="using:Converters" x:Key="DateConverter" />
+        <converter:PurchaseConverter xmlns:converter="using:Converters" x:Key="PurchaseConverter" />
+        <converter:IncomeConverter xmlns:converter="using:Converters" x:Key="IncomeConverter" />
     </Application.Resources>
 </Application>

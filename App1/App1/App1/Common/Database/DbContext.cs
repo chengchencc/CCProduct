@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using App1.Common.Model;
 using SQLite;
 namespace App1
 {
@@ -23,7 +24,8 @@ namespace App1
             //{
             //    return;
             //}
-            Conn.CreateTableAsync<RecorderItem>().Wait();
+            Conn.CreateTablesAsync<Recorder,RecorderItem>().Wait();
+            
         }
     }
     public class commonQueryModel

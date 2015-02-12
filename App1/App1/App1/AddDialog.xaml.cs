@@ -28,12 +28,12 @@ namespace App1
 
         private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            var recorder = new RecorderItem();
+            var recorder = new Recorder();
             recorder.HappenDate = HappenDate.Date.DateTime;
-            recorder.PurchaseUnitPrice = Convert.ToDecimal( PurchaseUnitPrice.Text);
-            recorder.PurchaseWeight = Convert.ToDecimal(PurchaseUnitPrice.Text);
-            recorder.SellUnitPrice = Convert.ToDecimal(SellUnitPrice.Text);
-            recorder.SellWeight = Convert.ToDecimal(SellWeight.Text);
+            //recorder.PurchaseUnitPrice = Convert.ToDecimal( PurchaseUnitPrice.Text);
+            //recorder.PurchaseWeight = Convert.ToDecimal(PurchaseUnitPrice.Text);
+            //recorder.SellUnitPrice = Convert.ToDecimal(SellUnitPrice.Text);
+            //recorder.SellWeight = Convert.ToDecimal(SellWeight.Text);
             recorder.CreatedDate = DateTime.Now;
 
             //var createTableResult = await DbContext.GetInstance().Conn.CreateTableAsync<RecorderItem>();

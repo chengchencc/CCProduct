@@ -23,6 +23,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using App1.Common.Model;
+using Windows.UI.Popups;
 
 // The Pivot Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
 
@@ -122,7 +124,7 @@ namespace App1
             {
                 //var localDBPath = "db.sdf";
                 //var conn = new SQLiteAsyncConnection(localDBPath);
-                var all = await DbContext.GetInstance().Conn.Table<RecorderItem>().OrderByDescending(s=>s.HappenDate).ToListAsync();
+                var all = await DbContext.GetInstance().Conn.Table<Recorder>().OrderByDescending(s=>s.HappenDate).ToListAsync();
                 recorder.ItemsSource = all;
 
             }
@@ -156,7 +158,7 @@ namespace App1
         {
             // Navigate to the appropriate destination page, configuring the new page
             // by passing required information as a navigation parameter
-            var itemId = ((RecorderItem)e.ClickedItem).Id;
+            var itemId = ((Recorder)e.ClickedItem).Id;
             if (!Frame.Navigate(typeof(ItemPage), itemId))
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
@@ -170,7 +172,7 @@ namespace App1
         {
             //var localDBPath = "db.sdf";
             //var conn = new SQLiteAsyncConnection(localDBPath);
-            var all = await  DbContext.GetInstance().Conn.Table<RecorderItem>().OrderByDescending(s=>s.HappenDate).ToListAsync();
+            var all = await  DbContext.GetInstance().Conn.Table<Recorder>().OrderByDescending(s=>s.HappenDate).ToListAsync();
             recorder.ItemsSource = all;
             //var sampleDataGroup = await SampleDataSource.GetGroupAsync("Group-2");
             //this.DefaultViewModel[SecondGroupName] = all;//sampleDataGroup;
@@ -204,6 +206,8 @@ namespace App1
 
         #endregion
 
+
+        #region 列表事件
         bool isElectricTorchOpen = false;
         ElectricTorch electricTorch = new ElectricTorch();
         private void ListViewItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -234,7 +238,9 @@ namespace App1
             //capture.InitailizeCapture().Wait();
             //capture.PhotoCaptureForCurrent();
         }
+        #endregion
 
+        #region 小工具事件
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             var progressIndicator = StatusBar.GetForCurrentView().ProgressIndicator;
@@ -273,6 +279,25 @@ namespace App1
 
         }
 
+        private async void DropDbBtn_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await DbContext.Instance.Conn.DropTableAsync<Recorder>();
+            await DbContext.Instance.Conn.DropTableAsync<RecorderItem>();
+
+            MessageDialog dialog = new MessageDialog("删除表成功！");
+            await dialog.ShowAsync();
+            
+        }
+
+        private void LightSensorDemo_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            
+            if (!Frame.Navigate(typeof(LightSensorPage)))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
+        }
+        #endregion
 
     }
 }

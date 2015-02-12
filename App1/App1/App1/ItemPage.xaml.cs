@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using App1.Common.Model;
 
 // The Pivot Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
 
@@ -30,7 +31,7 @@ namespace App1
     {
         private readonly NavigationHelper navigationHelper;
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
-
+        public int RecorderId { get; set; }
         public ItemPage()
         {
             this.InitializeComponent();
@@ -70,23 +71,30 @@ namespace App1
         /// session.  The state will be null the first time a page is visited.</param>
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
 
             // TODO: Create an appropriate data model for your problem domain to replace the sample data.
             var itemId = ((int)e.NavigationParameter);
-            //var localDBPath = "db.sdf";
-            //var conn = new SQLiteAsyncConnection(localDBPath);
-            //var all = await conn.Table<RecorderItem>().ToListAsync();
-            var item = await DbContext.GetInstance().Conn.FindAsync<RecorderItem>(itemId);
-            this.DefaultViewModel["Item"] = item;
-            List<RecorderItem> aa = new List<RecorderItem>();
-            aa.Add(new RecorderItem() { Id = 1, HappenDate = DateTime.Now });
-            aa.Add(new RecorderItem() { Id = 1, HappenDate = DateTime.Now });
-            aa.Add(new RecorderItem() { Id = 1, HappenDate = DateTime.Now });
-            //PurchaseList.ItemsSource = aa;
-          var content = string.Format( "{0}利润{1}元，其中收购单价：{2}元/kg，收购总重量为：{3}kg，收购花费为{4}元。卖出单价为：{5}元/kg，卖出重量为：{6}kg，卖出得{7}元。",
-                item.HappenDate.ToString("yyyy年MM月dd日"), item.Income.ToString("F2"), item.PurchaseUnitPrice.ToString("F2"), item.PurchaseWeight.ToString("F2"), item.PurchaseTotalPrice.ToString("F2"), item.SellUnitPrice.ToString("F2"), item.SellWeight.ToString("F2"), item.SellTotalPrice.ToString("F2"));
+            RecorderId = itemId;
+            var recorder = await DbContext.GetInstance().Conn.FindAsync<Recorder>(itemId);
 
+            var recorderItems = await DbContext.Instance.Conn.QueryAsync<RecorderItem>("select * from RecorderItem where RecorderId = "+RecorderId);
+
+            recorder.TotalExpenditure = 0;
+            recorder.TotalIncome = 0;
+            foreach (var item in recorderItems)
+            {
+                recorder.TotalExpenditure += item.PurchaseTotalPrice;
+                recorder.TotalIncome += item.SellTotalPrice;
+            }
+            recorder.Profit = recorder.TotalIncome - recorder.TotalExpenditure;
+            
+            IncomeContent.Text = "总收入："+recorder.TotalIncome;
+            ExpenditureContent.Text = "总支出：" + recorder.TotalExpenditure;
+            ProfitContent.Text = "净收入：" + recorder.Profit;
+
+            this.DefaultViewModel["Item"] = recorder;
+            this.PurchaseList.ItemsSource = recorderItems.Where(s => s.Type == "purchase").ToList();
+            this.IncomeList.ItemsSource = recorderItems.Where(s=>s.Type == "income").ToList();
         }
 
         /// <summary>
@@ -117,67 +125,61 @@ namespace App1
         /// </summary>
         /// <param name="e">Provides data for navigation methods and event
         /// handlers that cannot cancel the navigation request.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            //await StatusBar.GetForCurrentView().HideAsync();
+            StatusBar.GetForCurrentView().BackgroundOpacity = 0;//.ShowAsync();
+
+            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
+            
             this.navigationHelper.OnNavigatedTo(e);
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            StatusBar.GetForCurrentView().BackgroundOpacity = 1;//.ShowAsync();
+            //await StatusBar.GetForCurrentView().ShowAsync();
+
             this.navigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void AddPurchase_Click(object sender, RoutedEventArgs e)
         {
-            AddIncomeContent dialog = new AddIncomeContent();
-
+            AddPurchaseContent dialog = new AddPurchaseContent();
+            dialog.RecorderId = RecorderId;
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                //var localDBPath = "db.sdf";
-                //var conn = new SQLiteAsyncConnection(localDBPath);
-                //var all = await DbContext.GetInstance().Conn.Table<RecorderItem>().OrderByDescending(s => s.HappenDate).ToListAsync();
-                //recorder.ItemsSource = all;
-
+                var recorderItems = await DbContext.Instance.Conn.QueryAsync<RecorderItem>("select * from RecorderItem where RecorderId = " + RecorderId);
+                this.PurchaseList.ItemsSource = recorderItems.Where(s => s.Type == "purchase").ToList();
+                this.IncomeList.ItemsSource = recorderItems.Where(s => s.Type == "income").ToList();
             }
             else if (result == ContentDialogResult.Secondary)
             {
 
             }
 
-
-
-            //RecorderItem recorder = new RecorderItem();
-            //recorder.CreatedDate = DateTime.Now;
-            //var id = await DbContext.GetInstance().Conn.InsertAsync(recorder);
         }
 
-        private async void AddAppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void AddIncome_Click(object sender, RoutedEventArgs e)
         {
-            //var itemId = ((RecorderItem)e.ClickedItem).Id;
-            //var itemId = "id";
-            //if (!Frame.Navigate(typeof(AddPurchaseItem), itemId))
-            //{
-            //    throw new Exception("Navigation failed.");
-            //}
-
-            AddPurchaseContent dialog = new AddPurchaseContent();
-
+            AddIncomeContent dialog = new AddIncomeContent();
+            dialog.RecorderId = RecorderId;
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                //var localDBPath = "db.sdf";
-                //var conn = new SQLiteAsyncConnection(localDBPath);
-                //var all = await DbContext.GetInstance().Conn.Table<RecorderItem>().OrderByDescending(s => s.HappenDate).ToListAsync();
-                //recorder.ItemsSource = all;
+                var recorderItems = await DbContext.Instance.Conn.QueryAsync<RecorderItem>("select * from RecorderItem where RecorderId = " + RecorderId);
+                this.PurchaseList.ItemsSource = recorderItems.Where(s => s.Type == "purchase").ToList();
+                this.IncomeList.ItemsSource = recorderItems.Where(s => s.Type == "income").ToList();
 
             }
             else if (result == ContentDialogResult.Secondary)
             {
 
             }
+
         }
     }
 }
