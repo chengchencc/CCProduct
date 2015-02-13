@@ -75,9 +75,14 @@ namespace App1
             // TODO: Create an appropriate data model for your problem domain to replace the sample data.
             var itemId = ((int)e.NavigationParameter);
             RecorderId = itemId;
-            var recorder = await DbContext.GetInstance().Conn.FindAsync<Recorder>(itemId);
+            await BindingData();
+        }
 
-            var recorderItems = await DbContext.Instance.Conn.QueryAsync<RecorderItem>("select * from RecorderItem where RecorderId = "+RecorderId);
+        private async System.Threading.Tasks.Task BindingData()
+        {
+            var recorder = await DbContext.GetInstance().Conn.FindAsync<Recorder>(RecorderId);
+
+            var recorderItems = await DbContext.Instance.Conn.QueryAsync<RecorderItem>("select * from RecorderItem where RecorderId = " + RecorderId);
 
             recorder.TotalExpenditure = 0;
             recorder.TotalIncome = 0;
@@ -87,14 +92,14 @@ namespace App1
                 recorder.TotalIncome += item.SellTotalPrice;
             }
             recorder.Profit = recorder.TotalIncome - recorder.TotalExpenditure;
-            
-            IncomeContent.Text = "总收入："+recorder.TotalIncome;
+
+            IncomeContent.Text = "总收入：" + recorder.TotalIncome;
             ExpenditureContent.Text = "总支出：" + recorder.TotalExpenditure;
             ProfitContent.Text = "净收入：" + recorder.Profit;
 
             this.DefaultViewModel["Item"] = recorder;
             this.PurchaseList.ItemsSource = recorderItems.Where(s => s.Type == "purchase").ToList();
-            this.IncomeList.ItemsSource = recorderItems.Where(s=>s.Type == "income").ToList();
+            this.IncomeList.ItemsSource = recorderItems.Where(s => s.Type == "income").ToList();
         }
 
         /// <summary>
@@ -152,9 +157,10 @@ namespace App1
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                var recorderItems = await DbContext.Instance.Conn.QueryAsync<RecorderItem>("select * from RecorderItem where RecorderId = " + RecorderId);
-                this.PurchaseList.ItemsSource = recorderItems.Where(s => s.Type == "purchase").ToList();
-                this.IncomeList.ItemsSource = recorderItems.Where(s => s.Type == "income").ToList();
+                //var recorderItems = await DbContext.Instance.Conn.QueryAsync<RecorderItem>("select * from RecorderItem where RecorderId = " + RecorderId);
+                //this.PurchaseList.ItemsSource = recorderItems.Where(s => s.Type == "purchase").ToList();
+                //this.IncomeList.ItemsSource = recorderItems.Where(s => s.Type == "income").ToList();
+                await BindingData();
             }
             else if (result == ContentDialogResult.Secondary)
             {
@@ -167,12 +173,14 @@ namespace App1
         {
             AddIncomeContent dialog = new AddIncomeContent();
             dialog.RecorderId = RecorderId;
+            dialog.Id = -1;
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                var recorderItems = await DbContext.Instance.Conn.QueryAsync<RecorderItem>("select * from RecorderItem where RecorderId = " + RecorderId);
-                this.PurchaseList.ItemsSource = recorderItems.Where(s => s.Type == "purchase").ToList();
-                this.IncomeList.ItemsSource = recorderItems.Where(s => s.Type == "income").ToList();
+                //var recorderItems = await DbContext.Instance.Conn.QueryAsync<RecorderItem>("select * from RecorderItem where RecorderId = " + RecorderId);
+                //this.PurchaseList.ItemsSource = recorderItems.Where(s => s.Type == "purchase").ToList();
+                //this.IncomeList.ItemsSource = recorderItems.Where(s => s.Type == "income").ToList();
+                await BindingData();
 
             }
             else if (result == ContentDialogResult.Secondary)
@@ -181,5 +189,62 @@ namespace App1
             }
 
         }
+
+    
+
+        int holdingId=-1;
+        private async void ListViewItem_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            holdingId = ((RecorderItem)((Windows.UI.Xaml.FrameworkElement)(sender)).DataContext).Id;
+
+            FrameworkElement senderElement = sender as FrameworkElement;
+            FlyoutBase flyoutBase = FlyoutBase.GetAttachedFlyout(senderElement);
+
+            flyoutBase.ShowAt(senderElement);
+        }
+
+
+        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = await DbContext.Instance.Conn.FindAsync<RecorderItem>(holdingId);//.QueryAsync<RecorderItem>("select * from RecorderItem where CreatedDate = ? ", holdingId);
+            await DbContext.Instance.Conn.DeleteAsync(item);
+            await BindingData();
+            holdingId=-1;
+        }
+
+        private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            holdingId = ((RecorderItem)((Windows.UI.Xaml.FrameworkElement)(sender)).DataContext).Id;
+
+            FrameworkElement senderElement = sender as FrameworkElement;
+            FlyoutBase flyoutBase = FlyoutBase.GetAttachedFlyout(senderElement);
+
+            flyoutBase.ShowAt(senderElement);
+        }
+
+        private async void ListViewItem_Holding_1(object sender, HoldingRoutedEventArgs e)
+        {
+            var item = await DbContext.Instance.Conn.FindAsync<RecorderItem>(holdingId);//.QueryAsync<RecorderItem>("select * from RecorderItem where CreatedDate = ? ", holdingId);
+            await DbContext.Instance.Conn.DeleteAsync(item);
+            await BindingData();
+            holdingId = -1;
+        }
+
+        private async void IncomeList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            AddIncomeContent dialog = new AddIncomeContent();
+            dialog.RecorderId = RecorderId;
+            dialog.Id = ((RecorderItem)((Windows.UI.Xaml.FrameworkElement)(sender)).DataContext).Id;
+            ContentDialogResult result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                await BindingData();
+            }
+            else if (result == ContentDialogResult.Secondary)
+            {
+
+            }
+        }
+
     }
 }

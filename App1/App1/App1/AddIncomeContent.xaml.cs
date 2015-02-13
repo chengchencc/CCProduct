@@ -22,6 +22,7 @@ namespace App1
     public sealed partial class AddIncomeContent : ContentDialog
     {
         public int RecorderId { get; set; }
+        public int Id { get; set; }
         public AddIncomeContent()
         {
             this.InitializeComponent();
@@ -31,6 +32,7 @@ namespace App1
         {
             RecorderItem item = new RecorderItem();
             item.RecorderId = RecorderId;
+            item.Title =((ComboBoxItem) IncomeTitle.SelectedValue).Content.ToString();
             item.SellUnitPrice = Convert.ToDecimal(SellUnitPrice.Text);
             item.SellWeight =Convert.ToDecimal(SellWeight.Text);
             item.SellTotalPrice = Convert.ToDecimal(SellTotalPrice.Text);
@@ -59,6 +61,18 @@ namespace App1
             var sellUnitPrice = string.IsNullOrEmpty(SellUnitPrice.Text)?0: Convert.ToDecimal(SellUnitPrice.Text);
             var sellWeight = string.IsNullOrEmpty(SellWeight.Text) ? 0 : Convert.ToDecimal(SellWeight.Text);
             SellTotalPrice.Text = (sellUnitPrice * sellWeight).ToString();
+        }
+
+        private async void ContentDialog_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Id!=-1)
+            {
+                var model =await DbContext.Instance.Conn.FindAsync<RecorderItem>(Id);
+                IncomeTitle.SelectedValue = model.Title;
+                SellTotalPrice.Text = model.SellTotalPrice.ToString();
+                SellUnitPrice.Text = model.SellUnitPrice.ToString();
+                SellWeight.Text = model.SellWeight.ToString();
+            }
         }
 
     }

@@ -6,16 +6,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="新增收入"
+    Title="收入"
     PrimaryButtonText="确定"  
     SecondaryButtonText="取消"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick" Loaded="ContentDialog_Loaded">
 
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <TextBox Name="SellUnitPrice" Header="卖出每斤价格" InputScope="Number" Margin="0,0,-0.333,0" Text="0" AcceptsReturn="True" TextChanged="SellUnitPrice_TextChanged"/>
-        <TextBox Name="SellWeight" Header="卖出总重量" InputScope="Number" Text="0" AcceptsReturn="True" TextChanged="SellWeight_TextChanged"/>
-        <TextBox Name="SellTotalPrice" Header="卖出总支出" InputScope="Number" Text="0" AcceptsReturn="True"/>
+        <ComboBox Name="IncomeTitle" >
+            <ComboBoxItem Content="卖粮食" IsSelected="True"></ComboBoxItem>
+            <ComboBoxItem Content="其他"></ComboBoxItem>
+        </ComboBox>
+        <TextBox Name="SellUnitPrice" Header="卖出每斤价格(元)" Width="auto" InputScope="Number" Text="0" AcceptsReturn="True" TextChanged="SellUnitPrice_TextChanged" />
+        <TextBox Name="SellWeight" Header="卖出总重量(斤)" Width="auto" InputScope="Number" Text="0" AcceptsReturn="True" TextChanged="SellWeight_TextChanged" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
+        <TextBox Name="SellTotalPrice" Header="卖出总收入(元)" InputScope="Number" Text="0" AcceptsReturn="True"/>
 
         <!-- Content body -->
         <TextBlock Name="body" Style="{StaticResource MessageDialogContentStyle}" TextWrapping="Wrap">

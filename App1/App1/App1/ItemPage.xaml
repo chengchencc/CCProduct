@@ -63,14 +63,22 @@
                         <ListView x:Name="PurchaseList" Background="#E5E5E5" 
                                   Margin="10,0,10,10" 
                                   ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                                  ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                                   >
                             <ListView.ItemTemplate>
                                 <DataTemplate>
 
-                            <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0,5,0,0" Background="White" Padding="5">
-                                <StackPanel HorizontalAlignment="Stretch" >
-                                            <TextBlock Text="小标题" Style="{StaticResource ListViewItemSubheaderTextBlockStyle}" Foreground="#4E4E4E" FontFamily="Microsoft YaHei" FontSize="22" Height="39" Padding="10,5,0,0"/>
+                            <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0,5,0,0" Background="White" Padding="5" Holding="ListViewItem_Holding" >
+                                        <FlyoutBase.AttachedFlyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem Text="Delete" Margin="10,0" Click="MenuFlyoutItem_Click" />
+                                                <!--<MenuFlyoutItem Text="Refresh" />
+                                                <MenuFlyoutItem Text="Share" />-->
+                                            </MenuFlyout>
+                                        </FlyoutBase.AttachedFlyout>
+
+                                        <StackPanel HorizontalAlignment="Stretch" >
+                                            <TextBlock Text="{Binding Title}" Style="{StaticResource ListViewItemSubheaderTextBlockStyle}" Foreground="#4E4E4E" FontFamily="Microsoft YaHei" FontSize="22" Height="39" Padding="10,5,0,0"/>
                                             <TextBlock Text="{Binding Converter={StaticResource PurchaseConverter}}"
                                            Style="{StaticResource ListViewItemContentTextBlockStyle}" Foreground="#FF6A6A6A" Padding="10,0,0,0" TextWrapping="WrapWholeWords" LineHeight="20" FontSize="16"/>
                                 </StackPanel>
@@ -93,13 +101,20 @@
                         <TextBlock Text="收入" TextAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}" Foreground="#FF5F5063" Height="38" Padding="0,5,0,0"/>
                     </Border>
 
-                    <ListView x:Name="IncomeList" Background="#E5E5E5" Margin="10,0" Padding="0,10">
+                    <ListView x:Name="IncomeList" Background="#E5E5E5" Margin="10,0" Padding="0,10" ItemClick="IncomeList_ItemClick">
                         <ListView.ItemTemplate>
                             <DataTemplate>
 
-                                <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0,5,0,0" Background="White" Padding="5">
+                                <ListViewItem HorizontalAlignment="Stretch" BorderThickness="1" BorderBrush="#FFD8D8D8" Foreground="#FF7A7777" Margin="0,5,0,0" Background="White" Padding="5" Holding="ListViewItem_Holding_1">
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Delete" Margin="10,0" Click="MenuFlyoutItem_Click_1" />
+                                            <!--<MenuFlyoutItem Text="Refresh" />
+                                                <MenuFlyoutItem Text="Share" />-->
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                                     <StackPanel HorizontalAlignment="Stretch" >
-                                        <TextBlock Text="小标题" Style="{StaticResource ListViewItemSubheaderTextBlockStyle}" Foreground="#4E4E4E" FontFamily="Microsoft YaHei" FontSize="22" Height="39" Padding="10,5,0,0"/>
+                                        <TextBlock Text="{Binding Title}" Style="{StaticResource ListViewItemSubheaderTextBlockStyle}" Foreground="#4E4E4E" FontFamily="Microsoft YaHei" FontSize="22" Height="39" Padding="10,5,0,0"/>
                                         <TextBlock Text="{Binding Converter={StaticResource IncomeConverter}}"
                                            Style="{StaticResource ListViewItemContentTextBlockStyle}" Foreground="#FF6A6A6A" Padding="10,0,0,0" TextWrapping="WrapWholeWords" LineHeight="20" FontSize="16"/>
                                     </StackPanel>
@@ -117,8 +132,16 @@
 
     <Page.BottomAppBar>
         <CommandBar Background="#FF225120">
-            <AppBarButton  x:Name="AddPurchase" Label="支出" Icon="Import" Click="AddPurchase_Click"  />
-            <AppBarButton x:Name="AddIncome" Label="收入" Icon="Next"  Background="#FFE25454" Foreground="#FFCB5B5B" BorderBrush="#FF8F2525" Click="AddIncome_Click" />
+            <AppBarButton  x:Name="AddPurchase" Label="支出" Click="AddPurchase_Click"  >
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="支"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="AddIncome" Label="收入"  Background="#FFE25454" Foreground="#FFCB5B5B" BorderBrush="#FF8F2525" Click="AddIncome_Click" >
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="收"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

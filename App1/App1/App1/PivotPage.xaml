@@ -51,10 +51,18 @@
                     IsItemClickEnabled="True"
                     ItemClick="ItemView_ItemClick"
                     Loaded="SecondPivot_Loaded"
-                    ContinuumNavigationTransitionInfo.ExitElementContainer="True">
+                    ContinuumNavigationTransitionInfo.ExitElementContainer="True" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="0,0,0,9.5">
+                            
+                            <StackPanel Margin="0,0,0,9.5" Holding="StackPanel_Holding">
+                                <FlyoutBase.AttachedFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Text="Delete" Margin="10,0" Click="MenuFlyoutItem_Click" />
+                                        <!--<MenuFlyoutItem Text="Refresh" />
+                                                <MenuFlyoutItem Text="Share" />-->
+                                    </MenuFlyout>
+                                </FlyoutBase.AttachedFlyout>
                                 <TextBlock
                                     Text="{Binding HappenDate,Converter={StaticResource DateConverter}}"
                                     Pivot.SlideInAnimationGroup="1"

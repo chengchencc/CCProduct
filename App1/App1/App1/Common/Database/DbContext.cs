@@ -24,6 +24,7 @@ namespace App1
             //{
             //    return;
             //}
+            Conn.DropTableAsync<RecorderItem>().Wait();
             Conn.CreateTablesAsync<Recorder,RecorderItem>().Wait();
             
         }

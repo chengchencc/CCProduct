@@ -172,10 +172,15 @@ namespace App1
         {
             //var localDBPath = "db.sdf";
             //var conn = new SQLiteAsyncConnection(localDBPath);
-            var all = await  DbContext.GetInstance().Conn.Table<Recorder>().OrderByDescending(s=>s.HappenDate).ToListAsync();
-            recorder.ItemsSource = all;
+            await BindingSecondPivotData();
             //var sampleDataGroup = await SampleDataSource.GetGroupAsync("Group-2");
             //this.DefaultViewModel[SecondGroupName] = all;//sampleDataGroup;
+        }
+
+        private async System.Threading.Tasks.Task BindingSecondPivotData()
+        {
+            var all = await DbContext.GetInstance().Conn.Table<Recorder>().OrderByDescending(s => s.HappenDate).ToListAsync();
+            recorder.ItemsSource = all;
         }
 
     
@@ -283,6 +288,7 @@ namespace App1
         {
             await DbContext.Instance.Conn.DropTableAsync<Recorder>();
             await DbContext.Instance.Conn.DropTableAsync<RecorderItem>();
+            await DbContext.Instance.Conn.CreateTablesAsync<Recorder,RecorderItem>();
 
             MessageDialog dialog = new MessageDialog("删除表成功！");
             await dialog.ShowAsync();
@@ -298,6 +304,38 @@ namespace App1
             }
         }
         #endregion
+
+
+        //private async void recorder_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+        //{
+        //    MessageDialog dialog = new MessageDialog("DragItemsStarting！");
+        //    await dialog.ShowAsync();
+        //}
+
+        //private async void recorder_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        //{
+        //    MessageDialog dialog = new MessageDialog("recorder_RightTapped！");
+        //    await dialog.ShowAsync();
+        //}
+
+        int holdingId = -1;
+        private void StackPanel_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            holdingId = ((Recorder)((Windows.UI.Xaml.FrameworkElement)(sender)).DataContext).Id;
+
+            FrameworkElement senderElement = sender as FrameworkElement;
+            FlyoutBase flyoutBase = FlyoutBase.GetAttachedFlyout(senderElement);
+
+            flyoutBase.ShowAt(senderElement);
+        }
+
+        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = await DbContext.Instance.Conn.FindAsync<Recorder>(holdingId);//.QueryAsync<RecorderItem>("select * from RecorderItem where CreatedDate = ? ", holdingId);
+            await DbContext.Instance.Conn.DeleteAsync(item);
+            await BindingSecondPivotData();
+            holdingId = -1;
+        }
 
     }
 }

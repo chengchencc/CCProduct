@@ -31,6 +31,7 @@ namespace App1
         {
             RecorderItem item = new RecorderItem();
             item.RecorderId = RecorderId;
+            item.Title =((ComboBoxItem) PurchaseTitle.SelectedValue).Content.ToString();
             item.PurchaseUnitPrice = Convert.ToDecimal(PurchaseUnitPrice.Text);
             item.PurchaseWeight = Convert.ToDecimal(PurchaseWeight.Text);
             item.PurchaseTotalPrice = Convert.ToDecimal(PurchaseTotalPrice.Text);
