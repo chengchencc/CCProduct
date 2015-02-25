@@ -21,6 +21,7 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Background="#FF4564F1"/>
         <StackPanel Grid.Row="2" Background="WhiteSmoke" >
+            <ScrollViewer>
             <ListBox x:Name="ListBoxControl" BorderBrush="Red"  VerticalAlignment="Top" >
                 <ListBox.ItemTemplate >
                     <DataTemplate>
@@ -28,6 +29,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </Page>

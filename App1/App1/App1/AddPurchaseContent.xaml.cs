@@ -22,6 +22,7 @@ namespace App1
     public sealed partial class AddPurchaseContent : ContentDialog
     {
         public int RecorderId { get; set; }
+        public int Id { get; set; }
         public AddPurchaseContent()
         {
             this.InitializeComponent();
@@ -29,16 +30,33 @@ namespace App1
 
         private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            RecorderItem item = new RecorderItem();
-            item.RecorderId = RecorderId;
-            item.Title =((ComboBoxItem) PurchaseTitle.SelectedValue).Content.ToString();
-            item.PurchaseUnitPrice = Convert.ToDecimal(PurchaseUnitPrice.Text);
-            item.PurchaseWeight = Convert.ToDecimal(PurchaseWeight.Text);
-            item.PurchaseTotalPrice = Convert.ToDecimal(PurchaseTotalPrice.Text);
-            item.Type = "purchase";
-            item.CreatedDate = DateTime.Now;
+            if (Id == -1)
+            {
+                RecorderItem item = new RecorderItem();
+                item.RecorderId = RecorderId;
+                item.Title = ((ComboBoxItem)PurchaseTitle.SelectedValue).Content.ToString();
+                item.PurchaseUnitPrice = Convert.ToDecimal(PurchaseUnitPrice.Text);
+                item.PurchaseWeight = Convert.ToDecimal(PurchaseWeight.Text);
+                item.PurchaseTotalPrice = Convert.ToDecimal(PurchaseTotalPrice.Text);
+                item.Type = "purchase";
+                item.CreatedDate = DateTime.Now;
 
-            await DbContext.Instance.Conn.InsertAsync(item);
+                await DbContext.Instance.Conn.InsertAsync(item);
+            }
+            else
+            {
+                RecorderItem item = new RecorderItem();
+                item.Id = Id;
+                item.RecorderId = RecorderId;
+                item.Title = ((ComboBoxItem)PurchaseTitle.SelectedValue).Content.ToString();
+                item.PurchaseUnitPrice = Convert.ToDecimal(PurchaseUnitPrice.Text);
+                item.PurchaseWeight = Convert.ToDecimal(PurchaseWeight.Text);
+                item.PurchaseTotalPrice = Convert.ToDecimal(PurchaseTotalPrice.Text);
+                item.Type = "purchase";
+                //item.CreatedDate = DateTime.Now;
+
+                await DbContext.Instance.Conn.UpdateAsync(item);
+            }
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -60,6 +78,20 @@ namespace App1
             var purchaseUnitPrice = string.IsNullOrEmpty(PurchaseUnitPrice.Text)?0: Convert.ToDecimal(PurchaseUnitPrice.Text);
             var purchaseWeight = string.IsNullOrEmpty(PurchaseWeight.Text)?0: Convert.ToDecimal(PurchaseWeight.Text);
             PurchaseTotalPrice.Text = (purchaseUnitPrice * purchaseWeight).ToString();
+        }
+
+        private async void ContentDialog_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Id!=-1)
+            {
+                var model =await DbContext.Instance.Conn.FindAsync<RecorderItem>(Id);
+                var selectedIndex = (IncomeTitle)Enum.Parse(typeof(IncomeTitle), model.Title);
+                PurchaseTitle.SelectedIndex = (int)selectedIndex;
+                PurchaseTotalPrice.Text = model.PurchaseTotalPrice.ToString();
+                PurchaseUnitPrice.Text = model.PurchaseUnitPrice.ToString();
+                PurchaseWeight.Text = model.PurchaseWeight.ToString();
+            }
+
         }
 
     }

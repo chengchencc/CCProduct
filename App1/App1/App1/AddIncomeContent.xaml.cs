@@ -30,6 +30,8 @@ namespace App1
 
         private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            if (Id==-1)
+            {
             RecorderItem item = new RecorderItem();
             item.RecorderId = RecorderId;
             item.Title =((ComboBoxItem) IncomeTitle.SelectedValue).Content.ToString();
@@ -40,6 +42,21 @@ namespace App1
             item.CreatedDate = DateTime.Now;
 
             await DbContext.Instance.Conn.InsertAsync(item);
+            }
+            else
+            {
+
+                RecorderItem item = new RecorderItem();
+                item.Id = Id;
+                item.RecorderId = RecorderId;
+                item.Title = ((ComboBoxItem)IncomeTitle.SelectedValue).Content.ToString();
+                item.SellUnitPrice = Convert.ToDecimal(SellUnitPrice.Text);
+                item.SellWeight = Convert.ToDecimal(SellWeight.Text);
+                item.SellTotalPrice = Convert.ToDecimal(SellTotalPrice.Text);
+                item.Type = "income";
+                //item.CreatedDate = DateTime.Now;
+                await DbContext.Instance.Conn.UpdateAsync(item);
+            }
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -68,12 +85,18 @@ namespace App1
             if (Id!=-1)
             {
                 var model =await DbContext.Instance.Conn.FindAsync<RecorderItem>(Id);
-                IncomeTitle.SelectedValue = model.Title;
+                var selectedIndex = (IncomeTitle)Enum.Parse(typeof(IncomeTitle), model.Title);
+                IncomeTitle.SelectedIndex = (int)selectedIndex;
                 SellTotalPrice.Text = model.SellTotalPrice.ToString();
                 SellUnitPrice.Text = model.SellUnitPrice.ToString();
                 SellWeight.Text = model.SellWeight.ToString();
             }
         }
 
+    }
+    enum IncomeTitle
+    {
+        卖粮食=0,
+        其他=1
     }
 }

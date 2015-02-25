@@ -154,6 +154,7 @@ namespace App1
         {
             AddPurchaseContent dialog = new AddPurchaseContent();
             dialog.RecorderId = RecorderId;
+            dialog.Id = -1;
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
@@ -233,6 +234,38 @@ namespace App1
         private async void IncomeList_ItemClick(object sender, ItemClickEventArgs e)
         {
             AddIncomeContent dialog = new AddIncomeContent();
+            dialog.RecorderId = RecorderId;
+            dialog.Id = ((RecorderItem)((Windows.UI.Xaml.FrameworkElement)(sender)).DataContext).Id;
+            ContentDialogResult result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                await BindingData();
+            }
+            else if (result == ContentDialogResult.Secondary)
+            {
+
+            }
+        }
+
+        private async void ListViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            AddIncomeContent dialog = new AddIncomeContent();
+            dialog.RecorderId = RecorderId;
+            dialog.Id = ((RecorderItem)((Windows.UI.Xaml.FrameworkElement)(sender)).DataContext).Id;
+            ContentDialogResult result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                await BindingData();
+            }
+            else if (result == ContentDialogResult.Secondary)
+            {
+
+            }
+        }
+
+        private async void ListViewItem_Loaded(object sender, RoutedEventArgs e)
+        {
+            AddPurchaseContent dialog = new AddPurchaseContent();
             dialog.RecorderId = RecorderId;
             dialog.Id = ((RecorderItem)((Windows.UI.Xaml.FrameworkElement)(sender)).DataContext).Id;
             ContentDialogResult result = await dialog.ShowAsync();

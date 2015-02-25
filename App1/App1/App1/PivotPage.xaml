@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:App1.Data"
     mc:Ignorable="d"
-    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}" Opacity="1"
     
     >
     <!--<Page.Background>
@@ -24,7 +24,7 @@
     </Page.Transitions>
 
     <Grid AllowDrop="True" >
-        <Pivot  CommonNavigationTransitionInfo.IsStaggerElement="True" FontFamily="Microsoft JhengHei" FontSize="6">
+        <Pivot  CommonNavigationTransitionInfo.IsStaggerElement="True" FontFamily="Microsoft JhengHei" FontSize="6" SelectionChanged="Pivot_SelectionChanged">
             <Pivot.Title>
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock Text="我的" FontFamily="Assets/STXINGKA.TTF#STXingkai"></TextBlock>
@@ -282,7 +282,7 @@
                     <Border Grid.Row="2" Width="80" Height="80" CornerRadius="50" Background="#FFFF0606">
                         <TextBlock FontSize="15" Text="DropDB" Name="DropDbBtn" Tapped="DropDbBtn_Tapped" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                     </Border>
-                    <Border Background="Red" Grid.Row="3" BorderThickness="10" Width="80" Height="80" CornerRadius="10">
+                    <Border Background="Red" Grid.Row="3" BorderThickness="10" Width="80" Height="80" CornerRadius="10" Tapped="Border_Tapped">
                         <Border.BorderBrush>
                             <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
                                 <GradientStop Color="#FF000000"/>
@@ -298,7 +298,7 @@
     </Grid>
 
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar Name="commandBar" Opacity="0.8">
             <AppBarButton x:Uid="AddAppBarButton" x:Name="AddAppBarButton" Label="add" Icon="Add" Click="AddAppBarButton_Click" />
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="SecondaryButton1" x:Name="SecondaryButton1" Label="secondary command 1" />

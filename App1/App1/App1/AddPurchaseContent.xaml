@@ -10,7 +10,7 @@
     PrimaryButtonText="确定"  
     SecondaryButtonText="取消"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick" Loaded="ContentDialog_Loaded">
 
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <ComboBox Name="PurchaseTitle">
@@ -22,9 +22,9 @@
             <ComboBoxItem Content="其他"></ComboBoxItem>
         </ComboBox>
 
-        <TextBox Name="PurchaseUnitPrice" Header="每斤价格(元)" InputScope="Number" Margin="0,0,-0.333,0" Text="0" AcceptsReturn="True" TextChanged="PurchaseUnitPrice_TextChanged"/>
-        <TextBox x:Name="PurchaseWeight" Header="总重量(斤)" InputScope="Number" Text="0" VerticalAlignment="Top" AcceptsReturn="True" TabNavigation="Cycle" TextChanged="PurchaseWeight_TextChanged"/>
-        <TextBox Name="PurchaseTotalPrice" Header="总支出(元)" InputScope="Number" Margin="0,0,-0.333,0" Text="0" AcceptsReturn="True"/>
+        <TextBox Name="PurchaseUnitPrice" Header="每斤价格(元)" InputScope="Number" Margin="0,0,-0.333,0" AcceptsReturn="True" TextChanged="PurchaseUnitPrice_TextChanged"/>
+        <TextBox x:Name="PurchaseWeight" Header="总重量(斤)" InputScope="Number" VerticalAlignment="Top" AcceptsReturn="True" TabNavigation="Cycle" TextChanged="PurchaseWeight_TextChanged"/>
+        <TextBox Name="PurchaseTotalPrice" Header="总支出(元)" InputScope="Number" Margin="0,0,-0.333,0" AcceptsReturn="True"/>
 
         <!-- Content body -->
         <TextBlock Name="body" Style="{StaticResource MessageDialogContentStyle}" TextWrapping="Wrap">

@@ -333,8 +333,27 @@ namespace App1
         {
             var item = await DbContext.Instance.Conn.FindAsync<Recorder>(holdingId);//.QueryAsync<RecorderItem>("select * from RecorderItem where CreatedDate = ? ", holdingId);
             await DbContext.Instance.Conn.DeleteAsync(item);
+            await DbContext.Instance.Conn.ExecuteAsync("delete from RecorderItem where RecorderId='?'",holdingId);
             await BindingSecondPivotData();
             holdingId = -1;
+        }
+
+        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch ((sender as Pivot).SelectedIndex)
+            { 
+                case 0:
+                    commandBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    break;
+                default:
+                    commandBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    break;
+            }
+        }
+
+        private void Border_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
         }
 
     }
