@@ -1,0 +1,74 @@
+<Application
+    x:Class="AppStudio.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AppStudio"
+    xmlns:controls="using:AppStudio.Controls"
+    xmlns:common="using:AppStudio.Common"
+    xmlns:localData="using:Shared"
+    xmlns:html2xaml="using:AppStudio.Controls.Html2Xaml"
+    xmlns:commands="using:AppStudio.Commands">
+
+    <!--Application Resources-->
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default" Source="Styles/DefaultTheme.xaml"/>
+            </ResourceDictionary.ThemeDictionaries>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/FontSizes.xaml"/>
+                <ResourceDictionary Source="Styles/AppTheme.xaml"/>
+                <ResourceDictionary Source="Styles/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="Styles/PlatformStyles.xaml"/>
+                <!-- Application DataTemplate imports -->
+                <ResourceDictionary Source="Views/DataTemplates/AboutViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/DetailViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/GenericLayoutViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/PhotoLayoutViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/TextLayoutViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/ListLayoutsViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/NoPhotoViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/PhotoLeftViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/PhotoLeftDescriptionViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/BigPicturesViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/HorizontalCardsViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/VerticalCardsViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/BigVerticalCardsViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/PhotoViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/BigPhotoViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/PhotoTileViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/DatasourcesViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/HtmlViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/RSSViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/FlickrViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/BingViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/CollectionViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/TouchDevelopViews.xaml"/>
+                <ResourceDictionary Source="Views/DataTemplates/ActionsViews.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <x:String x:Key="AppName">Windows App Studio</x:String>
+            <x:String x:Key="AppTitle">Windows App Studio</x:String>
+
+            <!-- Html2Xaml -->
+            <html2xaml:Properties x:Key="Properties"/>
+
+            <!-- VariableSizedGrid -->
+            <controls:VariableSizedGrid x:Key="VariableSizedGrid"/>
+            <controls:RichTextColumns x:Key="RichTextColumns"/>
+
+            <!-- ItemClickCommand -->
+            <commands:ItemClickCommand x:Key="ItemClickCommand" />
+
+            <!-- Converters -->
+            <controls:VisibilityConverter x:Key="VisibilityConverter"/>
+            <controls:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
+            <controls:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <controls:GridLengthConverter x:Key="GridLengthConverter"/>
+
+            <!-- Action Commands -->
+            <local:ActionCommands x:Key="ActionCommands"/>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

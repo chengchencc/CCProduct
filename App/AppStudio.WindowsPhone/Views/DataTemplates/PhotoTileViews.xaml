@@ -1,0 +1,30 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:AppStudio.Controls"
+    xmlns:html2xaml="using:AppStudio.Controls.Html2Xaml"
+    xmlns:commands="using:AppStudio.Commands">
+
+    <!-- ListPhotoTile -->
+    <DataTemplate x:Key="PhotoTileList">
+        <Grid>
+            <controls:VariableSizedGrid ItemsSource="{Binding Items}"  SelectionMode="None" IsSwipeEnabled="False" IsItemClickEnabled="True"  commands:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                                        ItemTemplate="{StaticResource PhotoTileItem}"
+                                        ItemsPanel="{StaticResource PhotoTileItemsPanel}" />
+            <ProgressBar Height="40" VerticalAlignment="Top" IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
+        </Grid>
+    </DataTemplate>
+
+    <!-- ListPhotoTile ItemsPanel-->
+    <ItemsPanelTemplate x:Key="PhotoTileItemsPanel">
+        <VariableSizedWrapGrid ItemHeight="80" ItemWidth="80" Orientation="Horizontal" />
+    </ItemsPanelTemplate>
+
+    <!-- ListPhotoTile Item -->
+    <DataTemplate x:Key="PhotoTileItem">
+        <Grid Margin="5">
+            <Image Source="{Binding Thumbnail}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

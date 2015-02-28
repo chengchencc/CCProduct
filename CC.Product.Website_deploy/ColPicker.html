@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ColPicker</title>
+    <link href="Scripts/ColPicker/css/colpick.css" rel="stylesheet" />
+    <style type="text/css">
+        #picker {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            width: 70px;
+            height: 20px;
+            border-right: 20px solid green;
+            line-height: 20px;
+        }
+    </style>
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script src="Scripts/ColPicker/js/colpick.js"></script>
+    <script>
+        var colorArray = [];
+        $(function () {
+            var i = 1;
+            var lastColor = "FFFFFF";
+            $('#picker').colpick({
+                layout: 'hex',
+                submit: 0,
+                colorScheme: 'dark',
+                onChange: function (hsb, hex, rgb, el, bySetColor) {
+                    $(el).css('border-color', '#' + hex);
+                    // Fill the text box just if the color was set using the picker, and not the colpickSetColor function.
+                    if (!bySetColor) $(el).val(hex);
+                }
+            }).keyup(function () {
+           $(this).colpickSetColor(this.value);
+        });
+        $("#add").click(function () {
+            $("#left").append('<div style="width:500px;height:50px;background-color:#'+lastColor+';margin:10px" id="demo' + i + '" class="demo"></div>');
+            $("#demo" + i).colpick({
+                layout: 'hex',
+                submit: 0,
+                colorScheme: 'dark',
+                onChange: function (hsb, hex, rgb, el, bySetColor) {
+                    $(el).css('background-color', '#' + hex);
+                    // Fill the text box just if the color was set using the picker, and not the colpickSetColor function.
+                     if (!bySetColor) $(el).val(hex);
+                     lastColor = hex;
+                     drawCircle();
+                },
+                onSubmit: function () {
+                    
+                }
+            });
+            $("#demo" + i).click();
+            i++;
+        });
+
+        })
+
+        //function drawCircle() {
+        //    var canvas = document.getElementById("circle");
+        //    var ctx = canvas.getContext("2d");
+        //    ctx.fillStyle = '#77D1F6';
+        //    ctx.beginPath();
+        //    ctx.moveTo(200, 150);
+        //    ctx.arc(200, 150, 150, 0, Math.PI * 2, false);
+        //    ctx.fill();
+        //}
+
+        function drawCircle() {
+            colorArray.length = 0;
+            $(".demo").each(function (index, value) {
+                colorArray[index] = $(this).css("background-color");
+            })
+            var canvas = document.getElementById("circle");
+            var ctx = canvas.getContext("2d");
+            var startPoint = 1.5 * Math.PI;
+            for (var i = 0; i < colorArray.length; i++) {
+                ctx.fillStyle = colorArray[i];
+                ctx.strokeStyle = colorArray[i];
+                ctx.beginPath();
+                ctx.moveTo(200, 150);
+                ctx.arc(200, 150, 150, startPoint, startPoint - Math.PI * 2 * (1/colorArray.length), true);
+                ctx.fill();
+                ctx.stroke();
+                startPoint -= Math.PI * 2 * (1 / colorArray.length);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div style="float:right;">
+        <div style="font-size:20px;">预览</div>
+        <canvas id="circle" width="400" height="300">您的浏览器暂不支持Canvas</canvas>
+    </div>
+    <div id="left" style="float:left">
+        <input type="button" id="add" value="增加色彩条" />
+        <!--<input type="text" id="picker" />-->
+    </div>
+</body>
+</html>

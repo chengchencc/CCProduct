@@ -1,0 +1,36 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:AppStudio.Controls"
+    xmlns:html2xaml="using:AppStudio.Controls.Html2Xaml"
+    xmlns:commands="using:AppStudio.Commands">
+
+<!-- ListPhotoTile -->
+    <DataTemplate x:Key="PhotoTileList">
+        <controls:VariableSizedGrid ItemsSource="{Binding PreviewItems}" SelectionMode="None" IsSwipeEnabled="False" IsItemClickEnabled="True" commands:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                                    ItemTemplate="{StaticResource PhotoTileItem}"
+                                    ItemsPanel="{StaticResource PhotoTileItemsPanel}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="PhotoTileListSnapped">
+        <controls:VariableSizedGrid ItemsSource="{Binding PreviewItems}" SelectionMode="None" IsSwipeEnabled="False" IsItemClickEnabled="True" commands:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                                    ItemTemplate="{StaticResource PhotoTileItem}"
+                                    ItemsPanel="{StaticResource PhotoTileItemsPanelSnapped}" />
+    </DataTemplate>
+
+    <ItemsPanelTemplate x:Key="PhotoTileItemsPanel">
+        <VariableSizedWrapGrid ItemHeight="120" MaxHeight="500" VerticalAlignment="Top" ItemWidth="120" />
+    </ItemsPanelTemplate>
+
+    <ItemsPanelTemplate x:Key="PhotoTileItemsPanelSnapped">
+        <VariableSizedWrapGrid ItemHeight="60" ItemWidth="60" />
+    </ItemsPanelTemplate>
+
+    <!-- ListPhotoTile Item -->
+    <DataTemplate x:Key="PhotoTileItem">
+        <Grid >
+            <Image Source="{Binding Thumbnail}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

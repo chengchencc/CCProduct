@@ -1,0 +1,22 @@
+{
+  "Items": [
+    {
+      "Type": "Section",
+      "Title": "Generic Layout",
+      "Icon": "/Assets/DataImages/ModuleLogo.png",
+      "Target": "GenericLayoutPage"
+    },
+    {
+      "Type": "Section",
+      "Title": "Photo Layout",
+      "Icon": "/Assets/DataImages/ModuleLogo-1.png",
+      "Target": "PhotoLayoutPage"
+    },
+    {
+      "Type": "Section",
+      "Title": "Text Layout",
+      "Icon": "/Assets/DataImages/ModuleLogo-2.png",
+      "Target": "TextLayoutPage"
+    }
+  ]
+}

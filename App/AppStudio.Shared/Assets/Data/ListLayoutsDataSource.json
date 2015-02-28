@@ -1,0 +1,64 @@
+{
+  "Items": [
+    {
+      "Type": "Section",
+      "Title": "No Photo",
+      "Icon": "/Assets/DataImages/ModuleLogo-3.png",
+      "Target": "NoPhotoPage"
+    },
+    {
+      "Type": "Section",
+      "Title": "Photo Left",
+      "Icon": "/Assets/DataImages/ModuleLogo-4.png",
+      "Target": "PhotoLeftPage"
+    },
+    {
+      "Type": "Section",
+      "Title": "Photo Left Description",
+      "Icon": "/Assets/DataImages/ModuleLogo-6.png",
+      "Target": "PhotoLeftDescriptionPage"
+    },
+    {
+      "Type": "Section",
+      "Title": "Big Pictures",
+      "Icon": "/Assets/DataImages/ModuleLogo-7.png",
+      "Target": "BigPicturesPage"
+    },
+    {
+      "Type": "Section",
+      "Title": "Horizontal Cards",
+      "Icon": "/Assets/DataImages/ModuleLogo-8.png",
+      "Target": "HorizontalCardsPage"
+    },
+    {
+      "Type": "Section",
+      "Title": "Vertical Cards",
+      "Icon": "/Assets/DataImages/ModuleLogo-9.png",
+      "Target": "VerticalCardsPage"
+    },
+    {
+      "Type": "Section",
+      "Title": "Big Vertical Cards",
+      "Icon": "/Assets/DataImages/ModuleLogo-10.png",
+      "Target": "BigVerticalCardsPage"
+    },
+    {
+      "Type": "Section",
+      "Title": "Photo",
+      "Icon": "/Assets/DataImages/ModuleLogo-11.png",
+      "Target": "PhotoPage"
+    },
+    {
+      "Type": "Section",
+      "Title": "Big Photo",
+      "Icon": "/Assets/DataImages/ModuleLogo-12.png",
+      "Target": "BigPhotoPage"
+    },
+    {
+      "Type": "Section",
+      "Title": "Photo Tile",
+      "Icon": "/Assets/DataImages/ModuleLogo-13.png",
+      "Target": "PhotoTilePage"
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:AppStudio.Controls"
+    xmlns:html2xaml="using:AppStudio.Controls.Html2Xaml"
+    xmlns:commands="using:AppStudio.Commands">
+
+    <!-- ListHorizontalCards -->
+    <DataTemplate x:Key="PhotoLayoutList">
+        <Grid>
+            <GridView ItemsSource="{Binding PreviewItems}" SelectionMode="None" IsSwipeEnabled="False" IsItemClickEnabled="True"  commands:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                     ItemTemplate="{StaticResource PhotoLayoutItem}"/>
+            <ProgressBar Height="40" VerticalAlignment="Top" IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="PhotoLayoutListSnapped">
+        <Grid>
+            <GridView ItemsSource="{Binding PreviewItems}"  SelectionMode="None" IsSwipeEnabled="False" IsItemClickEnabled="True" commands:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                      ItemTemplate="{StaticResource PhotoLayoutItemSnapped}"/>
+            <ProgressBar Height="40" VerticalAlignment="Top" IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
+        </Grid>
+    </DataTemplate>
+
+    <!-- ListHorizontalCards Item -->
+    <DataTemplate x:Key="PhotoLayoutItem">
+        <Grid Width="480" Height="165" Style="{StaticResource BoxGrid}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="{Binding Thumbnail}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Grid Margin="12,4,4,4" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Style="{StaticResource BoxTitleStyle}" Text="{Binding Name}" MaxLines="2"/>
+                <TextBlock Grid.Row="1" Style="{StaticResource BoxSubtitleStyle}" Text="{Binding Surname}" />
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="PhotoLayoutItemSnapped">
+        <Grid Width="220" Height="100" Style="{StaticResource BoxGrid}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="{Binding Thumbnail}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Grid Grid.Column="1">
+                <Grid Margin="8,3,3,3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Style="{StaticResource BoxTitleStyle}" Text="{Binding Name}" MaxLines="1"/>
+                    <TextBlock Grid.Row="1" Style="{StaticResource BoxSubtitleStyle}" Text="{Binding Surname}"/>                    
+                </Grid>                
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <!-- DetailPhoto -->
+    <DataTemplate x:Key="PhotoLayout1DetailDetail">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width=".7*" />
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.ColumnSpan="2" Source="{Binding Image}" />
+
+            <Border Grid.Column="0" Margin="40,0,0,40" MaxHeight="200"
+                    VerticalAlignment="Bottom"
+                    Visibility="{Binding ElementName=ViewInfoToggleButton, Mode=OneWay, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Border.Background>
+                    <SolidColorBrush Color="{StaticResource BoxBackgroundColor}" Opacity="0.8" />
+                </Border.Background>
+                <Grid Margin="40,20,20,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding Name}" Margin="0,0,0,20" Style="{StaticResource BoxTitleStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Surname}" Margin="10,0,0,20" Style="{StaticResource BoxTitleStyle}"/>
+                    <ScrollViewer Grid.Row="2" VerticalAlignment="Bottom" Margin="10,0,0,0" ZoomMode="Disabled">
+                        <RichTextBlock Style="{StaticResource BoxRichDescriptionStyle}" Foreground="{StaticResource BoxForeground}"
+                                       html2xaml:Properties.Html="{Binding PersonalSummary}" html2xaml:Properties.ContainsCrlf="True" />
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+            <AppBarToggleButton x:Name="ViewInfoToggleButton" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,10"
+                                IsCompact="True" IsChecked="True" Style="{StaticResource InfoAppBarToggleButtonStyle}">
+                <AppBarToggleButton.Icon>
+                    <FontIcon FontFamily="Arial" Glyph="&#x0069;" />
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="PhotoLayout1DetailDetailSnapped">
+        <Grid>
+            <Image Source="{Binding Image}" />
+
+            <Border Margin="40" MaxHeight="200"
+                    VerticalAlignment="Bottom"
+                    Visibility="{Binding ElementName=ViewInfoToggleButton, Mode=OneWay, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Border.Background>
+                    <SolidColorBrush Color="{StaticResource BoxBackgroundColor}" Opacity="0.8" />
+                </Border.Background>
+                <Grid Margin="40,20,20,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding Name}" Margin="0,0,0,20" Style="{StaticResource BoxTitleStyle}" />
+                    <TextBlock Grid.Row="1" Text="{Binding Surname}" Margin="10,0,0,20" Style="{StaticResource BoxTitleStyle}"/>
+                    <ScrollViewer Grid.Row="2" VerticalAlignment="Bottom" Margin="10,0,0,0" ZoomMode="Disabled">
+                        <RichTextBlock Style="{StaticResource BoxRichDescriptionStyle}" html2xaml:Properties.Html="{Binding PersonalSummary}" html2xaml:Properties.ContainsCrlf="True" />
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+            <AppBarToggleButton x:Name="ViewInfoToggleButton" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,0"
+                                IsCompact="True" IsChecked="True" Style="{StaticResource InfoAppBarToggleButtonStyle}">
+                <AppBarToggleButton.Icon>
+                    <FontIcon FontFamily="Arial" Glyph="&#x0069;" />
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

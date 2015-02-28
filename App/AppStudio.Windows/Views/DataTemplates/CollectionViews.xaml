@@ -1,0 +1,111 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:AppStudio.Controls"
+    xmlns:html2xaml="using:AppStudio.Controls.Html2Xaml"
+    xmlns:commands="using:AppStudio.Commands">
+
+    <!-- ListPhotoLeft -->
+    <DataTemplate x:Key="CollectionList">
+        <Grid>
+            <GridView ItemsSource="{Binding PreviewItems}" SelectionMode="None" IsSwipeEnabled="False" IsItemClickEnabled="True" commands:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                      ItemTemplate="{StaticResource CollectionItem}"/>
+            <ProgressBar Height="40" VerticalAlignment="Top" IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="CollectionListSnapped">
+        <Grid>
+            <GridView ItemsSource="{Binding PreviewItems}" SelectionMode="None" IsSwipeEnabled="False" IsItemClickEnabled="True" commands:ItemClickCommand.Command="{Binding ItemClickCommand}"
+                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                      ItemTemplate="{StaticResource CollectionItemSnapped}"/>
+            <ProgressBar Height="40" VerticalAlignment="Top" IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
+        </Grid>
+    </DataTemplate>
+
+    <!-- ListPhotoLeft Item -->
+    <DataTemplate x:Key="CollectionItem">
+        <Grid Width="480" Height="77">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="77"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Source="{Binding Image}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Grid Grid.Column="1" Margin="12,-7,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Style="{StaticResource TitleStyle}" Text="{Binding Name}" MaxLines="2"/>
+                    <TextBlock Grid.Row="1" Style="{StaticResource SubtitleStyle}" Text="{Binding Surname}" />
+                </Grid>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="CollectionItemSnapped">
+        <Grid Width="220" Height="77">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="77"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Source="{Binding Image}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Grid Grid.Column="1" Margin="10,-7,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Style="{StaticResource TitleStyle}" Text="{Binding Name}" MaxLines="2"/>
+                    <TextBlock Grid.Row="1" Style="{StaticResource SubtitleStyle}" Text="{Binding Surname}" />
+                </Grid>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+
+    <!-- DetailMultiColumn -->
+    <DataTemplate x:Key="Collection1DetailDetail">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" ZoomMode="Disabled">
+            <StackPanel>
+                <TextBlock Style="{StaticResource PageTitleStyle}" Text="Collection Item"/>
+                <TextBlock Margin="0,12,0,0" VerticalAlignment="Top" Style="{StaticResource TitleStyle}" Text="{Binding Name}"/>
+                <Button Margin="0,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ImageButtonStyle}" 
+                        Command="{Binding Source={StaticResource ActionCommands}, Path=ShowImage}" CommandParameter="{Binding Image}">
+                    <Viewbox StretchDirection="DownOnly">
+                        <Image Source="{Binding Image}" Stretch="UniformToFill"/>
+                    </Viewbox>
+                </Button>
+                <RichTextBlock Margin="0,12,0,0" Style="{StaticResource RichDescriptionStyle}" html2xaml:Properties.Html="{Binding PersonalSummary}" html2xaml:Properties.ContainsCrlf="True"/>
+            </StackPanel>
+        </ScrollViewer>
+    </DataTemplate>
+    <DataTemplate x:Key="Collection1DetailDetailSnapped">
+        <ContentPresenter ContentTemplate="{StaticResource Collection1DetailDetail}" />
+    </DataTemplate>
+    <!-- DetailMultiColumn -->
+    <DataTemplate x:Key="Collection2DetailDetail">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" ZoomMode="Disabled">
+            <StackPanel>
+                <TextBlock Style="{StaticResource PageTitleStyle}" Text="Detail"/>
+                <Button Margin="0,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ImageButtonStyle}" 
+                        Command="{Binding Source={StaticResource ActionCommands}, Path=ShowImage}" CommandParameter="">
+                    <Viewbox StretchDirection="DownOnly">
+                        <Image Source="" Stretch="UniformToFill"/>
+                    </Viewbox>
+                </Button>
+                <Button Margin="0,12,0,0" VerticalAlignment="Top" Style="{StaticResource TitleCallActionButton}"
+                        Command="{Binding Source={StaticResource ActionCommands}, Path=CallToPhone}" CommandParameter="{Binding Phone}" 
+                        Content="{Binding Phone}"/>
+                <Button Margin="0,12,0,0" VerticalAlignment="Top" Style="{StaticResource DescriptionMailActionButton}"
+                        Command="{Binding Source={StaticResource ActionCommands}, Path=MailTo}" CommandParameter="{Binding Mail}"
+                        Content="{Binding Mail}"/>
+            </StackPanel>
+        </ScrollViewer>
+    </DataTemplate>
+    <DataTemplate x:Key="Collection2DetailDetailSnapped">
+        <ContentPresenter ContentTemplate="{StaticResource Collection2DetailDetail}" />
+    </DataTemplate>
+</ResourceDictionary>

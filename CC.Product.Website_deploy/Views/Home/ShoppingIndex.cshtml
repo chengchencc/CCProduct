@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="container">
+    <div class="row">
+        @*<div class="col-lg-2" style="width:200px;display:inline-block">
+                <a href="/"><img style="width:200px" src="~/Content/images/zpLife.png" /></a>
+            </div>*@
+        <div class="col-lg-6 col-lg-offset-3" style="width:500px;height:56px;display:inline-block">
+            <div class="input-group">
+                <input type="text" class="form-control search-input">
+                <span class="input-group-btn">
+                    <button class="btn btn-default search-button" type="button">搜索</button>
+                </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+</div>
+<div class="container">
+    <div class="col-lg-2" id="left-nav">
+        <ul class="nav nav-pills nav-stacked navbar-static-top" role="tablist">
+            <li role="presentation" style="background-color:#C40000;height:40px;line-height:40px;color:white;width:200px;left:-15px">全部服务分类</li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-search"></span>首页</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-stats"></span>新手上路</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-flash"></span>大客户专区</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-record"></span>风云榜</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-certificate"></span>需求市场</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-bell"></span>需求市场</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-plane"></span>需求市场</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-warning-sign"></span>需求市场</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-warning-sign"></span>需求市场</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-warning-sign"></span>需求市场</a></li>
+            <li role="presentation"><a href="#"><span class="glyphicon glyphicon-warning-sign"></span>需求市场</a></li>
+
+        </ul>
+    </div>
+
+
+
+    <div class="col-lg-offset-2" id="top-nav">
+        <ul class="nav nav-pills" role="tablist">
+            <li role="presentation"><a href="#">新闻</a></li>
+            <li role="presentation"><a href="#">热点</a></li>
+            <li role="presentation"><a href="#">旅游活动</a></li>
+            <li role="presentation"><a href="#">吃喝玩乐</a></li>
+            <li role="presentation"><a href="#">团购</a></li>
+            <li role="presentation"><a href="#">房产</a></li>
+            <li role="presentation"><a href="#">跳骚市场</a></li>
+            <li role="presentation"><a href="#">拼车</a></li>
+            <li role="presentation"><a href="#">特色邹平</a></li>
+
+        </ul>
+    </div>
+    <hr id="hr-top" />
+
+
+
+
+</div>
+<!--海报*-->
+<div id="poster1" class="poster" style="background-color:#0078FF;">
+    <div class="container">
+        <div class="poster-img">
+            <img src="~/Content/images/shuma-810-480.jpg" alt="Alternate Text" style="height:462px" />
+        </div>
+        <div class="poster-img-right">
+            <img src="~/Content/images/yidongdianyuan-405-480.png" alt="Alternate Text" />
+        </div>
+        <div class="poster-right">
+            <div id="poster-info-1" class="poster-info">
+                <div class="poster-radius">疯抢</div>
+            </div>
+            <div id="poster-info-2" class="poster-info">
+                <div class="poster-radius">假一罚十</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="poster2" style="background-color:#6FA432;display:none" class="poster">
+    <div class="container">
+        <div class="poster-img">
+            <img src="~/Content/images/nanzhuang-810-480.jpg" alt="Alternate Text" style="height:462px" />
+        </div>
+        <div class="poster-img-right">
+            <img src="~/Content/images/yidongdianyuan-405-480.png" alt="Alternate Text" />
+        </div>
+        <div class="poster-right">
+            <div id="poster-info-1" class="poster-info">
+                <div class="poster-radius">疯抢</div>
+            </div>
+            <div id="poster-info-2" class="poster-info">
+                <div class="poster-radius">假一罚十</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $("#left-nav li[role=presentation] a").mouseover(function () {
+                if ($("#poster1").is(":visible")) {
+                    $("#poster1").hide();
+                    $("#poster2").fadeIn();
+                } else {
+                    $("#poster2").hide();
+                    $("#poster1").fadeIn();
+                }
+            });
+        });
+    </script>
+}

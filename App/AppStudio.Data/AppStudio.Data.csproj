@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7774ABAF-FE78-402C-AE79-C4A5353F351C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AppStudio.Data</RootNamespace>
+    <AssemblyName>AppStudio.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile32</TargetFrameworkProfile>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
+    <TargetPlatform Include="Windows, Version=8.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppStorage\UploadStorage.cs" />
+    <Compile Include="DataProviders\WebHtmlDataProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AppStorage\AppCache.cs" />
+    <Compile Include="AppStorage\AppLogs.cs" />
+    <Compile Include="AppStorage\UserStorage.cs" />
+    <Compile Include="Common\RssHelper.cs" />
+    <Compile Include="Common\Utility.cs" />
+    <Compile Include="Common\ISyncItem.cs" />
+    <Compile Include="Common\ObservableCollectionExtensions.cs" />
+    <Compile Include="Common\LocalSettingNames.cs" />
+    <Compile Include="DataProviders\RssReaders\RssDataProvider.cs" />
+    <Compile Include="DataProviders\RssReaders\AtomReader.cs" />
+    <Compile Include="DataProviders\RssReaders\BaseRssReader.cs" />
+    <Compile Include="DataProviders\RssReaders\RssReader.cs" />
+    <Compile Include="DataProviders\ServiceDataProvider.cs" />
+    <Compile Include="DataProviders\StaticHtmlDataProvider.cs" />
+    <Compile Include="DataProviders\StaticDataProvider.cs" />
+    <Compile Include="DataProviders\TouchDevelop\TouchDevelopItem.cs" />
+    <Compile Include="DataProviders\TouchDevelop\TouchDevelopDataProvider.cs" />
+    <Compile Include="DataSources\DataSourceContent.cs" />
+    <Compile Include="DataSources\DataSourceBase.cs" />
+    <Compile Include="DataSources\AboutDataSource.cs" />
+    <Compile Include="DataSources\DetailDataSource.cs" />
+    <Compile Include="DataSources\GenericLayoutDataSource.cs" />
+    <Compile Include="DataSources\PhotoLayoutDataSource.cs" />
+    <Compile Include="DataSources\TextLayoutDataSource.cs" />
+    <Compile Include="DataSources\ListLayoutsDataSource.cs" />
+    <Compile Include="DataSources\NoPhotoDataSource.cs" />
+    <Compile Include="DataSources\PhotoLeftDataSource.cs" />
+    <Compile Include="DataSources\PhotoLeftDescriptionDataSource.cs" />
+    <Compile Include="DataSources\BigPicturesDataSource.cs" />
+    <Compile Include="DataSources\HorizontalCardsDataSource.cs" />
+    <Compile Include="DataSources\VerticalCardsDataSource.cs" />
+    <Compile Include="DataSources\BigVerticalCardsDataSource.cs" />
+    <Compile Include="DataSources\PhotoDataSource.cs" />
+    <Compile Include="DataSources\BigPhotoDataSource.cs" />
+    <Compile Include="DataSources\PhotoTileDataSource.cs" />
+    <Compile Include="DataSources\DatasourcesDataSource.cs" />
+    <Compile Include="DataSources\HtmlDataSource.cs" />
+    <Compile Include="DataSources\RSSDataSource.cs" />
+    <Compile Include="DataSources\FlickrDataSource.cs" />
+    <Compile Include="DataSources\BingDataSource.cs" />
+    <Compile Include="DataSources\CollectionDataSource.cs" />
+    <Compile Include="DataSources\TouchDevelopDataSource.cs" />
+    <Compile Include="DataSources\ActionsDataSource.cs" />
+    <Compile Include="Tiles\TileServices.cs" />
+    <Compile Include="DataSchemas\RssSchema.cs" />
+    <Compile Include="DataSchemas\HtmlSchema.cs" />
+    <Compile Include="DataSchemas\MenuSchema.cs" />
+    <Compile Include="DataSchemas\GenericLayoutSchema.cs" />
+    <Compile Include="DataSchemas\PhotoLayoutSchema.cs" />
+    <Compile Include="DataSchemas\NoPhotoSchema.cs" />
+    <Compile Include="DataSchemas\PhotoLeftSchema.cs" />
+    <Compile Include="DataSchemas\PhotoLeftDescriptionSchema.cs" />
+    <Compile Include="DataSchemas\BigPicturesSchema.cs" />
+    <Compile Include="DataSchemas\HorizontalCardsSchema.cs" />
+    <Compile Include="DataSchemas\VerticalCardsSchema.cs" />
+    <Compile Include="DataSchemas\BigVerticalCardsSchema.cs" />
+    <Compile Include="DataSchemas\PhotoSchema.cs" />
+    <Compile Include="DataSchemas\BigPhotoSchema.cs" />
+    <Compile Include="DataSchemas\PhotoTileSchema.cs" />
+    <Compile Include="DataSchemas\FlickrSchema.cs" />
+    <Compile Include="DataSchemas\BingSchema.cs" />
+    <Compile Include="DataSchemas\CollectionSchema.cs" />
+    <Compile Include="DataSchemas\TouchDevelopSchema.cs" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="AppStudio.Common">
+      <HintPath>..\Lib\AppStudio.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLStorage">
+      <HintPath>..\packages\PCLStorage.1.0.0\lib\portable-win8+wpa81\PCLStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLStorage.Abstractions">
+      <HintPath>..\packages\PCLStorage.1.0.0\lib\portable-win8+wpa81\PCLStorage.Abstractions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

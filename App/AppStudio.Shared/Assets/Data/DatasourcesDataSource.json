@@ -1,0 +1,52 @@
+{
+    "Items": [
+        {
+            "Type": "Section",
+            "Title": "Html",
+            "Icon": "/Assets/DataImages/Item-0a141351-cc4f-4231-9b10-099642e342a4.png",
+            "Target": "HtmlPage"
+        },
+        {
+            "Type": "Section",
+            "Title": "RSS",
+            "Icon": "/Assets/DataImages/Item-63a8f97f-864e-4433-a452-33c2db30756e.png",
+            "Target": "RSSPage"
+        },
+        {
+            "Type": "Section",
+            "Title": "Flickr",
+            "Icon": "/Assets/DataImages/Item-f479b45b-5a73-4ff0-9902-5cbe8f43cae2.png",
+            "Target": "FlickrPage"
+        },
+        {
+            "Type": "Section",
+            "Title": "Bing",
+            "Icon": "/Assets/DataImages/Item-31731a8b-97c1-48c0-8aa9-801ec95e7dd0.png",
+            "Target": "BingPage"
+        },
+        {
+            "Type": "Section",
+            "Title": "Collection",
+            "Icon": "/Assets/DataImages/Item-ee98fe03-6664-4aec-8259-a1c0a06db7fd.png",
+            "Target": "CollectionPage"
+        },
+        {
+            "Type": "Section",
+            "Title": "TouchDevelop1111",
+            "Icon": "/Assets/DataImages/ModuleLogo-13.png",
+            "Target": "TouchDevelopPage"
+        },
+        {
+            "Type": "Section",
+            "Title": "HttpUploaded",
+            "Icon": "/Assets/DataImages/Item-ee98fe03-6664-4aec-8259-a1c0a06db7fd.png",
+            "Target": "UploadStreamPage"
+        },
+        {
+            "Type": "Section",
+            "Title": "CheckAppLogs",
+            "Icon": "/Assets/DataImages/Item-ee98fe03-6664-4aec-8259-a1c0a06db7fd.png",
+            "Target": "CheckAppLogPage"
+        }
+    ]
+}
