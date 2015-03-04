@@ -63,6 +63,7 @@
     <Compile Include="Interfaces\IAccountServiceEF.cs" />
     <Compile Include="Services\IAccountService.cs" />
     <Compile Include="Services\ICarPoolingService.cs" />
+    <Compile Include="Services\WayBookService.cs" />
     <Compile Include="Services\IocTest.cs" />
   </ItemGroup>
   <ItemGroup>

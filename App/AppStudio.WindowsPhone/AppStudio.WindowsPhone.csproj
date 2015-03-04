@@ -129,6 +129,9 @@
     <Compile Include="Views\AboutThisAppPage.xaml.cs">
       <DependentUpon>AboutThisAppPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CCwayBookPage.xaml.cs">
+      <DependentUpon>CCwayBookPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CheckAppLogPage.xaml.cs">
       <DependentUpon>CheckAppLogPage.xaml</DependentUpon>
     </Compile>
@@ -221,6 +224,10 @@
     <Page Include="Views\AboutThisAppPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CCwayBookPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CheckAppLogPage.xaml">
       <Generator>MSBuild:Compile</Generator>

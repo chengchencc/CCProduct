@@ -47,6 +47,12 @@
             "Title": "CheckAppLogs",
             "Icon": "/Assets/DataImages/Item-ee98fe03-6664-4aec-8259-a1c0a06db7fd.png",
             "Target": "CheckAppLogPage"
+        },
+        {
+            "Type": "Section",
+            "Title": "WayBook",
+            "Icon": "/Assets/DataImages/Item-ee98fe03-6664-4aec-8259-a1c0a06db7fd.png",
+            "Target": "CCwayBookPage"
         }
     ]
 }

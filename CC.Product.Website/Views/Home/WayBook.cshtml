@@ -1,0 +1,214 @@
+﻿@{
+    ViewBag.Title = "Map";
+}
+@section headerScripts {
+    <style type="text/css">
+        body, html, #allmap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=mdANhSaVGdhDDiKYshMtDv5k"></script>
+    <script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
+}
+
+<div class="container text-center">
+    <form class="form-inline" role="form">
+        <div class="form-group">
+            <label class="" for="exampleInputEmail2">公交号</label>
+            <div class="input-group">
+                <input type="text" class="form-control search-input" id="busname" placeholder="公交号" style="border-width:1px;">
+                @*<div class="input-group-addon" style="background-color: #60AF00;border-color: #60AF00; border-radius: inherit; cursor:pointer" id="changeBtn"><span class="glyphicon glyphicon-transfer"></span></div>
+                    <input type="text" class="form-control search-input" id="latitude" placeholder="纬度" style="border-width:1px;">*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <a class="btn btn-default search-button" id="searchBtn" style="border-width:1px;">搜索</a>
+        </div>
+    </form>
+    <div id="allmap" style="height:600px;border: 1px solid black;margin-top: 20px;"></div>
+</div>
+
+<div id="modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg" style="width:90%">
+        <div class="modal-content" style="height:733px">
+            <div class="panel-heading">
+                <h3 class="panel-title">路线 <span class="glyphicon glyphicon-remove pull-right"></span></h3>
+            </div>
+            <div id="modal-content">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/Scripts/toolbar.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            // 百度地图API功能
+            var map = new BMap.Map("allmap");    // 创建Map实例
+            map.centerAndZoom(new BMap.Point(117.01942515473, 36.660980599837), 11);  // 初始化地图,设置中心点坐标和地图级别
+            map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+            map.setCurrentCity("济南市");          // 设置地图显示的城市 此项是必须设置的
+            map.enableScrollWheelZoom(true);
+
+            //根据ip获取当前城市定位
+            function myFun(result) {
+                var cityName = result.name;
+                map.setCenter(cityName);
+                //alert("当前定位城市:" + cityName);
+            }
+            var myCity = new BMap.LocalCity();
+            myCity.get(myFun);
+
+            //根据经纬度定位
+            // 用经纬度设置地图中心点
+
+            $("#searchBtn").click(function () {
+                var busName = $("#busname").val();
+                $.get("/Api/WayBookRealTimeBusInfo?busName=" + busName, function (xhr) {
+
+                })
+
+
+                $('#modal').modal("show");
+            });
+            $("#modal").on("click", ".glyphicon-remove", function () {
+                $('#modal').modal('hide');
+            });
+            //地址解析
+            var geoc = new BMap.Geocoder();
+
+            map.addEventListener("click", function (e) {
+                var pt = e.point;
+                geoc.getLocation(pt, function (rs) {
+                    var addComp = rs.addressComponents;
+                    alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+                });
+            });
+
+
+            $("#changeBtn").click(function () {
+                var temp = $("#longitude").val();
+                $("#longitude").val($("#latitude").val());
+                $("#latitude").val(temp);
+            });
+
+
+            var busline = new BMap.BusLineSearch(map, {
+                renderOptions: { map: map, panel: "r-result" },
+                onGetBusListComplete: function (result) {
+                    if (result) {
+                        var fstLine = result.getBusListItem(0);//获取第一个公交列表显示到map上
+                        busline.getBusLine(fstLine);
+                    }
+                }
+            });
+            function busSearch(no) {
+                var busName = no;
+                busline.getBusList(busName);
+                //转换坐标
+                setTimeout(function () {
+                    map.removeOverlay();
+                    a.result.forEach(function (element, index, array) {
+                        var xx = element.lng;
+                        var yy = element.lat;
+                        var gpsPoint = new BMap.Point(xx, yy);
+                        BMap.Convertor.translate(gpsPoint, 0, function (point) {
+                            var marker = new BMap.Marker(point);
+                            map.addOverlay(marker);
+                            var label = new BMap.Label(element.cardId, { offset: new BMap.Size(20, -20) });
+                            label.setStyle({
+                                color: "red",
+                                fontSize: "12px",
+                                height: "20px",
+                                lineHeight: "20px",
+                                fontFamily: "微软雅黑",
+                                border: "0px"
+                            });
+                            marker.setLabel(label); //添加百度label
+
+                            marker.addEventListener("click", getAttr);
+                            function getAttr() {
+                                var p = marker.getPosition();       //获取marker的位置
+                                alert("车牌号：" + element.cardId + " ID：" + element.busId + "危险系数：" + element.velocity + "车队：" + element.orgName);
+                            }
+                            //map.setCenter(point);
+                            //alert(point.lng + "," + point.lat);
+                        });     //真实经纬度转成百度坐标
+                    })
+
+                }, 2000);
+
+            }
+
+            busSearch(115);
+
+
+            //坐标转换完之后的回调函数
+            translateCallback = function (point) {
+                var marker = new BMap.Marker(point);
+                map.addOverlay(marker);
+                var label = new BMap.Label("我是百度标注哦", { offset: new BMap.Size(20, -10) });
+                marker.setLabel(label); //添加百度label
+                map.setCenter(point);
+                //alert(point.lng + "," + point.lat);
+            }
+            //setTimeout(function () {
+            //    busSearch();
+            //}, 1500);
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+        var a = {
+            "status": { "code": 0 },
+            "result": [
+                { "busId": "4893", "lng": 117.005646, "lat": 36.655368, "velocity": 0.0, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:12 PM", "cardId": "鲁A18369", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": true, "dualSerialNum": 66 },
+                { "busId": "4910", "lng": 117.005091, "lat": 36.655646, "velocity": 0.0, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:12 PM", "cardId": "鲁A18669", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": true, "dualSerialNum": 66 },
+                { "busId": "K7396", "lng": 117.018425, "lat": 36.648146, "velocity": 0.0, "stationSeqNum": 4, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:00 PM", "cardId": "鲁AH1062", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": false, "dualSerialNum": 4 },
+                { "busId": "4901", "lng": 117.006201, "lat": 36.655091, "velocity": 0.0, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:13 PM", "cardId": "鲁A18556", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": true, "dualSerialNum": 66 },
+                { "busId": "4906", "lng": 117.053146, "lat": 36.648701, "velocity": 8.25, "stationSeqNum": 11, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:11 PM", "cardId": "鲁A18626", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": false, "dualSerialNum": 11 },
+                { "busId": "4890", "lng": 117.005091, "lat": 36.655646, "velocity": 0.0, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:05 PM", "cardId": "鲁A18335", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": true, "dualSerialNum": 66 },
+                { "busId": "K7397", "lng": 117.079535, "lat": 36.652313, "velocity": 7.72, "stationSeqNum": 14, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:25 PM", "cardId": "鲁AH1063", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": false, "dualSerialNum": 14 },
+                { "busId": "K7402", "lng": 117.005925, "lat": 36.655368, "velocity": 0.0, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:10 PM", "cardId": "鲁AH1077", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": true, "dualSerialNum": 66 },
+                { "busId": "4911", "lng": 117.042591, "lat": 36.647868, "velocity": 0.0, "stationSeqNum": 9, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:17 PM", "cardId": "鲁A18667", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": false, "dualSerialNum": 9 },
+                { "busId": "K7392", "lng": 117.006201, "lat": 36.655091, "velocity": 0.0, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:14 PM", "cardId": "鲁AH1037", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": true, "dualSerialNum": 66 },
+                { "busId": "4886", "lng": 117.195091, "lat": 36.673425, "velocity": 0.0, "stationSeqNum": 30, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:20 PM", "cardId": "鲁A18197", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": false, "dualSerialNum": 30 },
+                { "busId": "4891", "lng": 117.007868, "lat": 36.648146, "velocity": 5.4, "isArrvLft": "1", "stationSeqNum": 3, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:12 PM", "cardId": "鲁A18336", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": false, "dualSerialNum": 3 },
+                { "busId": "K7395", "lng": 117.006201, "lat": 36.655368, "velocity": 0.0, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:20 PM", "cardId": "鲁AH1061", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": true, "dualSerialNum": 66 },
+                { "busId": "K7390", "lng": 117.125646, "lat": 36.658425, "velocity": 1.81, "isArrvLft": "2", "stationSeqNum": 21, "buslineId": "217", "actTime": "Mar 4, 2015 3:36:25 PM", "cardId": "鲁AH1000", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": false, "dualSerialNum": 21 },
+                { "busId": "4902", "lng": 117.005925, "lat": 36.655368, "velocity": 0.0, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:17 PM", "cardId": "鲁A18557", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": true, "dualSerialNum": 66 },
+                { "busId": "5051", "lng": 117.00648, "lat": 36.655368, "velocity": 0.1, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:24 PM", "cardId": "鲁A18388", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": true, "dualSerialNum": 66 },
+                { "busId": "4885", "lng": 117.00648, "lat": 36.654813, "velocity": 0.49, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:19 PM", "cardId": "鲁A18151", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": true, "dualSerialNum": 66 },
+                { "busId": "4908", "lng": 117.005925, "lat": 36.655091, "velocity": 0.0, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:03 PM", "cardId": "鲁A18666", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": true, "dualSerialNum": 66 },
+                { "busId": "5050", "lng": 117.005646, "lat": 36.655091, "velocity": 0.97, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:37:59 PM", "cardId": "鲁A18339", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": true, "dualSerialNum": 66 },
+                { "busId": "5048", "lng": 117.006201, "lat": 36.655091, "velocity": 0.0, "isArrvLft": "2", "stationSeqNum": 17, "buslineId": "217", "actTime": "Mar 4, 2015 3:37:23 PM", "cardId": "鲁A18330", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": false, "dualSerialNum": 17 },
+                { "busId": "4912", "lng": 117.005091, "lat": 36.655925, "velocity": 0.0, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:20 PM", "cardId": "鲁A18680", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": false, "dualSerialNum": 66 },
+                { "busId": "4884", "lng": 117.004535, "lat": 36.655925, "velocity": 0.65, "stationSeqNum": 1, "buslineId": "217", "actTime": "Mar 4, 2015 3:38:00 PM", "cardId": "鲁A18117", "orgName": "201车队_200.二公司_济南公共交通总公司", "isArriveDest": true, "dualSerialNum": 66 }
+            ]
+        }
+
+
+
+
+
+
+    </script>
+}

@@ -24,6 +24,8 @@ namespace CC.Product.Domain.DI
             For<IAccountService>().Use<AccountService>();
             For<ICarPoolingService>().Use<CarPoolingService>();
             For<IIocTest>().Use<IocTest>();
+            For<IWayBookService>().Use<WayBookService>();
+
         }
 
     }

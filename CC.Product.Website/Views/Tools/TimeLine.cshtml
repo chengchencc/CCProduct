@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "TimeLine";
+}
+
+<style>
+    body {
+        background-attachment: fixed;
+        background-image: url(../../Content/TimeLine/background.jpg);
+        background-size: cover;
+    }
+
+    .dot {
+        background-image: url(../../Content/TimeLine/timeline-jan140928124407.png);
+        background-position: -969px 0;
+        width: 11px;
+        height: 11px;
+        position: absolute;
+        top: 10px;
+        left: -23px;
+    }
+
+        .dot:hover {
+            background-position: -882px 18px;
+            width: 15px;
+            height: 16px;
+            top: 8px;
+            left: -25px;
+        }
+
+    .relative {
+        position: relative;
+    }
+
+    .favorite-icon {
+        font-size: 40px;
+        color: #6D84B4;
+        position: absolute;
+        top: -5px;
+        right: 15px;
+    }
+
+    .triangle-left {
+        width: 0px;
+        height: 0px;
+        border: 10px solid;
+        border-color: transparent #ff3300 transparent transparent;
+    }
+
+    .triangle {
+        width: 11px;
+        height: 11px;
+        position: absolute;
+        top: 10px;
+        left: -10px;
+    }
+
+    .glyphicon-thumbs-up:hover {
+        color: #6D84B4;
+        cursor: pointer;
+    }
+
+    .year {
+        position: absolute;
+        top: -15px;
+        left: -65px;
+        color: white;
+    }
+</style>
+<div class="row" style="background-image: url(../../Content/TimeLine/bg_tml_spine.png); background-repeat-x: no-repeat; background-repeat-y: inherit;padding-left: 4px; margin-left:50px;">
+
+    <div class="col-md-6">
+        <div class="relative">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color:white;border-color:white">
+                    <h3>
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        2014年10月20号
+                        <span class="caret" style="position: relative;left: 50%;"></span>
+                    </h3>
+                    <span class="glyphicon glyphicon-bookmark favorite-icon"></span>
+                </div>
+                <div class="panel-body">
+                    <blockquote>
+                        <p>广东恒健项目正式签合同，并开始启动开发。</p>
+                        @*<footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>*@
+                    </blockquote>
+                    <img data-src="holder.js/100%x180" alt="..." src="~/Content/TimeLine/background.jpg" style="width:100%;">
+                </div>
+                <div class="panel-footer">
+                    <span class="glyphicon glyphicon-thumbs-up" style="font-size:20px"></span>
+                </div>
+            </div>
+            <div class="dot"></div>
+            <img class="triangle" src="~/Content/TimeLine/triangle.png" />
+            <div class="year">2014</div>
+        </div>
+
+        <div class="relative">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color:white;border-color:white">
+                    <h3>2013年3月20号</h3>
+                    <span class="glyphicon glyphicon-bookmark favorite-icon"></span>
+                </div>
+
+                <div class="panel-body">
+                    <blockquote>
+                        <p>完成行政事业版发布.</p>
+                    </blockquote>
+                </div>
+
+                <div class="panel-footer">
+                    <span class="glyphicon glyphicon-thumbs-up" style="font-size:20px"></span>
+                </div>
+            </div>
+            <div class="dot"></div>
+            <img class="triangle" src="~/Content/TimeLine/triangle.png" />
+            <div class="year">2013</div>
+        </div>
+
+        <div class="relative">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color:white;border-color:white">
+                    <h3>2013年1月20号</h3>
+                    <span class="glyphicon glyphicon-bookmark favorite-icon"></span>
+
+                </div>
+
+                <div class="panel-body">
+                    完成股份制
+                </div>
+
+                <div class="panel-footer">
+                    <span class="glyphicon glyphicon-thumbs-up" style="font-size:20px"></span>
+                </div>
+            </div>
+            <div class="dot"></div>
+            <img class="triangle" src="~/Content/TimeLine/triangle.png" />
+            <div class="year"></div>
+        </div>
+
+        <div class="relative">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color:white;border-color:white">
+                    2012年5月15日
+                    <span class="glyphicon glyphicon-bookmark favorite-icon"></span>
+
+                </div>
+
+                <div class="panel-body">
+                    升级企业门户
+                </div>
+
+                <div class="panel-footer">
+                    <span class="glyphicon glyphicon-thumbs-up" style="font-size:20px"></span>
+                </div>
+            </div>
+            <div class="dot"></div>
+            <img class="triangle" src="~/Content/TimeLine/triangle.png" />
+            <div class="year">2012</div>
+
+        </div>
+    </div>
+
+</div>

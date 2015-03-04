@@ -43,6 +43,10 @@ namespace CC.Product.Website.Controllers
         {
             return View();
         }
+        public ActionResult WayBook()
+        {
+            return View();
+        }
         public ActionResult ShoppingIndex()
         {
             return View();
