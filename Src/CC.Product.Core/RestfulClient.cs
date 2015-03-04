@@ -28,7 +28,7 @@ namespace CC.Product.Core
                 request.Method = Method.GET;
 
                 var response = client.Execute(request);
-                if (response.RawBytes != null) content = Encoding.GetEncoding(EncodingNames.GBK).GetString(response.RawBytes);
+                if (response.RawBytes != null) content = Encoding.GetEncoding(EncodingNames.UTF8).GetString(response.RawBytes);
             }
             catch (Exception ex)
             {

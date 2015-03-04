@@ -87,8 +87,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{44D7D01C-AFE
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		CPlusPlusUniversalClient\CPlusPlusUniversalClient.Shared\CPlusPlusUniversalClient.Shared.vcxitems*{9b0dc038-1457-48c9-b176-18ad53c7864e}*SharedItemsImports = 4
 		App\AppStudio.Shared\AppStudio.Shared.projitems*{9dd3c931-981a-4185-a95b-a1f2dbcb6848}*SharedItemsImports = 4
+		CPlusPlusUniversalClient\CPlusPlusUniversalClient.Shared\CPlusPlusUniversalClient.Shared.vcxitems*{df4ab7d4-3bb0-4372-9fee-e8138c184375}*SharedItemsImports = 4
 		App\AppStudio.Shared\AppStudio.Shared.projitems*{2d6d9e72-e390-45a6-ba60-fc857067ebbc}*SharedItemsImports = 13
+		CPlusPlusUniversalClient\CPlusPlusUniversalClient.Shared\CPlusPlusUniversalClient.Shared.vcxitems*{348e2d5e-4507-470c-a71e-24977df5766f}*SharedItemsImports = 9
 		App\AppStudio.Shared\AppStudio.Shared.projitems*{f75e718d-3875-4e37-8d9c-b1e73791961d}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

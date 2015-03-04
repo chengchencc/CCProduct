@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using CC.Product.Core;
 using CC.Product.Domain.Services;
+using CC.Product.ViewModels;
+using Newtonsoft.Json;
 
 namespace CC.Product.Website.Controllers
 {
@@ -19,9 +21,22 @@ namespace CC.Product.Website.Controllers
         // GET: Api
         public ActionResult WayBookRealTimeBusInfo(string busName)
         {
-            WayBookService.GetBusIdByName(busName);
+            Bus bus = GetBusIdByName(busName); //WayBookService.GetBusIdByName("115");
 
-            return View();
+            return View(bus.result.result);
         }
+
+
+        public Bus GetBusIdByName(string busName)
+        {
+            RestfulClient httpClient = new RestfulClient();
+            var response = httpClient.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + busName + "/0/20");
+            var buses = WayBookService.GetBusIdByName(busName);
+            //var buses = JsonConvert.DeserializeObject<Bus>(response);
+
+            return buses;
+        }
+
+
     }
 }

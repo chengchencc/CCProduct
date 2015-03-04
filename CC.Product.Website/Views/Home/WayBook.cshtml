@@ -74,7 +74,7 @@
             $("#searchBtn").click(function () {
                 var busName = $("#busname").val();
                 $.get("/Api/WayBookRealTimeBusInfo?busName=" + busName, function (xhr) {
-
+                    $("#modal-content").html(xhr);
                 })
 
 

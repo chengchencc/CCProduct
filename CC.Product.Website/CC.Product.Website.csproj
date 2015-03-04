@@ -793,6 +793,10 @@
       <Project>{1adcd0a3-18bb-4ec6-b03a-b51a411ad811}</Project>
       <Name>CC.Product.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Src\CC.Product.ViewModels\CC.Product.ViewModels.csproj">
+      <Project>{629a3f75-829d-4523-af8f-d50f105e49c2}</Project>
+      <Name>CC.Product.ViewModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
