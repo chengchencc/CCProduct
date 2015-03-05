@@ -3,7 +3,7 @@
 @foreach (var item in Model)
 {
     <div>
-        <input type="radio" name="bus" value="@item.id" data-bind="@item.startStationName - @item.endStationName"/>
+        <input type="radio" name="bus" value="@item.id" data-bind="@item.startStationName - @item.endStationName" title="@item.lineName"/>
         @Html.Label(item.lineName +"路公交车  方向："+ item.startStationName +"-"+ item.endStationName +"  更新日期："+item.updateTime.ToString("yyyy年MM月dd日")+"  id为："+item.id)
     </div>
 }
