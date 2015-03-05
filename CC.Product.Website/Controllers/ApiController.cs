@@ -18,25 +18,20 @@ namespace CC.Product.Website.Controllers
         {
             WayBookService = wayBookService;
         }
-        // GET: Api
-        public ActionResult WayBookRealTimeBusInfo(string busName)
+        #region WayBook Api
+        public ActionResult GetBusList(string busName)
         {
-            Bus bus = GetBusIdByName(busName); //WayBookService.GetBusIdByName("115");
+            Bus bus = WayBookService.GetBusIdByName(busName);
 
             return View(bus.result.result);
         }
 
-
-        public Bus GetBusIdByName(string busName)
+        public ActionResult GetRealTimeBuses(string busId)
         {
-            RestfulClient httpClient = new RestfulClient();
-            var response = httpClient.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + busName + "/0/20");
-            var buses = WayBookService.GetBusIdByName(busName);
-            //var buses = JsonConvert.DeserializeObject<Bus>(response);
-
-            return buses;
+            string realTimeBuses = WayBookService.GetRealTimeBuses(busId);
+            return Content(realTimeBuses);
         }
 
-
+        #endregion
     }
 }

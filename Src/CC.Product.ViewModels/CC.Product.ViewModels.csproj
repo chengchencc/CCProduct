@@ -42,6 +42,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WayBook\Bus.cs" />
+    <Compile Include="WayBook\RealTimeBus.cs" />
     <Compile Include="WayBook\WayBookBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -31,6 +31,6 @@ namespace CC.Product.ViewModels
         public string endStationName { get; set; }
         public string lineName { get; set; }
         public string startStationName { get; set; }
-        public string updateTime { get; set; }
+        public DateTime updateTime { get; set; }
     }
 }

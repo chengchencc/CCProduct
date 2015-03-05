@@ -41,6 +41,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -116,9 +120,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -191,10 +192,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ColPicker.html" />
+    <Content Include="Content\bootstrap-buttons.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\buttons.js" />
     <Content Include="Content\datePicker\css\bootstrap-datetimepicker.css" />
     <Content Include="Content\datePicker\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\datePicker\js\bootstrap-datetimepicker.js" />
@@ -763,7 +766,7 @@
     <Content Include="Views\Tools\TimeLine.cshtml" />
     <Content Include="Views\Tools\ColPicker.cshtml" />
     <Content Include="Views\Home\WayBook.cshtml" />
-    <Content Include="Views\Api\WayBookRealTimeBusInfo.cshtml" />
+    <Content Include="Views\Api\GetBusList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

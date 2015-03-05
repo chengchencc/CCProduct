@@ -1,9 +1,0 @@
-﻿@model List<CC.Product.ViewModels.ResultItem>
-@{Layout = null;}
-@foreach (var item in Model)
-{
-    <div>
-        <input type="radio" name="bus" />
-        @Html.Label(item.lineName + item.startStationName + item.endStationName)
-    </div>
-}

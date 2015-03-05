@@ -12,6 +12,7 @@ namespace CC.Product.Domain.Services
     public interface IWayBookService
     {
         Bus GetBusIdByName(string busName);
+        string GetRealTimeBuses(string busId);
     }
     public class WayBookService : IWayBookService
     {
@@ -21,7 +22,15 @@ namespace CC.Product.Domain.Services
             var response = httpClient.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/"+busName+"/0/20");
             var buses = JsonConvert.DeserializeObject<Bus>(response);
 
-            return new Bus();
+            return buses;
         }
+
+        public string GetRealTimeBuses(string busId)
+        {
+            RestfulClient httpClient = new RestfulClient();
+            var result = httpClient.Get("http://60.216.101.229/server-ue2/rest/buses/busline/370100/"+busId);
+            return result;
+        }
+
     }
 }
