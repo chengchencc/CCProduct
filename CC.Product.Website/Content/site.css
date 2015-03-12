@@ -104,6 +104,9 @@ border-color: #EEEEEE;*/
     #top-nav .nav-pills > li {
         text-align: center;
     }
+    .navbar-toggle{
+        padding:0px 0px;
+    }
 
 
 #hr-top {

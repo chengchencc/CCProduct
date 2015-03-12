@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CC.Product.Core;
 using Newtonsoft.Json;
 using CC.Product.ViewModels;
+using CC.Product.ViewModels.WayBook;
 
 namespace CC.Product.Domain.Services
 {
@@ -13,6 +14,7 @@ namespace CC.Product.Domain.Services
     {
         Bus GetBusIdByName(string busName);
         string GetRealTimeBuses(string busId);
+        WayBookBase<StationInfo> GetStations(string busId);
     }
     public class WayBookService : IWayBookService
     {
@@ -30,6 +32,14 @@ namespace CC.Product.Domain.Services
             RestfulClient httpClient = new RestfulClient();
             var result = httpClient.Get("http://60.216.101.229/server-ue2/rest/buses/busline/370100/"+busId);
             return result;
+        }
+
+        public WayBookBase<StationInfo> GetStations(string busId)
+        {
+            RestfulClient httpClient = new RestfulClient();
+            var response = httpClient.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + busId);
+            var stationsInfo = JsonConvert.DeserializeObject<WayBookBase<StationInfo>>(response);
+            return stationsInfo;
         }
 
     }

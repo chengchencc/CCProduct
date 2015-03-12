@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CC.Product.Domain.Services;
 
 namespace CC.Product.Website.Controllers
 {
     public class ToolsController : Controller
     {
+
+         public IWayBookService WayBookService { get; set; }
+
+         public ToolsController(IWayBookService wayBookService)
+        {
+            WayBookService = wayBookService;
+        }
+
         // GET: Tools
         public ActionResult TimeLine()
         {
@@ -17,6 +26,12 @@ namespace CC.Product.Website.Controllers
         {
             return View();
         }
+        public ActionResult WayBook(string busId)
+        {
+            var stationsInfo = WayBookService.GetStations(busId);
+            return View(stationsInfo.result);
+        }
+
         public ActionResult GetDistance()
         {
             //var longitude1 =117.052313;

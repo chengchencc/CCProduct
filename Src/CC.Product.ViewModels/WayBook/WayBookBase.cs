@@ -8,6 +8,6 @@ namespace CC.Product.ViewModels
     public class WayBookBase<T> where T:new()
     {
         public Status status { get; set; }
-        public List<T> result { get; set; }
+        public T result { get; set; }
     }
 }

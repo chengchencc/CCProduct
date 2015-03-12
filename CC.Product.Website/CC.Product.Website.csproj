@@ -767,6 +767,7 @@
     <Content Include="Views\Tools\ColPicker.cshtml" />
     <Content Include="Views\Home\WayBook.cshtml" />
     <Content Include="Views\Api\GetBusList.cshtml" />
+    <Content Include="Views\Tools\WayBook.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

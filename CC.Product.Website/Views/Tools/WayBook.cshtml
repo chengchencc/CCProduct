@@ -1,0 +1,154 @@
+﻿@model CC.Product.ViewModels.WayBook.StationInfo
+
+@{
+    ViewBag.Title = "WayBook";
+}
+<style>
+    body {
+        background-attachment: fixed;
+        /*background-image: url(../../Content/TimeLine/background.jpg);*/
+        background-color: cadetblue;
+        background-size: cover;
+    }
+
+    .dot {
+        background-image: url(../../Content/TimeLine/timeline-jan140928124407.png);
+        background-position: -969px 0;
+        width: 11px;
+        height: 11px;
+        position: absolute;
+        top: 5px;
+        left: -23px;
+    }
+
+        .dot:hover {
+            background-position: -882px 18px;
+            width: 15px;
+            height: 16px;
+            top: 3px;
+            left: -25px;
+        }
+
+    .relative {
+        position: absolute;
+    }
+
+    .favorite-icon {
+        font-size: 40px;
+        color: #6D84B4;
+        position: absolute;
+        top: -5px;
+        right: 15px;
+    }
+
+    .triangle-left {
+        width: 0px;
+        height: 0px;
+        border: 10px solid;
+        border-color: transparent #ff3300 transparent transparent;
+    }
+
+    .triangle {
+        width: 11px;
+        height: 11px;
+        position: absolute;
+        top: 5px;
+        left: -10px;
+    }
+
+    .glyphicon-thumbs-up:hover {
+        color: #6D84B4;
+        cursor: pointer;
+    }
+
+    .year {
+        position: absolute;
+        top: -15px;
+        left: -65px;
+        color: white;
+    }
+
+    .bus {
+    }
+
+    .bus-station {
+        position: absolute;
+        left: 20px;
+    }
+
+    .bus-station-dot {
+        background-image: url(../../Content/TimeLine/timeline-jan140928124407.png);
+        background-position: -882px 18px;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        top: 2px;
+        left: 69px;
+    }
+
+    .buses {
+    }
+
+    .bustip {
+        border: 1px solid transparent;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        border-color: #ddd;
+        width: 100px;
+        background-color: #fff;
+    }
+</style>
+<div class="row" style="background-image: url(../../Content/TimeLine/bg_tml_spine.png);
+background-repeat-x: no-repeat; background-repeat-y: inherit;padding-left: 19px; margin-left:95px;">
+    @{var pageHeight = (Model.stations.Count * 100 + 300) + "px";}
+    <div class="buses-and-stations" style="height:@pageHeight;">
+        <div id="buses">
+            @*<div id="1" class="relative bus">
+                <div class="bustip">
+                    <footer>鲁:AC3301</footer>
+                </div>
+                <div class="dot"></div>
+                <img class="triangle" src="~/Content/TimeLine/triangle.png" />
+                <div class="year"></div>
+            </div>*@
+        </div>
+        <div id="stations">
+            @{var marginTop = 0;}
+            @foreach (var station in Model.stations)
+            {
+                marginTop += 100;
+                var marginTopString = marginTop + "px";
+                <div class="bus-station" id="@station.id" style="margin-top:@marginTopString ;">
+                    @station.stationName
+                    <div class="bus-station-dot"></div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    <script src="~/Scripts/toolbar.js"></script>
+    <script src="~/Content/buttons.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.getJSON("/Api/GetRealTimeBuses?busId=" + "217", function (xhrJson) {
+                xhrJson.result.forEach(function (element, index, array) {
+                    var position = element.stationSeqNum;
+                    var marginTop = position * 100 + 100;
+                    var htmlContent = '<div id="3" class="relative bus" style="margin-top:'+marginTop+'px;">';
+                    htmlContent += '<div class="bustip">';
+                    htmlContent += '<footer>鲁:AC3301</footer>';
+                    htmlContent += '</div>';
+                    htmlContent += '<img class="triangle" src="../Content/TimeLine/triangle.png" />';
+                    htmlContent += '<div class="year"></div>';
+                    htmlContent += ' </div>';
+                    $("#buses").append(htmlContent);
+                });
+                });
+
+
+        })
+    </script>
+}

@@ -64,6 +64,7 @@
     <Compile Include="CodeTest\FileTest.cs" />
     <Compile Include="NLogTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EncoderTest.cs" />
     <Compile Include="ReflecterTest.cs" />
     <Compile Include="RestfulTest.cs" />
     <Compile Include="SpeechRecognizerTest.cs" />
