@@ -31,6 +31,11 @@ namespace CC.Product.Website.Controllers
             string realTimeBuses = WayBookService.GetRealTimeBuses(busId);
             return Content(realTimeBuses);
         }
+        public ActionResult GetBusStations(string busId)
+        {
+            string res = WayBookService.GetStationsInJson(busId);
+            return Content(res);
+        }
 
         #endregion
     }

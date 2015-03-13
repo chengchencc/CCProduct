@@ -28,8 +28,10 @@ namespace CC.Product.Website.Controllers
         }
         public ActionResult WayBook(string busId)
         {
-            var stationsInfo = WayBookService.GetStations(busId);
-            return View(stationsInfo.result);
+           // var stationsInfo = WayBookService.GetStations(busId);
+            //return View(stationsInfo.result);
+            return View();
+
         }
 
         public ActionResult GetDistance()

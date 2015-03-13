@@ -15,6 +15,7 @@ namespace CC.Product.Domain.Services
         Bus GetBusIdByName(string busName);
         string GetRealTimeBuses(string busId);
         WayBookBase<StationInfo> GetStations(string busId);
+        string GetStationsInJson(string busId);
     }
     public class WayBookService : IWayBookService
     {
@@ -41,6 +42,11 @@ namespace CC.Product.Domain.Services
             var stationsInfo = JsonConvert.DeserializeObject<WayBookBase<StationInfo>>(response);
             return stationsInfo;
         }
-
+        public string GetStationsInJson(string busId)
+        {
+            RestfulClient httpClient = new RestfulClient();
+            var response = httpClient.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + busId);
+            return response;
+        }
     }
 }
