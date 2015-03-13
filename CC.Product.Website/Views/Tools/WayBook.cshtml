@@ -154,6 +154,8 @@ background-repeat-x: no-repeat; background-repeat-y: inherit;padding-left: 19px;
 @section Scripts {
     <script src="~/Scripts/toolbar.js"></script>
     <script src="~/Content/buttons.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=mdANhSaVGdhDDiKYshMtDv5k"></script>
+<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
     <script type="text/javascript">
         $(function () {
             //setInterval(function () {
@@ -203,21 +205,27 @@ background-repeat-x: no-repeat; background-repeat-y: inherit;padding-left: 19px;
                     var position = element.stationSeqNum;
                     var preStation = stationsR.result.stations[position - 1];
                     var nextStation = stationsR.result.stations[position];
-                    // var stationDistance = getDistance(preStation.lat, preStation.lng, nextStation.lat, nextStation.lng);
+                     var stationDistance = getDistance(preStation.lat, preStation.lng, nextStation.lat, nextStation.lng);
+                    var gpsPoint = new BMap.Point(element.lng, element.lat);
+                    BMap.Convertor.translate(gpsPoint, 0, function (point) {
+                        var lat = point.lat;
+                        var lng = point.lng;
+                        var busNextStation = getDistance(lat, lng, nextStation.lat, nextStation.lng);
+                        var marginTop = position * 100 + 100 - busNextStation / stationDistance * 100;
+                        var htmlContent = '<div id="' + element.busId + '" class="relative bus" style="margin-top:' + marginTop + 'px;">';
+                        htmlContent += '<div class="bustip">';
+                        htmlContent += '<footer>' + element.cardId + ' ' + element.stationSeqNum + '</footer>';
+                        htmlContent += '</div>';
+                        htmlContent += '<img class="triangle" src="../Content/TimeLine/triangle.png" />';
+                        htmlContent += '<div class="year"></div>';
+                        htmlContent += ' </div>';
+                        $("#buses").append(htmlContent);
+                    });
 
-                    var busPreStation = getDistance(element.lat, element.lng, preStation.lat, preStation.lng);
-                    var busNextStation = getDistance(element.lat, element.lng, nextStation.lat, nextStation.lng);
+                    
 
 
-                    var marginTop = position * 100 + 100 - busNextStation / (busPreStation + busNextStation) * 100;
-                    var htmlContent = '<div id="' + element.busId + '" class="relative bus" style="margin-top:' + marginTop + 'px;">';
-                    htmlContent += '<div class="bustip">';
-                    htmlContent += '<footer>' + element.cardId + ' ' + element.stationSeqNum + '</footer>';
-                    htmlContent += '</div>';
-                    htmlContent += '<img class="triangle" src="../Content/TimeLine/triangle.png" />';
-                    htmlContent += '<div class="year"></div>';
-                    htmlContent += ' </div>';
-                    $("#buses").append(htmlContent);
+                    
                 });
             });
         }
@@ -240,6 +248,11 @@ background-repeat-x: no-repeat; background-repeat-y: inherit;padding-left: 19px;
             });
         }
 
+        translateCallback = function(point) {
+            var lat = point.lat;
+            var lng = point.lng;
+
+        }
 
         var EARTH_RADIUS = 6378.137;//地球半径
         function rad(d) {
