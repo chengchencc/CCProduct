@@ -25,6 +25,11 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using App1.Common.Model;
 using Windows.UI.Popups;
+using CC.Product.TallyBook.Common;
+using Windows.Web.Http;
+using System.Threading;
+using Windows.Storage.Streams;
+using System.Threading.Tasks;
 
 // The Pivot Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
 
@@ -38,6 +43,7 @@ namespace App1
         private readonly NavigationHelper navigationHelper;
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView("Resources");
+        private HttpClient httpClient;
 
         public PivotPage()
         {
@@ -48,6 +54,7 @@ namespace App1
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            httpClient = new HttpClient();
 
             ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
             ApplicationView.GetForCurrentView().VisibleBoundsChanged += PivotPage_VisibleBoundsChanged;
@@ -356,7 +363,95 @@ namespace App1
 
         }
 
+        private async void UploadDb_Click(object sender, RoutedEventArgs e)
+        {
+            string url = "http://chaphets.chinacloudapp.cn/upload/index";
+            //string url = "http://localhost:2015/upload/index";
+            Uri resourceAddress;
+            DbContext.Instance.Conn.CloseAsync().Wait();
+            //string filePath = "/Assets/Data/RSSDataSource1.json";
+            var fileDb = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFileAsync("db.sdf");
+            IRandomAccessStreamWithContentType randomStream = await fileDb.OpenReadAsync();
+            var streamDb = randomStream.AsStream();
+            // The value of 'AddressField' is set by the user and is therefore untrusted input. If we can't create a
+            // valid, absolute URI, we'll notify the user about the incorrect input.
+            if (!Helpers.TryGetUri(url, out resourceAddress))
+            {
+                await ShowNotifyBox("Invalid URI.");
+                return;
+            }
 
+            await ShowNotifyBox("In progress");
+            
+            try
+            {
+                //Stream stream = await UploadStorage.ConvertTempFileToStream("RSSDataSource");
+                //Stream stream = await UploadStorage.ConvertStaticFileToStream(filePath);
+                if (streamDb == null)
+                {
+                    await ShowNotifyBox("此文件为空，或者无此文件！");
+                }
+                HttpStreamContent streamContent = new HttpStreamContent(streamDb.AsInputStream());
+
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, resourceAddress);
+                request.Content = streamContent;
+
+                // Do an asynchronous POST.
+                CancellationTokenSource cts = new CancellationTokenSource();
+                //IProgress<HttpProgress> progress = new Progress<HttpProgress>(ProgressHandler);
+                HttpResponseMessage response = await httpClient.SendRequestAsync(request).AsTask(cts.Token);
+                //HttpResponseMessage response = await httpClient.PostAsync(resourceAddress, streamContent).AsTask(cts.Token,progress);//.SendRequestAsync(request).AsTask(cts.Token);
+
+
+                await ShowNotifyBox("Completed");
+
+                //rootPage.NotifyUser("Completed", NotifyType.StatusMessage);
+            }
+            catch (TaskCanceledException)
+            {
+                //rootPage.NotifyUser("Request canceled.", NotifyType.ErrorMessage);
+                ShowNotifyBox("Request canceled.").Wait();
+            }
+            catch (Exception ex)
+            {
+                //rootPage.NotifyUser("Error: " + ex.Message, NotifyType.ErrorMessage);
+                 ShowNotifyBox("Error:"+ex.Message).Wait();
+            }
+            finally
+            {
+                //RequestProgressBar.Value = 100;
+                DbContext.Instance.CreateConnection();
+            }
+        }
+
+        private static async System.Threading.Tasks.Task ShowNotifyBox(string message)
+        {
+            MessageDialog dialog = new MessageDialog(message);
+            await dialog.ShowAsync();
+        }
+
+    }
+    internal static class Helpers
+    {
+        internal static bool TryGetUri(string uriString, out Uri uri)
+        {
+            // Note that this app has both "Internet (Client)" and "Home and Work Networking" capabilities set,
+            // since the user may provide URIs for servers located on the internet or intranet. If apps only
+            // communicate with servers on the internet, only the "Internet (Client)" capability should be set.
+            // Similarly if an app is only intended to communicate on the intranet, only the "Home and Work
+            // Networking" capability should be set.
+            if (!Uri.TryCreate(uriString.Trim(), UriKind.Absolute, out uri))
+            {
+                return false;
+            }
+
+            if (uri.Scheme != "http" && uri.Scheme != "https")
+            {
+                return false;
+            }
+
+            return true;
+        }
 
     }
 

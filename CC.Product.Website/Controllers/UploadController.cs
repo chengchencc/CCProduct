@@ -13,8 +13,8 @@ namespace CC.Product.Website.Controllers
         // GET: Upload
         public ActionResult Index()
         {
-            string path = @"e:\temp\upload.json";
-            string directory = @"e:\temp\";
+            string path = @"C:\TallyBook\upload.db";
+            string directory = @"C:\TallyBook\";
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
@@ -27,7 +27,11 @@ namespace CC.Product.Website.Controllers
             // Create a file to write to. 
             using (FileStream fs = System.IO.File.Create(path))
             {
-                Request.InputStream.CopyToAsync(fs);
+                //CC.Product.Core.LogHelper.WriteError(Request.InputStream.Length.ToString());
+                Request.InputStream.Seek(0, SeekOrigin.Begin);
+               // Request.InputStream.CopyToAsync(fs);
+                Request.InputStream.CopyTo(fs);
+                
             }
 
 

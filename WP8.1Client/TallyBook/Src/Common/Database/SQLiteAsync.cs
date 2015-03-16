@@ -298,6 +298,21 @@ namespace SQLite
 				}
 			});
 		}
+
+        public Task CloseAsync()
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                var conn = GetConnection();
+                using (conn.Lock())
+                {
+                    conn.Close();
+                }
+            });
+        }
+
+
+
 	}
 
 	//

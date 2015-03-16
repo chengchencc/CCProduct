@@ -147,6 +147,7 @@
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Common\Converters.cs" />
+    <Compile Include="Common\UploadStorage.cs" />
     <Compile Include="Common\Utilities.cs" />
     <Compile Include="DataModel\SampleDataSource.cs" />
     <Compile Include="Common\Database\DbContext.cs" />

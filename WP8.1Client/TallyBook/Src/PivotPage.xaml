@@ -294,6 +294,9 @@
                 </Grid>
 
             </PivotItem>
+
+
+
         </Pivot>
     </Grid>
 
@@ -301,7 +304,7 @@
         <CommandBar Name="commandBar" Opacity="0.8">
             <AppBarButton x:Uid="AddAppBarButton" x:Name="AddAppBarButton" Label="add" Icon="Add" Click="AddAppBarButton_Click" />
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Uid="SecondaryButton1" x:Name="SecondaryButton1" Label="secondary command 1" />
+                <AppBarButton x:Uid="SecondaryButton1" x:Name="SecondaryButton1" Label="secondary command 1" Click="UploadDb_Click"/>
                 <AppBarButton x:Uid="SecondaryButton2" x:Name="SecondaryButton2" Label="secondary command 2" />
             </CommandBar.SecondaryCommands>
         </CommandBar>

@@ -6,6 +6,12 @@
       "Icon": "/Assets/DataImages/Item-c2823056-37a4-490e-a504-3530836ca8e2.png",
       "Target": "http://www.microsoft.com"
     },
+        {
+      "Type": "Url",
+      "Title": "WayBook",
+      "Icon": "/Assets/DataImages/Item-c2823056-37a4-490e-a504-3530836ca8e2.png",
+      "Target": "http://chaphets.chinacloudapp.cn/Tools/WayBook"
+    },
     {
       "Type": "Url",
       "Title": "Https",

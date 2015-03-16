@@ -27,12 +27,16 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="66"/>
-            <RowDefinition/>
+            <!--<RowDefinition Height="66"/>-->
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <!-- Back button and page title -->
         <Grid>
+            <WebView Name="webView1" Source="http://chaphets.chinacloudapp.cn/Tools/WayBook" />
+        </Grid>
+        
+        <!-- Back button and page title -->
+        <Grid Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
@@ -40,7 +44,12 @@
             <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" 
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="1" />
         </Grid>
-        <Grid Grid.Row="1" Margin="0,30,0,-35">
+        <Grid Grid.Row="1">
+            
+        </Grid>
+        
+        
+        <Grid Grid.Row="1" Margin="0,30,0,-35" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100*"></RowDefinition>
                 <RowDefinition Height="300*"></RowDefinition>

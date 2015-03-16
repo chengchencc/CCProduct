@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Globalization;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.ViewManagement;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -99,12 +100,13 @@ namespace AppStudio.Views
         {
             navigationHelper.OnNavigatedTo(e);
             httpClient = new HttpClient();
-            rootPage = e.Content as MainPage;
-            await DisplayAppLog();
+            await StatusBar.GetForCurrentView().HideAsync();
+            //await DisplayAppLog();
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            await StatusBar.GetForCurrentView().ShowAsync();
             navigationHelper.OnNavigatedFrom(e);
         }
 
@@ -119,7 +121,7 @@ namespace AppStudio.Views
 
         private async void RefreshButtonClicked(object sender, RoutedEventArgs e)
         {
-            await DisplayAppLog();
+            webView1.Refresh();
         }
 
         private async Task DisplayAppLog()

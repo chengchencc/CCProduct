@@ -9,9 +9,10 @@ namespace App1
 {
     public class DbContext:Singleton<DbContext>
     {
+        public const string DBNAME = "db.sdf"; 
         public DbContext()
         {
-            Conn = new SQLiteAsyncConnection("db.sdf");
+            Conn = new SQLiteAsyncConnection(DBNAME);
             Seed();
         }
 
@@ -28,6 +29,12 @@ namespace App1
             Conn.CreateTablesAsync<Recorder,RecorderItem>().Wait();
             
         }
+        public void CreateConnection()
+        {
+            Conn = new SQLiteAsyncConnection(DBNAME);
+            //Seed();
+        }
+
     }
     public class commonQueryModel
     {
