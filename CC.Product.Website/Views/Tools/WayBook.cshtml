@@ -100,10 +100,12 @@
     </style>
     <link href="~/Content/bootstrap-buttons.css" rel="stylesheet" />
 }
+
+
 <div class="container text-center">
     <form class="form-inline" role="form">
         <div class="form-group">
-            <label class="" for="exampleInputEmail2">公交号</label>
+            @*<label class="" for="exampleInputEmail2">公交号</label>*@
             <div class="input-group">
                 <input type="text" class="form-control search-input" id="busname" placeholder="输入查询的公交号" style="border-width:1px;">
             </div>
@@ -116,7 +118,7 @@
 </div>
 
 <div style="position:fixed;right:10px;bottom:10px;">
-    <a id="btnRefresh" class="button button-3d button-primary button-rounded">未选中任何公交</a>
+    <a id="btnRefresh" class="button button-raised button-primary button-pill" style="">未选中任何公交</a>
 </div>
 <div class="row" style="background-image: url(../../Content/TimeLine/bg_tml_spine.png);background-repeat:repeat-y;
 background-repeat-x: no-repeat; background-repeat-y: inherit;padding-left: 19px; margin-left:50%; width:18px;">

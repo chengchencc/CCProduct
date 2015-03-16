@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CC.Product.Core;
 using CC.Product.Domain.Services;
 
 namespace CC.Product.Website.Controllers
@@ -28,6 +29,7 @@ namespace CC.Product.Website.Controllers
         }
         public ActionResult WayBook(string busId)
         {
+
            // var stationsInfo = WayBookService.GetStations(busId);
             //return View(stationsInfo.result);
             return View();
