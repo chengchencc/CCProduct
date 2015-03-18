@@ -1,0 +1,289 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>WayBook</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    @*<link href="~/Content/site.css" rel="stylesheet" />*@
+
+    <style>
+        body {
+            background-attachment: fixed;
+            /*background-image: url(../../Content/TimeLine/background.jpg);*/
+            background-color: whitesmoke; /*cadetblue;*/
+            background-size: cover;
+        }
+
+        .dot {
+            background-image: url(../../Content/TimeLine/timeline-jan140928124407.png);
+            background-position: -969px 0;
+            width: 11px;
+            height: 11px;
+            position: absolute;
+            top: 5px;
+            left: -23px;
+        }
+
+            .dot:hover {
+                background-position: -882px 18px;
+                width: 15px;
+                height: 16px;
+                top: 3px;
+                left: -25px;
+            }
+
+        .relative {
+            position: absolute;
+        }
+
+        .favorite-icon {
+            font-size: 40px;
+            color: #6D84B4;
+            position: absolute;
+            top: -5px;
+            right: 15px;
+        }
+
+        .triangle-left {
+            width: 0px;
+            height: 0px;
+            border: 10px solid;
+            border-color: transparent #ff3300 transparent transparent;
+        }
+
+        .triangle {
+            width: 11px;
+            height: 11px;
+            position: absolute;
+            top: 5px;
+            left: -10px;
+        }
+
+        .glyphicon-thumbs-up:hover {
+            color: #6D84B4;
+            cursor: pointer;
+        }
+
+        .year {
+            position: absolute;
+            top: -15px;
+            left: -65px;
+            color: white;
+        }
+
+        .bus {
+        }
+
+        .bus-station {
+            position: absolute;
+            /*left: 20px;*/
+            margin-left: -114px;
+        }
+
+        .bus-station-dot {
+            background-image: url(../../Content/TimeLine/timeline-jan140928124407.png);
+            background-position: -882px 18px;
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            top: 2px;
+            left: 89px;
+        }
+
+        .buses {
+        }
+
+        .bustip {
+            border: 1px solid transparent;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            border-color: #ddd;
+            width: 100px;
+            background-color: #fff;
+        }
+    </style>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=mdANhSaVGdhDDiKYshMtDv5k"></script>
+    <script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //setInterval(function () {
+            //    refreshBus(217);
+            //}, 1000);
+
+            // refreshBus(217);
+            //$("#btnRefresh").click(function () {
+            //    refreshBus(217);
+            //});
+
+            $("#searchBtn").click(function () {
+                var busName = $("#busname").val();
+                $("#modal-content").html("加载中......");
+                $.get("/Api/GetBusList?busName=" + busName, function (xhr) {
+                    $("#modal-content").html(xhr);
+                })
+                $('#modal').modal("show");
+            });
+            $("#btnOK").on("click", function () {
+                if ($('input[type="radio"][name="bus"]:checked').val() != undefined) {
+                    var selectedBusId = $('input[type="radio"][name="bus"]:checked').val();
+                    var busName = $("#busname").val();
+                    busNo = busName;//$('input[type="radio"][name="bus"]:checked').attr("title");
+                    busId = selectedBusId;
+                    $("#btnRefresh").text($('input[type="radio"][name="bus"]:checked').attr("data-bind"));
+                    $("#btnRefresh").attr("title", $('input[type="radio"][name="bus"]:checked').attr("data-bind"));
+
+                    paintBusMap();
+
+                }
+                $('#modal').modal("hide");
+            });
+            $("#btnRefresh").on("click", function () {
+
+                refreshBus(busId);
+            });
+
+
+        });
+
+
+        function refreshBus(busId) {
+            $.getJSON("/Api/GetRealTimeBuses?busId=" + busId, function (xhrJson) {
+                $("#buses").html("");
+                xhrJson.result.forEach(function (element, index, array) {
+                    var position = element.stationSeqNum;
+                    var preStation = stationsR.result.stations[position - 1];
+                    var nextStation = stationsR.result.stations[position];
+                    var stationDistance = getDistance(preStation.lat, preStation.lng, nextStation.lat, nextStation.lng);
+                    var gpsPoint = new BMap.Point(element.lng, element.lat);
+                    BMap.Convertor.translate(gpsPoint, 0, function (point) {
+                        var lat = point.lat;
+                        var lng = point.lng;
+                        var busNextStation = getDistance(lat, lng, nextStation.lat, nextStation.lng);
+                        var marginTop = position * 100 + 100 - busNextStation / stationDistance * 100;
+                        var htmlContent = '<div id="' + element.busId + '" class="relative bus" style="margin-top:' + marginTop + 'px;">';
+                        htmlContent += '<div class="bustip">';
+                        htmlContent += '<footer>' + element.cardId + ' ' + element.stationSeqNum + '</footer>';
+                        htmlContent += '</div>';
+                        htmlContent += '<img class="triangle" src="../Content/TimeLine/triangle.png" />';
+                        htmlContent += '<div class="year"></div>';
+                        htmlContent += ' </div>';
+                        $("#buses").append(htmlContent);
+                    });
+
+
+
+
+
+                });
+            });
+        }
+        function paintBusMap() {
+            $.getJSON("/Api/GetBusStations?busId=" + busId, function (xhrJson) {
+                stationsR = xhrJson;
+                $("#stations").html("");
+                $(".buses-and-stations").height(stationsR.result.stations.length * 100 + 300);
+                var marginTop = 0;
+                stationsR.result.stations.forEach(function (element, index, array) {
+                    marginTop += 100;
+                    var htmlContent = '<div class="bus-station" id="' + element.id + '" style="margin-top:' + marginTop + 'px;">';
+                    htmlContent += element.stationName;
+                    htmlContent += '<div class="bus-station-dot"></div>'
+                    htmlContent += '</div>'
+                    $("#stations").append(htmlContent);
+
+                });
+                refreshBus(busId);
+            });
+        }
+
+        translateCallback = function (point) {
+            var lat = point.lat;
+            var lng = point.lng;
+
+        }
+
+        var EARTH_RADIUS = 6378.137;//地球半径
+        function rad(d) {
+            return d * Math.PI / 180.0;
+        }
+        function getDistance(lat1, lng1, lat2, lng2) {
+            var radLat1 = rad(lat1);
+            var radLat2 = rad(lat2);
+            var a = radLat1 - radLat2;
+            var b = rad(lng1) - rad(lng2);
+
+            var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) +
+             Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+            s = s * EARTH_RADIUS;
+            s = Math.round(s * 10000) / 10000;
+            return s;
+        }
+
+
+        var stationsR;//= { "status": { "code": 0 }, "result": { "id": "217", "area": 370100, "localLineId": "33170708", "endStationName": "唐冶公交枢纽", "lineName": "115", "linePoints": "117.01942515473_36.660980599837,117.01987410621_36.658684386126,117.02231576415_36.654579274323,117.02751212572_36.6545663609,117.03365415482_36.654462549807,117.0404836585_36.654340865685,117.04436112971_36.654256599488,117.04861502884_36.654268642224,117.05501316989_36.654168975403,117.05950368615_36.654045451886,117.06503778738_36.654502878149,117.0685404447_36.655826870805,117.07565901028_36.656326173316,117.08199011857_36.656951853638,117.09365565186_36.65902330769,117.09695425033_36.659903398609,117.10276327538_36.661695303852,117.10911786466_36.663668491812,117.11985942014_36.665498695822,117.1278988689_36.665820107866,117.13811831293_36.665104791591,117.1435126991_36.665291195224,117.14988039134_36.667357208381,117.15918399636_36.670409494285,117.16505509896_36.672299381311,117.17363096688_36.673615802644,117.18485398866_36.674569228283,117.19320299554_36.676106716066,117.20066971254_36.677865859932,117.20780899331_36.679619137476,117.21126793604_36.680073173067,117.2212993003_36.67871115354,117.22568448406_36.6803114297", "startStationName": "山东剧院", "state": "1", "stationList": "70378,70379,70380,70381,70382,70383,70384,70385,70386,70387,70388,70389,70390,70391,70392,70393,70394,70395,70396,70397,70398,70399,70400,70401,70402,70403,70404,70405,70406,70407,70408,70409,70410", "stations": [{ "id": "70378", "area": 370100, "lat": 36.660980599837, "lng": 117.01942515473, "state": "1", "stationName": "山东剧院", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70379", "area": 370100, "lat": 36.658684386126, "lng": 117.01987410621, "state": "1", "stationName": "青年西路", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70380", "area": 370100, "lat": 36.654579274323, "lng": 117.02231576415, "state": "1", "stationName": "全民健身中心", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70381", "area": 370100, "lat": 36.6545663609, "lng": 117.02751212572, "state": "1", "stationName": "泉城公园北门", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70382", "area": 370100, "lat": 36.654462549807, "lng": 117.03365415482, "state": "1", "stationName": "舜耕路", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70383", "area": 370100, "lat": 36.654340865685, "lng": 117.0404836585, "state": "1", "stationName": "千佛山", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70384", "area": 370100, "lat": 36.654256599488, "lng": 117.04436112971, "state": "1", "stationName": "历山路南口", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70385", "area": 370100, "lat": 36.654268642224, "lng": 117.04861502884, "state": "1", "stationName": "山师东路", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70386", "area": 370100, "lat": 36.654168975403, "lng": 117.05501316989, "state": "1", "stationName": "科院路", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70387", "area": 370100, "lat": 36.654045451886, "lng": 117.05950368615, "state": "1", "stationName": "燕子山西路", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70388", "area": 370100, "lat": 36.654502878149, "lng": 117.06503778738, "state": "1", "stationName": "山大路南口", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70389", "area": 370100, "lat": 36.655826870805, "lng": 117.0685404447, "state": "1", "stationName": "燕子山路南口", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70390", "area": 370100, "lat": 36.656326173316, "lng": 117.07565901028, "state": "1", "stationName": "燕山立交桥西", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70391", "area": 370100, "lat": 36.656951853638, "lng": 117.08199011857, "state": "1", "stationName": "燕山立交桥东", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70392", "area": 370100, "lat": 36.65902330769, "lng": 117.09365565186, "state": "1", "stationName": "浆水泉路", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70393", "area": 370100, "lat": 36.659903398609, "lng": 117.09695425033, "state": "1", "stationName": "华洋名苑", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70394", "area": 370100, "lat": 36.661695303852, "lng": 117.10276327538, "state": "1", "stationName": "省博物馆", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70395", "area": 370100, "lat": 36.663668491812, "lng": 117.10911786466, "state": "1", "stationName": "历下广场", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70396", "area": 370100, "lat": 36.665498695822, "lng": 117.11985942014, "state": "1", "stationName": "奥体西路", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70397", "area": 370100, "lat": 36.665820107866, "lng": 117.1278988689, "state": "1", "stationName": "省立医院东院区", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70398", "area": 370100, "lat": 36.665104791591, "lng": 117.13811831293, "state": "1", "stationName": "草山岭西", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70399", "area": 370100, "lat": 36.665291195224, "lng": 117.1435126991, "state": "1", "stationName": "草山岭东", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70400", "area": 370100, "lat": 36.667357208381, "lng": 117.14988039134, "state": "1", "stationName": "高新开发区", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70401", "area": 370100, "lat": 36.670409494285, "lng": 117.15918399636, "state": "1", "stationName": "北胡", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70402", "area": 370100, "lat": 36.672299381311, "lng": 117.16505509896, "state": "1", "stationName": "刘智远村南", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70403", "area": 370100, "lat": 36.673615802644, "lng": 117.17363096688, "state": "1", "stationName": "林家庄", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70404", "area": 370100, "lat": 36.674569228283, "lng": 117.18485398866, "state": "1", "stationName": "临港南区", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70405", "area": 370100, "lat": 36.676106716066, "lng": 117.19320299554, "state": "1", "stationName": "田庄西", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70406", "area": 370100, "lat": 36.677865859932, "lng": 117.20066971254, "state": "1", "stationName": "田庄东", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70407", "area": 370100, "lat": 36.679619137476, "lng": 117.20780899331, "state": "1", "stationName": "潘庄", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70408", "area": 370100, "lat": 36.680073173067, "lng": 117.21126793604, "state": "1", "stationName": "邢村立交桥", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70409", "area": 370100, "lat": 36.67871115354, "lng": 117.2212993003, "state": "1", "stationName": "邢村立交桥东", "updateTime": "Dec 18, 2014 3:22:08 PM" }, { "id": "70410", "area": 370100, "lat": 36.6803114297, "lng": 117.22568448406, "state": "1", "stationName": "唐冶公交枢纽", "updateTime": "Dec 18, 2014 3:22:08 PM" }], "ticketPrice": "115:票价一元  K115:票价两元", "operationTime": "山东剧院 : 6:00－21:30唐冶公交枢纽 : 6:00－21:30", "owner": "330600", "updateTime": "Dec 18, 2014 3:22:08 PM", "descrip": "" } };
+
+    </script>
+</head>
+<body>
+
+
+    <div class="container text-center">
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <div class="col-xs-8">
+                    <input type="text" class="form-control" id="busname" placeholder="输入查询的公交号">
+                </div>
+                <div class="col-xs-3">
+                    <a class="btn btn-default search-button" id="searchBtn" style="border-width:1px;">搜索</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div style="position:fixed;right:10px;bottom:10px;">
+        <a id="btnRefresh" class="btn btn-info" style="z-index:1000;">未选中任何公交</a>
+    </div>
+    <div class="row" style="background-image: url(../../Content/TimeLine/bg_tml_spine.png);background-repeat:repeat-y;
+background-repeat-x: no-repeat; background-repeat-y: inherit;padding-left: 19px; margin-left:50%; width:18px;">
+
+        <div class="buses-and-stations" style="z-index:1">
+            <div id="buses">
+
+            </div>
+            <div id="stations">
+
+            </div>
+        </div>
+
+    </div>
+
+    <div id="modal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">选择线路</h4>
+                </div>
+                <div class="modal-body" id="modal-content">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="btnOK">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

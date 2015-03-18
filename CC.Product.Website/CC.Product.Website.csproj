@@ -773,6 +773,7 @@
     <Content Include="Views\Home\WayBook.cshtml" />
     <Content Include="Views\Api\GetBusList.cshtml" />
     <Content Include="Views\Tools\WayBook.cshtml" />
+    <Content Include="Views\Tools\WayBookSample.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

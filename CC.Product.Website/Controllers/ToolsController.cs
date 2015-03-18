@@ -36,6 +36,15 @@ namespace CC.Product.Website.Controllers
 
         }
 
+        public ActionResult WayBookSample(string busId)
+        {
+
+           // var stationsInfo = WayBookService.GetStations(busId);
+            //return View(stationsInfo.result);
+            return View();
+
+        }
+
         public ActionResult GetDistance()
         {
             //var longitude1 =117.052313;

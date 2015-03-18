@@ -53,6 +53,12 @@
             "Title": "WayBook",
             "Icon": "/Assets/DataImages/Item-ee98fe03-6664-4aec-8259-a1c0a06db7fd.png",
             "Target": "CCwayBookPage"
+        },
+                {
+            "Type": "Section",
+            "Title": "Demo",
+            "Icon": "/Assets/DataImages/Item-ee98fe03-6664-4aec-8259-a1c0a06db7fd.png",
+            "Target": "CCDemoPage"
         }
     ]
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,7 @@ namespace CC.Product.Website.Filters
             {
                 var b = a[item.ToString()];
                 LogHelper.WriteInfo(item.ToString() + ":" + b);
+                Debug.WriteLine(item.ToString() + ":" + b);
             }
 
             base.OnActionExecuting(filterContext);
