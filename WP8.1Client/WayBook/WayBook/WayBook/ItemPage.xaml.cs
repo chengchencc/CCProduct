@@ -18,6 +18,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using WayBook.DataModel;
 using Newtonsoft.Json;
+using Windows.UI.Xaml.Shapes;
+using Windows.UI;
+using Windows.Data.Json;
 
 // The Hub Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
 
@@ -30,6 +33,8 @@ namespace WayBook
     {
         private readonly NavigationHelper navigationHelper;
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
+        string _busId = string.Empty;
+        List<Station> stations;
 
         public ItemPage()
         {
@@ -38,7 +43,7 @@ namespace WayBook
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-        } 
+        }
 
         /// <summary>
         /// Gets the <see cref="NavigationHelper"/> associated with this <see cref="Page"/>.
@@ -75,19 +80,40 @@ namespace WayBook
             //this.DefaultViewModel["Item"] = item;
             var item = (ResultItem)e.NavigationParameter;
             this.DefaultViewModel["Item"] = item;
-
-            var jsonResult =await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + item.id);
+            _busId = item.id;
+            var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + item.id);
             var stationsInfo = JsonConvert.DeserializeObject<WayBookBase<StationInfo>>(jsonResult);
-            var stations = stationsInfo.result.stations;
+            stations = stationsInfo.result.stations;
             int i = 1;
+            StationPanel.Children.Clear();
+            LinePanel.Children.Clear();
             foreach (var stationItem in stations)
             {
                 Button b = new Button();
                 b.Content = stationItem.stationName;
-                var top = i * 100;
+                b.RequestedTheme = ElementTheme.Light;
+                b.BorderThickness = new Thickness(0);
+
                 b.Margin = new Thickness(0, 100, 0, 0);
+                StationPanel.Children.Add(b);
+
+                Ellipse ellipse = new Ellipse();
+                ellipse.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Center;
+                ellipse.Width = 20;
+                ellipse.Height = 20;
+                ellipse.Fill = new SolidColorBrush(Colors.White);
+                ellipse.Stroke = new SolidColorBrush(Colors.DeepSkyBlue);
+                ellipse.StrokeThickness = 5;
+                if (i == 1)
+                {
+                    ellipse.Margin = new Thickness(0, 118.75, 0, 0);
+                }
+                else
+                {
+                    ellipse.Margin = new Thickness(0, 137.5, 0, 0);
+                }
+                LinePanel.Children.Add(ellipse);
                 i++;
-                ContentPanel.Children.Add(b);
             }
         }
 
@@ -129,6 +155,104 @@ namespace WayBook
             this.navigationHelper.OnNavigatedFrom(e);
         }
 
+        #endregion
+
+
+        private async void SearchBusLineBtn_Click(object sender, RoutedEventArgs e)
+        {
+            #region GetData
+            var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buses/busline/370100/" + _busId);
+            var buses = JsonConvert.DeserializeObject<WayBookBase<List<RealTimeBus>>>(jsonResult);
+            var coords = string.Empty;
+            foreach (var item in buses.result)
+            {
+                coords += item.lng + "," + item.lat + ";";
+            }
+            coords = coords.TrimEnd(';');
+
+            var url = "http://api.map.baidu.com/geoconv/v1/?coords=" + coords + "&from=1&to=5&ak=075c51e0ecb472c3e2fa7b696e1fb01a";
+
+            var baiduMapCoords = await HttpClientWapper.Instance.Get(url);
+            JsonObject jsonObject = JsonObject.Parse(baiduMapCoords);
+            JsonArray jsonArray = jsonObject["result"].GetArray();
+
+            for (int i = 0; i < jsonArray.Count; i++)
+            {
+                JsonObject groupObject = jsonArray[i].GetObject();
+                buses.result[i].lng = groupObject["x"].GetNumber();
+                buses.result[i].lat = groupObject["y"].GetNumber();
+            }
+            #endregion
+
+            #region Display
+            BusPanel.Children.Clear();
+
+            foreach (var item in buses.result)
+            {
+                //<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-15,100,0,0">
+                //         <Ellipse HorizontalAlignment="Center" Width="10" Height="10"  Fill="#FFF51717" StrokeThickness="1" />
+                //         <Button Content="鲁A18556" RequestedTheme="Light" RenderTransformOrigin="0.5,0.5" BorderThickness="1" BorderBrush="#FF7C1D1D" Foreground="#FFF55353"/>
+                //     </StackPanel>
+
+                StackPanel panel = new StackPanel();
+                panel.Orientation = Orientation.Horizontal;
+                panel.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left;
+                panel.VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Center;
+                panel.Margin = new Thickness(-15, 0, 0, 0);
+
+                Ellipse el = new Ellipse();
+                el.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Center;
+                el.Width = 10;
+                el.Height = 10;
+                el.Fill = new SolidColorBrush(Colors.OrangeRed);
+                el.StrokeThickness = 1;
+
+                Button btn = new Button();
+                btn.Content = item.cardId;
+                btn.RequestedTheme = ElementTheme.Light;
+                btn.Background = new SolidColorBrush(Colors.WhiteSmoke);
+                btn.BorderThickness = new Thickness(1);
+                btn.BorderBrush = new SolidColorBrush(Colors.OrangeRed);
+                btn.Foreground = new SolidColorBrush(Colors.OrangeRed);
+
+                panel.Children.Add(el);
+                panel.Children.Add(btn);
+
+                var position = item.stationSeqNum;
+                var preStation = stations[position - 1];
+                var nextStation = stations[position];
+                var stationDistance = GetDistance(preStation.lat, preStation.lng, nextStation.lat, nextStation.lng);
+                var busNextStationDistance = GetDistance(nextStation.lat, nextStation.lng, item.lat, item.lng);
+                PlaneProjection pro = new PlaneProjection();
+                pro.GlobalOffsetY = position * 100 + 100 - busNextStationDistance / stationDistance * 100 + position * 57.5;
+                
+                panel.Projection = pro;
+                BusPanel.Children.Add(panel);
+            }
+
+            #endregion
+        }
+
+        #region Helpers
+        private const double EARTH_RADIUS = 6378.137;//地球半径
+        private static double Rad(double d)
+        {
+            return d * Math.PI / 180.0;
+        }
+
+        public static double GetDistance(double lat1, double lng1, double lat2, double lng2)
+        {
+            double radLat1 = Rad(lat1);
+            double radLat2 = Rad(lat2);
+            double a = radLat1 - radLat2;
+            double b = Rad(lng1) - Rad(lng2);
+
+            double s = 2 * Math.Asin(Math.Sqrt(Math.Pow(Math.Sin(a / 2), 2) +
+             Math.Cos(radLat1) * Math.Cos(radLat2) * Math.Pow(Math.Sin(b / 2), 2)));
+            s = s * EARTH_RADIUS;
+            s = Math.Round(s * 10000) / 10000;
+            return s;
+        }
         #endregion
 
     }

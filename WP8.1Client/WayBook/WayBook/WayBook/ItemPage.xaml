@@ -9,7 +9,9 @@
     mc:Ignorable="d"
     DataContext="{Binding DefaultViewModel.Item, RelativeSource={RelativeSource Self}}"
     d:DataContext="{Binding Groups[0].Items[0], Source={d:DesignData Source=/DataModel/SampleData.json, Type=data:SampleDataSource}}"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="CornflowerBlue"
+      >
+    <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">-->
     <Page.Transitions>
         <TransitionCollection>
             <NavigationThemeTransition>
@@ -35,23 +37,56 @@
         <StackPanel Grid.Row="0" Margin="19,0,0,0" Orientation="Horizontal">
             <!--<TextBlock x:Uid="Header" Text="application name" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0" />-->
             <TextBlock Text="{Binding lineName}" Style="{ThemeResource HeaderTextBlockStyle}"  CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
-            <TextBlock Text="{Binding startStationName}" Style="{ThemeResource SubheaderTextBlockStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="#FFE4E1E1"></TextBlock>
-            <TextBlock Text="--" Style="{ThemeResource SubheaderTextBlockStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="#FFE4E1E1"></TextBlock>
-            <TextBlock Text="{Binding endStationName}" Style="{ThemeResource SubheaderTextBlockStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="#FFE4E1E1"></TextBlock>
+            <TextBlock Text="{Binding startStationName}" Style="{ThemeResource SubheaderTextBlockStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="#FFE4E1E1" FontSize="15"></TextBlock>
+            <TextBlock Text="--" Style="{ThemeResource SubheaderTextBlockStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="#FFE4E1E1" FontSize="15"></TextBlock>
+            <TextBlock Text="{Binding endStationName}" Style="{ThemeResource SubheaderTextBlockStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="#FFE4E1E1" FontSize="15"></TextBlock>
         </StackPanel>
 
         <!-- 
             TODO: Content should be placed within the following grid 
                   to show details for the current item
         -->
-        <ScrollViewer Grid.Row="1">
-        <Grid  x:Name="ContentRoot" Margin="19,9.5,19,0">
-                <Border Background="#FFDAD7D7" BorderThickness="0" Width="5" Margin="0,100,0,0"></Border>
-                <StackPanel x:Name="ContentPanel" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+        <ScrollViewer Grid.Row="1" Background="White">
+            <Grid  x:Name="ContentRoot" Margin="19,10,19,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="20"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
+                <StackPanel x:Name="StationPanel" Grid.Column="0" HorizontalAlignment="Right">
+                    <Button  Content="山东剧院" Margin="0,100,0,0" RequestedTheme="Light" BorderThickness="0" ToolTipService.ToolTip="tooltip" Padding="0" ></Button>
+                    <Button  Content="山东剧院" Margin="0,100,0,0" RequestedTheme="Light" ></Button>
+                    <Button  Content="山东剧院" Margin="0,100,0,0" RequestedTheme="Light" ></Button>
+                    <Button  Content="山东剧院" Margin="0,100,0,0" RequestedTheme="Light" ></Button>
+                    <Button  Content="山东剧院" Margin="0,100,0,0" RequestedTheme="Light" ></Button>
                 </StackPanel>
-
+                <Border Grid.Column="1" Background="#FFDAD7D7" BorderThickness="0" Width="5" Margin="0,100,0,0"></Border>
+                <StackPanel Grid.Column="1" Name="LinePanel">
+                    <Ellipse HorizontalAlignment="Center" Width="20" Height="20" Margin="0,118.75,0,0" Fill="#FFF9F7F7" Stroke="#FFB3B0FF" StrokeThickness="5" />
+                    <Ellipse HorizontalAlignment="Center" Width="20" Height="20" Margin="0,137.5,0,0" Fill="#FFF9F7F7" Stroke="#FFB3B0FF" StrokeThickness="5" />
+                    <Ellipse HorizontalAlignment="Center" Width="20" Height="20" Margin="0,137.5,0,0" Fill="#FFF9F7F7" Stroke="#FFB3B0FF" StrokeThickness="5" />
+                </StackPanel>
+                <Grid Grid.Column="2" Name="BusPanel" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-15,0,0,0">
+                        <Ellipse HorizontalAlignment="Center" Width="10" Height="10"  Fill="#FFF51717" StrokeThickness="1" />
+                        <Button Content="鲁A18556" RequestedTheme="Light" RenderTransformOrigin="0.5,0.5" Background="{x:Null}" BorderThickness="1" BorderBrush="#FF7C1D1D" Foreground="#FFF55353"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-15,0,0,0">
+                        <StackPanel.Projection>
+                            <PlaneProjection GlobalOffsetY="1"/>
+                        </StackPanel.Projection>
+                        <Ellipse HorizontalAlignment="Center" Width="10" Height="10"  Fill="#FFF51717" StrokeThickness="1" />
+                        <Button Content="鲁A18556" RequestedTheme="Light" RenderTransformOrigin="0.5,0.5" Background="{x:Null}" BorderThickness="1" BorderBrush="#FF7C1D1D" Foreground="#FFF55353"/>
+                    </StackPanel>
+                </Grid>
             </Grid>
         </ScrollViewer>
     </Grid>
+    <Page.BottomAppBar >
+        <CommandBar Name="commandBar" Opacity="0.5"  Background="CornflowerBlue">
+            <AppBarButton x:Name="SearchBusLineBtn" Label="搜索" Background="CornflowerBlue" Click="SearchBusLineBtn_Click" Icon="Find" >
+            </AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>
