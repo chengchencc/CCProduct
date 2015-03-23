@@ -70,7 +70,8 @@ namespace WayBook
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             // TODO: Create an appropriate data model for your problem domain to replace the sample data.
-            var group = await SampleDataSource.GetGroupAsync((string)e.NavigationParameter);
+            //var group = await SampleDataSource.GetGroupAsync((string)e.NavigationParameter);
+            var group = await RecentlySearchedBusLinesSource.GetAllAsync();
             this.DefaultViewModel["Group"] = group;
             //StatusBar.GetForCurrentView().BackgroundColor = Colors.CornflowerBlue;
             StatusBar.GetForCurrentView().BackgroundOpacity = 0;

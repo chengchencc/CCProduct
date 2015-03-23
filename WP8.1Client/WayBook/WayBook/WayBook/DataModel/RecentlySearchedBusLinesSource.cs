@@ -23,9 +23,9 @@ namespace WayBook.Data
     /// <summary>
     /// Generic group data model.
     /// </summary>
-    public class RecentlySearchedBusLinesSource
+    public class RecentlySearchedBusLines
     {
-        public RecentlySearchedBusLinesSource()
+        public RecentlySearchedBusLines()
         {
             this.RecentlyBusLines = new ObservableCollection<StationInfo>();
         }
@@ -81,16 +81,17 @@ namespace WayBook.Data
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
             string jsonText = await FileIO.ReadTextAsync(file);
 
-           this.All =  JsonConvert.DeserializeObject<RecentlySearchedBusLinesSource>(jsonText).RecentlyBusLines;
+            this.All = JsonConvert.DeserializeObject<RecentlySearchedBusLines>(jsonText).RecentlyBusLines;
 
-            }
+        }
 
-        private async Task SaveDataAsync(){
+        private async Task SaveDataAsync()
+        {
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
-            FileIO.WriteTextAsync(file,this.ToString());
-            
-        }
+            FileIO.WriteTextAsync(file, this.ToString());
 
         }
+
     }
+
 }
