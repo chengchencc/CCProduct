@@ -88,8 +88,10 @@
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\Singleton.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Common\Utilities.cs" />
     <Compile Include="DataModel\BusLine.cs" />
     <Compile Include="DataModel\RealTimeBus.cs" />
+    <Compile Include="DataModel\RecentlySearchedBusLinesSource.cs" />
     <Compile Include="DataModel\SampleDataSource.cs" />
     <Compile Include="DataModel\StationInfo.cs" />
     <Compile Include="DataModel\WayBookBase.cs" />
@@ -168,6 +170,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DataModel\RecentlySearchedBusLines.json" />
     <None Include="packages.config" />
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
   </ItemGroup>
