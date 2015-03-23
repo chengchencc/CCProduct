@@ -74,22 +74,26 @@ namespace WayBook.Data
 
         private async Task GetDataAsync()
         {
-            if (this._all.Count != 0)
-                return;
+            //if (this._all.Count != 0)
+            //    return;
 
 
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
             string jsonText = await FileIO.ReadTextAsync(file);
-
+            
             this.All = JsonConvert.DeserializeObject<RecentlySearchedBusLines>(jsonText).RecentlyBusLines;
 
         }
 
-        private async Task SaveDataAsync()
+        public async Task SaveDataAsync()
         {
+            var data = new RecentlySearchedBusLines();
+            foreach (var item in this.All)
+            {
+                data.RecentlyBusLines.Add(item);
+            }
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
-            FileIO.WriteTextAsync(file, this.ToString());
-
+            await FileIO.WriteTextAsync(file, data.ToString());
         }
 
     }

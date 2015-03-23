@@ -78,12 +78,34 @@ namespace WayBook
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
             //var item = await SampleDataSource.GetItemAsync((string)e.NavigationParameter);
             //this.DefaultViewModel["Item"] = item;
-            var item = (ResultItem)e.NavigationParameter;
-            this.DefaultViewModel["Item"] = item;
-            _busId = item.id;
-            var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + item.id);
-            var stationsInfo = JsonConvert.DeserializeObject<WayBookBase<StationInfo>>(jsonResult);
-            stations = stationsInfo.result.stations;
+
+            var stationInfo = e.NavigationParameter as StationInfo;
+            if (stationInfo != null)
+            {
+                stations = stationInfo.stations;
+            }
+            else
+            {
+                var item = (ResultItem)e.NavigationParameter;
+                this.DefaultViewModel["Item"] = item;
+                _busId = item.id;
+                var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + item.id);
+                var stationsInfo = JsonConvert.DeserializeObject<WayBookBase<StationInfo>>(jsonResult);
+                if (stationsInfo == null)
+                {
+                    return;
+                }
+                RecentlySearchedBusLinesSource source = new RecentlySearchedBusLinesSource();
+                var old = await RecentlySearchedBusLinesSource.GetAllAsync();
+                source.All.Add(stationsInfo.result);
+                foreach (var item1 in old.ToList())
+                {
+                source.All.Add(item1);
+                    
+                }
+                await source.SaveDataAsync();
+                stations = stationsInfo.result.stations;
+            }
             int i = 1;
             StationPanel.Children.Clear();
             LinePanel.Children.Clear();
@@ -163,6 +185,10 @@ namespace WayBook
             #region GetData
             var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buses/busline/370100/" + _busId);
             var buses = JsonConvert.DeserializeObject<WayBookBase<List<RealTimeBus>>>(jsonResult);
+            if (buses == null)
+            {
+                return;
+            }
             var coords = string.Empty;
             foreach (var item in buses.result)
             {
