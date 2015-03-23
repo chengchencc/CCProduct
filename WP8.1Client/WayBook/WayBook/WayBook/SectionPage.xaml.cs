@@ -72,8 +72,8 @@ namespace WayBook
             // TODO: Create an appropriate data model for your problem domain to replace the sample data.
             var group = await SampleDataSource.GetGroupAsync((string)e.NavigationParameter);
             this.DefaultViewModel["Group"] = group;
-            StatusBar.GetForCurrentView().BackgroundColor = Colors.CornflowerBlue;
-            StatusBar.GetForCurrentView().BackgroundOpacity = 1;
+            //StatusBar.GetForCurrentView().BackgroundColor = Colors.CornflowerBlue;
+            StatusBar.GetForCurrentView().BackgroundOpacity = 0;
         }
 
         /// <summary>
@@ -87,8 +87,8 @@ namespace WayBook
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
             // TODO: Save the unique state of the page here.
-            StatusBar.GetForCurrentView().BackgroundColor = Colors.Black;
-            StatusBar.GetForCurrentView().BackgroundOpacity = 0;
+            //StatusBar.GetForCurrentView().BackgroundColor = Colors.Black;
+            //StatusBar.GetForCurrentView().BackgroundOpacity = 0;
         }
 
         /// <summary>
@@ -151,9 +151,18 @@ namespace WayBook
             //autoSuggestBox.ItemsSource = autoSuggestBoxSource.Where(s => s.StartsWith(text, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(sender.Text))
             {
+               // var GetBuslineUrl = Resources.SingleOrDefault(s => s.Key == "GetBuslineUrl");
                 var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + sender.Text + "/0/20");
-                var busLines = JsonConvert.DeserializeObject<BusLine>(jsonResult);
-                autoSuggestBox.ItemsSource = busLines.result.result;
+                if (!string.IsNullOrEmpty(jsonResult))
+                {
+                    var busLines = JsonConvert.DeserializeObject<BusLine>(jsonResult);
+                    autoSuggestBox.ItemsSource = busLines.result.result;
+                }
+                else
+                {
+                    autoSuggestBox.ItemsSource = null;
+                }
+
             }
         }
 

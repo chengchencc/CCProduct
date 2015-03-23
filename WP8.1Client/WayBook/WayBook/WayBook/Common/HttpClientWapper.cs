@@ -15,6 +15,7 @@ namespace WayBook.Common
         public HttpClientWapper()
         {
             httpClient = new HttpClient();
+            httpClient.Timeout = new TimeSpan(0, 0, 10);//set Timeout to 10s
         }
 
         public async Task<string> Get(string url)
@@ -27,10 +28,18 @@ namespace WayBook.Common
             //httpClient.DefaultRequestHeaders.Accept.Clear();
             //httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             //HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
+            try
+            {
+                var responseByteArray = await httpClient.GetByteArrayAsync(uri);
+                var resultString = Encoding.GetEncoding("UTF-8").GetString(responseByteArray, 0, responseByteArray.Length);
+                return resultString;
+            }
+            catch (Exception)
+            {
+                throw new Exception(Utilities.GetStringFromResource("NetworkConnectionError"));
+                //return string.Empty;
+            }
 
-            var responseByteArray = await httpClient.GetByteArrayAsync(uri);
-            var resultString = Encoding.GetEncoding("UTF-8").GetString(responseByteArray, 0, responseByteArray.Length);
-            return resultString;
         }
         public string Post(string url)
         {
