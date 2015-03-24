@@ -75,6 +75,7 @@ namespace WayBook
             this.DefaultViewModel["Group"] = group;
             //StatusBar.GetForCurrentView().BackgroundColor = Colors.CornflowerBlue;
             StatusBar.GetForCurrentView().BackgroundOpacity = 0;
+            
         }
 
         /// <summary>
@@ -137,11 +138,12 @@ namespace WayBook
 
         private async void SearchBusLineBtn_Click(object sender, RoutedEventArgs e)
         {
-            //if (!Frame.Navigate(typeof(SearchBusLinePage)))
-            //{
-            //    var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-            //    throw new Exception(resourceLoader.GetString("NavigationFailedExceptionMessage"));
-            //}
+            if (!Frame.Navigate(typeof(SearchBusLinePage)))
+            {
+                var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
+                throw new Exception(resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
+            //Utilities.ShowImageTextToast("","ttttt");
         }
 
 
@@ -153,7 +155,8 @@ namespace WayBook
             if (!string.IsNullOrEmpty(sender.Text))
             {
                // var GetBuslineUrl = Resources.SingleOrDefault(s => s.Key == "GetBuslineUrl");
-                var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + sender.Text + "/0/20");
+                //var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + sender.Text + "/0/20");
+                var jsonResult = await RestfulClient.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + sender.Text + "/0/20");
                 if (!string.IsNullOrEmpty(jsonResult))
                 {
                     var busLines = JsonConvert.DeserializeObject<BusLine>(jsonResult);
@@ -161,6 +164,7 @@ namespace WayBook
                 }
                 else
                 {
+                    Utilities.ShowMessage("网络连接失败，请检查网络连接！");
                     autoSuggestBox.ItemsSource = null;
                 }
 

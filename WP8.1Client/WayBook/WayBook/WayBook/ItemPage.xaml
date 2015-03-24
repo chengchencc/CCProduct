@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     DataContext="{Binding DefaultViewModel.Item, RelativeSource={RelativeSource Self}}"
     d:DataContext="{Binding Groups[0].Items[0], Source={d:DesignData Source=/DataModel/SampleData.json, Type=data:SampleDataSource}}"
-    Background="CornflowerBlue"
+    Background="CornflowerBlue" RequestedTheme="Light"
       >
     <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">-->
     <Page.Transitions>
@@ -36,10 +36,27 @@
         <!-- Title Panel -->
         <StackPanel Grid.Row="0" Margin="19,0,0,0" Orientation="Horizontal">
             <!--<TextBlock x:Uid="Header" Text="application name" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0" />-->
-            <TextBlock Text="{Binding lineName}" Style="{ThemeResource HeaderTextBlockStyle}"  CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
-            <TextBlock Text="{Binding startStationName}" Style="{ThemeResource SubheaderTextBlockStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="#FFE4E1E1" FontSize="15"></TextBlock>
-            <TextBlock Text="--" Style="{ThemeResource SubheaderTextBlockStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="#FFE4E1E1" FontSize="15"></TextBlock>
-            <TextBlock Text="{Binding endStationName}" Style="{ThemeResource SubheaderTextBlockStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="#FFE4E1E1" FontSize="15"></TextBlock>
+            <!--<TextBlock Text="115" FontSize="50"  />
+            <StackPanel VerticalAlignment="Bottom">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="山东剧院"></TextBlock>
+                <TextBlock Text=""></TextBlock>
+                <TextBlock Text="唐冶公交枢纽"></TextBlock>
+            </StackPanel>
+                <TextBlock>115:票价一元 K115:票价两元</TextBlock>
+                <TextBlock>山东剧院 : 6:00－21:30唐冶公交枢纽 : 6:00－21:30</TextBlock>
+            </StackPanel>-->
+            <TextBlock Text="{Binding lineName}" FontSize="50"  />
+            <StackPanel VerticalAlignment="Bottom">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding startStationName}"></TextBlock>
+                    <TextBlock Text="--"></TextBlock>
+                    <TextBlock Text="{Binding endStationName}"></TextBlock>
+                </StackPanel>
+                <TextBlock Text="{Binding ticketPrice}"></TextBlock>
+                <TextBlock Text="{Binding operationTime}"></TextBlock>
+            </StackPanel>
+
         </StackPanel>
 
         <!-- 
@@ -84,8 +101,8 @@
         </ScrollViewer>
     </Grid>
     <Page.BottomAppBar >
-        <CommandBar Name="commandBar" Opacity="0.5"  Background="CornflowerBlue">
-            <AppBarButton x:Name="SearchBusLineBtn" Label="搜索" Background="CornflowerBlue" Click="SearchBusLineBtn_Click" Icon="Find" >
+        <CommandBar Name="commandBar">
+            <AppBarButton x:Name="SearchBusLineBtn" Label="刷新" Click="SearchBusLineBtn_Click" Icon="Refresh" >
             </AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>

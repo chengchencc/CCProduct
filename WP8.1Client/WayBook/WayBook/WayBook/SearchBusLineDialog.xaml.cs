@@ -43,7 +43,8 @@ namespace WayBook
             //autoSuggestBox.ItemsSource = autoSuggestBoxSource.Where(s => s.StartsWith(text, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(sender.Text))
             {
-                var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + sender.Text + "/0/20");
+                //var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + sender.Text + "/0/20");
+                var jsonResult = await RestfulClient.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + sender.Text + "/0/20");
                 var busLines = JsonConvert.DeserializeObject<BusLine>(jsonResult);
                 autoSuggestBox.ItemsSource = busLines.result.result;
             }

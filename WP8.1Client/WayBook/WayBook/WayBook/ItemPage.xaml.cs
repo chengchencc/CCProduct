@@ -21,6 +21,8 @@ using Newtonsoft.Json;
 using Windows.UI.Xaml.Shapes;
 using Windows.UI;
 using Windows.Data.Json;
+using Windows.UI.Notifications;
+using System.Threading;
 
 // The Hub Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
 
@@ -78,34 +80,51 @@ namespace WayBook
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
             //var item = await SampleDataSource.GetItemAsync((string)e.NavigationParameter);
             //this.DefaultViewModel["Item"] = item;
-
+            //ToastNotification toast = new ToastNotification();
             var stationInfo = e.NavigationParameter as StationInfo;
             if (stationInfo != null)
             {
                 stations = stationInfo.stations;
+                this.DefaultViewModel["Item"] = stationInfo;
+                _busId = stationInfo.id;
             }
             else
             {
                 var item = (ResultItem)e.NavigationParameter;
-                this.DefaultViewModel["Item"] = item;
+                //this.DefaultViewModel["Item"] = item;
                 _busId = item.id;
-                var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + item.id);
+                //var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + item.id);
+                var jsonResult = await RestfulClient.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + item.id);
+                if (string.IsNullOrEmpty(jsonResult))
+                {
+                    Utilities.ShowMessage("网络连接失败，请检查网络连接！");
+                    return;
+                }
+                
                 var stationsInfo = JsonConvert.DeserializeObject<WayBookBase<StationInfo>>(jsonResult);
                 if (stationsInfo == null)
                 {
                     return;
                 }
-                RecentlySearchedBusLinesSource source = new RecentlySearchedBusLinesSource();
-                var old = await RecentlySearchedBusLinesSource.GetAllAsync();
-                source.All.Add(stationsInfo.result);
-                foreach (var item1 in old.ToList())
-                {
-                source.All.Add(item1);
-                    
-                }
-                await source.SaveDataAsync();
                 stations = stationsInfo.result.stations;
+                this.DefaultViewModel["Item"] = stationsInfo.result;
+                //保存最近搜索
+                RecentlySearchedBusLinesSource.AddStationInfo(stationsInfo.result);
+                await RecentlySearchedBusLinesSource.SaveDataAsync();
             }
+            GenerateStation();
+
+            //TimerCallback callback = Refresh;
+
+            //System.Threading.Timer timer = new System.Threading.Timer(callback, null, 0, 5000);
+            await GetBusPoint();
+        }
+        private void Refresh(object status)
+        {
+            GetBusPoint().Wait();
+        }
+        private void GenerateStation()
+        {
             int i = 1;
             StationPanel.Children.Clear();
             LinePanel.Children.Clear();
@@ -182,8 +201,20 @@ namespace WayBook
 
         private async void SearchBusLineBtn_Click(object sender, RoutedEventArgs e)
         {
+            await GetBusPoint();
+        }
+
+        private async System.Threading.Tasks.Task GetBusPoint()
+        {
             #region GetData
-            var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buses/busline/370100/" + _busId);
+            //var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buses/busline/370100/" + _busId);
+            var jsonResult = await RestfulClient.Get("http://60.216.101.229/server-ue2/rest/buses/busline/370100/" + _busId);
+            if (string.IsNullOrEmpty(jsonResult))
+            {
+                Utilities.ShowMessage("网络连接失败，请检查网络连接！");
+                return;
+            }
+
             var buses = JsonConvert.DeserializeObject<WayBookBase<List<RealTimeBus>>>(jsonResult);
             if (buses == null)
             {
@@ -198,7 +229,14 @@ namespace WayBook
 
             var url = "http://api.map.baidu.com/geoconv/v1/?coords=" + coords + "&from=1&to=5&ak=075c51e0ecb472c3e2fa7b696e1fb01a";
 
-            var baiduMapCoords = await HttpClientWapper.Instance.Get(url);
+            //var baiduMapCoords = await HttpClientWapper.Instance.Get(url);
+            var baiduMapCoords = await RestfulClient.Get(url);
+            if (string.IsNullOrEmpty(baiduMapCoords))
+            {
+                Utilities.ShowMessage("网络连接失败，请检查网络连接！");
+                return;
+            }
+
             JsonObject jsonObject = JsonObject.Parse(baiduMapCoords);
             JsonArray jsonArray = jsonObject["result"].GetArray();
 
@@ -213,8 +251,19 @@ namespace WayBook
             #region Display
             BusPanel.Children.Clear();
 
+            GenerateBusPoint(buses);
+
+            #endregion
+        }
+
+        private void GenerateBusPoint(WayBookBase<List<RealTimeBus>> buses)
+        {
             foreach (var item in buses.result)
             {
+                //if (item.stationSeqNum != item.dualSerialNum)
+                //{
+                //    continue;
+                //}
                 //<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-15,100,0,0">
                 //         <Ellipse HorizontalAlignment="Center" Width="10" Height="10"  Fill="#FFF51717" StrokeThickness="1" />
                 //         <Button Content="鲁A18556" RequestedTheme="Light" RenderTransformOrigin="0.5,0.5" BorderThickness="1" BorderBrush="#FF7C1D1D" Foreground="#FFF55353"/>
@@ -251,12 +300,10 @@ namespace WayBook
                 var busNextStationDistance = GetDistance(nextStation.lat, nextStation.lng, item.lat, item.lng);
                 PlaneProjection pro = new PlaneProjection();
                 pro.GlobalOffsetY = position * 100 + 100 - busNextStationDistance / stationDistance * 100 + position * 57.5;
-                
+
                 panel.Projection = pro;
                 BusPanel.Children.Add(panel);
             }
-
-            #endregion
         }
 
         #region Helpers

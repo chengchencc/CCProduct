@@ -8,7 +8,32 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid x:Name="LayoutRoot">
+    <Page.Resources>
+        <Storyboard x:Name="heightStoryboard">
+            <!--针对Height属性的动画-->
+            <DoubleAnimation Storyboard.TargetName="rectangle1" Storyboard.TargetProperty="Height" RepeatBehavior="Forever" EnableDependentAnimation="True" From="100" To="200" Duration="0:0:2">
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="scaleTransformStoryboard">
+            <!--针对ScaleTransform的ScaleY属性的动画-->
+            <DoubleAnimation Storyboard.TargetName="scaleTransform1" Storyboard.TargetProperty="ScaleX"  RepeatBehavior="Forever" From="1" To="2" Duration="0:0:2">
+            </DoubleAnimation>
+        </Storyboard>
+    </Page.Resources>
+    <StackPanel>
+        <Button Content="阻塞UI线程" Click="Button_Click_1"></Button>
+        <Button x:Name="heightAnimationButton" Content="Height属性动画"  Click="heightAnimationButton_Click_1"></Button>
+        <Button x:Name="scaleTransformAnimationButton" Content="ScaleTransform属性动画"  Click="scaleTransformAnimationButton_Click_1"></Button>
+        <Rectangle Height="100" Width="100" Fill="Blue" x:Name="rectangle1" >
+            <Rectangle.RenderTransform>
+                <ScaleTransform x:Name="scaleTransform1" ></ScaleTransform>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+    </StackPanel>
+
+
+
+    <!--<Grid x:Name="LayoutRoot">
 
         <Grid.ChildrenTransitions>
             <TransitionCollection>
@@ -21,15 +46,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Title Panel -->
+        --><!-- Title Panel --><!--
         <StackPanel Grid.Row="0" Margin="19,0,0,0">
             <TextBlock Style="{ThemeResource ListViewItemTextBlockStyle}">搜索公交线路</TextBlock>
         </StackPanel>
 
-        <!--TODO: Content should be placed within the following grid-->
+        --><!--TODO: Content should be placed within the following grid--><!--
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
             <AutoSuggestBox Name="autoSuggestBox" PlaceholderText="输入要搜索的公交车" TextChanged="autoSuggestBox_TextChanged" >
             </AutoSuggestBox>
         </Grid>
-    </Grid>
+    </Grid>-->
 </Page>

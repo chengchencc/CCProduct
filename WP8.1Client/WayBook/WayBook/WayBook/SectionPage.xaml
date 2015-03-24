@@ -11,7 +11,7 @@
     DataContext="{Binding DefaultViewModel.Group, RelativeSource={RelativeSource Self}}"
     d:DataContext="{Binding All, Source={d:DesignData Source=/DataModel/RecentlySearchedBusLines.json, Type=data:RecentlySearchedBusLinesSource}}"
 
-    Background="CornflowerBlue"
+    Background="CornflowerBlue" RequestedTheme="Light"
     >
     <Page.Transitions>
         <TransitionCollection>
@@ -61,13 +61,14 @@
         </StackPanel>
 
         <ListView
-            Background="Black"
+            Background="White"
+            Foreground="Gray"
             x:Name="itemListView"
             AutomationProperties.AutomationId="ItemListView"
             AutomationProperties.Name="Items In Group"
             TabIndex="1"
             Grid.Row="1"
-            ItemsSource="{Binding}"
+            ItemsSource="{Binding RecentlyBusLines}"
             IsItemClickEnabled="True"
             ItemClick="ItemView_ItemClick"
             SelectionMode="None"
@@ -83,13 +84,16 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" Margin="0,9.5,0,0" Width="79" Height="79">
+                        <!--<Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" Margin="0,9.5,0,0" Width="79" Height="79">
                             <Image Source="{Binding ImagePath}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}"/>
-                        </Border>
+                        </Border>-->
                         <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="14.5,0,0,0">
                             <TextBlock Text="{Binding lineName}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
-                            <TextBlock Text="{Binding endStationName}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
-                            <TextBlock Text="{Binding startStationName}" Style="{ThemeResource ListViewItemContentTextBlockStyle}" Foreground="{ThemeResource PhoneMidBrush}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding startStationName}" Style="{ThemeResource ListViewItemContentTextBlockStyle}" Foreground="{ThemeResource PhoneMidBrush}"/>
+                                <TextBlock Text="-->" Style="{ThemeResource ListViewItemContentTextBlockStyle}" Foreground="{ThemeResource PhoneMidBrush}"/>
+                                <TextBlock Text="{Binding endStationName}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

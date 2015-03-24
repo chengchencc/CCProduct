@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Threading.Tasks;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -113,7 +114,26 @@ namespace WayBook
         {
             List<string> autoSuggestBoxSource = new List<string>() { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "D3" };
             var text = sender.Text;
-            autoSuggestBox.ItemsSource = autoSuggestBoxSource.Where(s => s.StartsWith(text, StringComparison.OrdinalIgnoreCase));
+           // autoSuggestBox.ItemsSource = autoSuggestBoxSource.Where(s => s.StartsWith(text, StringComparison.OrdinalIgnoreCase));
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            // 阻塞UI线程2秒钟
+            Task.Delay(2000).Wait();
+        }
+        private void heightAnimationButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            // 播放改变高度属性的动画，高度有100变成200
+            scaleTransformStoryboard.Stop();
+            heightStoryboard.Begin();
+        }
+        private void scaleTransformAnimationButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            // 播放改变变换属性的动画，举行沿着X轴放大2倍
+            heightStoryboard.Stop();
+            scaleTransformStoryboard.Begin();
+        }
+
     }
 }

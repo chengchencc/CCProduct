@@ -47,16 +47,16 @@ namespace WayBook.Data
     {
         private static RecentlySearchedBusLinesSource _recentlySearchedBusLinesSource = new RecentlySearchedBusLinesSource();
 
-        private ObservableCollection<StationInfo> _all = new ObservableCollection<StationInfo>();
-        private Uri dataUri = new Uri("ms-appx:///DataModel/RecentlySearchedBusLines.json");
+        private RecentlySearchedBusLines _all = new RecentlySearchedBusLines();
+        private static Uri dataUri = new Uri("ms-appx:///DataModel/RecentlySearchedBusLines.json");
 
-        public ObservableCollection<StationInfo> All
+        public RecentlySearchedBusLines All
         {
             get { return this._all; }
             set { _all = value; }
         }
 
-        public static async Task<IEnumerable<StationInfo>> GetAllAsync()
+        public static async Task<RecentlySearchedBusLines> GetAllAsync()
         {
             await _recentlySearchedBusLinesSource.GetDataAsync();
 
@@ -67,33 +67,45 @@ namespace WayBook.Data
         {
             await _recentlySearchedBusLinesSource.GetDataAsync();
             // Simple linear search is acceptable for small data sets
-            var matches = _recentlySearchedBusLinesSource.All.Where((group) => group.id.Equals(BusId));
+            var matches = _recentlySearchedBusLinesSource.All.RecentlyBusLines.Where(s => s.id.Equals(BusId));
             if (matches.Count() == 1) return matches.First();
             return null;
         }
 
         private async Task GetDataAsync()
         {
-            //if (this._all.Count != 0)
-            //    return;
+            if (this._all.RecentlyBusLines.Count != 0)
+                return;
 
 
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
             string jsonText = await FileIO.ReadTextAsync(file);
-            
-            this.All = JsonConvert.DeserializeObject<RecentlySearchedBusLines>(jsonText).RecentlyBusLines;
+            JsonObject jsonObject = JsonObject.Parse(jsonText);
+
+            this.All = JsonConvert.DeserializeObject<RecentlySearchedBusLines>(jsonText);
 
         }
 
-        public async Task SaveDataAsync()
+        public static async Task SaveDataAsync()
         {
-            var data = new RecentlySearchedBusLines();
-            foreach (var item in this.All)
-            {
-                data.RecentlyBusLines.Add(item);
-            }
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(dataUri);
-            await FileIO.WriteTextAsync(file, data.ToString());
+            var data = _recentlySearchedBusLinesSource.All.ToString();
+            await FileIO.WriteTextAsync(file, data);
+            //_recentlySearchedBusLinesSource._all = new RecentlySearchedBusLines();
+        }
+
+        public static void AddStationInfo(StationInfo stationInfo)
+        {
+           // await Task.Factory.StartNew(() =>
+           //{
+           //    _recentlySearchedBusLinesSource.All.RecentlyBusLines.Add(stationInfo);
+           //});
+            var existed = _recentlySearchedBusLinesSource.All.RecentlyBusLines.SingleOrDefault(s => s.id == stationInfo.id);
+            if (existed!=null)
+            {
+                _recentlySearchedBusLinesSource.All.RecentlyBusLines.Remove(existed);
+            }
+            _recentlySearchedBusLinesSource.All.RecentlyBusLines.Add(stationInfo);
         }
 
     }
