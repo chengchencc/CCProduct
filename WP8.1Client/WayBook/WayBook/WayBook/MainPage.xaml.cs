@@ -40,9 +40,9 @@ namespace WayBook
             DrawerLayout.InitializeDrawerLayout();
 
             // Hub is only supported in Portrait orientation
-            DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
+            //DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
 
-            this.NavigationCacheMode = NavigationCacheMode.Required;
+            //this.NavigationCacheMode = NavigationCacheMode.Required;
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
@@ -193,6 +193,22 @@ namespace WayBook
                 DrawerLayout.CloseRightDrawer();
             else
                 DrawerLayout.OpenRightDrawer();
+        }
+
+        private void BusBorder_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (!Frame.Navigate(typeof(SectionPage),"1"))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
+        }
+        private void TrainBorder_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Utilities.ShowMessage("未开通");
+        }
+        private void AirLineBorder_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Utilities.ShowMessage("未开通");
         }
     }
 }
