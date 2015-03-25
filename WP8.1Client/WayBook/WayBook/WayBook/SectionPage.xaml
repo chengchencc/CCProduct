@@ -38,6 +38,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Name="NotificationPanel" Orientation="Horizontal" Visibility="Collapsed" Background="Red" Width="Auto" Height="40" VerticalAlignment="Top" Canvas.ZIndex="1000">
+            <TextBlock Name="NotificationContent" Text="网络连接错误！" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
 
         <!-- Title Panel -->
         <StackPanel Grid.Row="0" Margin="0,0,0,0" Background="CornflowerBlue">
@@ -102,11 +105,12 @@
 
     </Grid>
 
-    <!--<Page.BottomAppBar >
+    <Page.BottomAppBar >
         <CommandBar Name="commandBar" Opacity="0.5" >
             <AppBarButton x:Name="SearchBusLineBtn" Label="搜索" Click="SearchBusLineBtn_Click" Icon="Find" >
             </AppBarButton>
+            <AppBarButton x:Name="AnimationDemo" Label="Animation" Click="AnimationDemo_Click" Icon="OpenPane"></AppBarButton>
         </CommandBar>
-    </Page.BottomAppBar>-->
+    </Page.BottomAppBar>
 
 </Page>

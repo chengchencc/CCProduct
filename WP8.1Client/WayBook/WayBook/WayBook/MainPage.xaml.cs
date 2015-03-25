@@ -9,30 +9,40 @@ using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.ViewManagement;
-using Windows.UI;
-using Newtonsoft.Json;
-using WayBook.DataModel;
+using Windows.UI.Popups;
 
 // The Hub Application template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
 namespace WayBook
 {
-    public sealed partial class SectionPage : Page
+    /// <summary>
+    /// A page that displays a grouped collection of items.
+    /// </summary>
+    public sealed partial class MainPage : Page
     {
         private readonly NavigationHelper navigationHelper;
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView("Resources");
 
-        public SectionPage()
+        public MainPage()
         {
             this.InitializeComponent();
+            DrawerLayout.InitializeDrawerLayout();
+
+            // Hub is only supported in Portrait orientation
+            DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
+
+            this.NavigationCacheMode = NavigationCacheMode.Required;
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
@@ -69,13 +79,9 @@ namespace WayBook
         /// session.  The state will be null the first time a page is visited.</param>
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            // TODO: Create an appropriate data model for your problem domain to replace the sample data.
-            //var group = await SampleDataSource.GetGroupAsync((string)e.NavigationParameter);
-            var group = await RecentlySearchedBusLinesSource.GetAllAsync();
-            this.DefaultViewModel["Group"] = group;
-            //StatusBar.GetForCurrentView().BackgroundColor = Colors.CornflowerBlue;
-            StatusBar.GetForCurrentView().BackgroundOpacity = 0;
-
+            // TODO: Create an appropriate data model for your problem domain to replace the sample data
+            var sampleDataGroups = await SampleDataSource.GetGroupsAsync();
+            this.DefaultViewModel["Groups"] = sampleDataGroups;
         }
 
         /// <summary>
@@ -89,22 +95,31 @@ namespace WayBook
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
             // TODO: Save the unique state of the page here.
-            //StatusBar.GetForCurrentView().BackgroundColor = Colors.Black;
-            //StatusBar.GetForCurrentView().BackgroundOpacity = 0;
+        }
+
+        /// <summary>
+        /// Shows the details of a clicked group in the <see cref="SectionPage"/>.
+        /// </summary>
+        private void GroupSection_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var groupId = ((SampleDataGroup)e.ClickedItem).UniqueId;
+            if (!Frame.Navigate(typeof(SectionPage), groupId))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
         }
 
         /// <summary>
         /// Shows the details of an item clicked on in the <see cref="ItemPage"/>
         /// </summary>
-        /// <param name="sender">The GridView displaying the item clicked.</param>
-        /// <param name="e">Event data that describes the item clicked.</param>
         private void ItemView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var itemId = (StationInfo)e.ClickedItem;
+            // Navigate to the appropriate destination page, configuring the new page
+            // by passing required information as a navigation parameter
+            var itemId = ((SampleDataItem)e.ClickedItem).UniqueId;
             if (!Frame.Navigate(typeof(ItemPage), itemId))
             {
-                var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-                throw new Exception(resourceLoader.GetString("NavigationFailedExceptionMessage"));
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
         }
 
@@ -125,73 +140,59 @@ namespace WayBook
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
-
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedFrom(e);
-
         }
 
         #endregion
 
-        private async void SearchBusLineBtn_Click(object sender, RoutedEventArgs e)
+        #region DrawerLayoutEvent
+        private void DrawerIcon_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (!Frame.Navigate(typeof(SearchBusLinePage)))
-            {
-                var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-                throw new Exception(resourceLoader.GetString("NavigationFailedExceptionMessage"));
-            }
-            //Utilities.ShowImageTextToast("","ttttt");
+            if (DrawerLayout.IsLeftDrawerOpen)
+                DrawerLayout.CloseLeftDrawer();
+            else
+                DrawerLayout.OpenLeftDrawer();
         }
 
-
-        private async void autoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        private async void Item1_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            //List<string> autoSuggestBoxSource = new List<string>() { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "D3" };
-            //var text = sender.Text;
-            //autoSuggestBox.ItemsSource = autoSuggestBoxSource.Where(s => s.StartsWith(text, StringComparison.OrdinalIgnoreCase));
-            if (!string.IsNullOrEmpty(sender.Text))
+            var grid = sender as Grid;
+            if (grid != null)
             {
-                // var GetBuslineUrl = Resources.SingleOrDefault(s => s.Key == "GetBuslineUrl");
-                //var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + sender.Text + "/0/20");
-                var jsonResult = await RestfulClient.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + sender.Text + "/0/20");
-                if (!string.IsNullOrEmpty(jsonResult))
+                string menuItemName = grid.Name;
+                MessageDialog dialog = null;
+
+                switch (menuItemName)
                 {
-                    var busLines = JsonConvert.DeserializeObject<BusLine>(jsonResult);
-                    autoSuggestBox.ItemsSource = busLines.result.result;
-                }
-                else
-                {
-                    
-                    Utilities.ShowNotification(NotificationPanel);
-                    //Utilities.ShowMessage("网络连接失败，请检查网络连接！");
-                    autoSuggestBox.ItemsSource = null;
+                    case "Item1":
+                        dialog = new MessageDialog("Ay caramba!");
+                        break;
+                    case "Item2":
+                        dialog = new MessageDialog("Don't have a cow, man!");
+                        break;
+                    case "Item3":
+                        dialog = new MessageDialog("Hey, Ottoman!");
+                        break;
+                    case "Item4":
+                        dialog = new MessageDialog("Eat my shorts!");
+                        break;
                 }
 
+                if (dialog != null) await dialog.ShowAsync();
             }
         }
+        #endregion
 
-        private void autoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        private void Button_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            var selectedItem = (ResultItem)args.SelectedItem;
-            if (!Frame.Navigate(typeof(ItemPage), selectedItem))
-            {
-                var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-                throw new Exception(resourceLoader.GetString("NavigationFailedExceptionMessage"));
-            }
-
-        }
-
-        private void AnimationDemo_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (!Frame.Navigate(typeof(AnimationDemoPage)))
-            {
-                var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
-                throw new Exception(resourceLoader.GetString("NavigationFailedExceptionMessage"));
-            }
+            if (DrawerLayout.IsRightDrawerOpen)
+                DrawerLayout.CloseRightDrawer();
+            else
+                DrawerLayout.OpenRightDrawer();
         }
     }
 }

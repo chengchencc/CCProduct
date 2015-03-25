@@ -23,6 +23,8 @@ using Windows.UI;
 using Windows.Data.Json;
 using Windows.UI.Notifications;
 using System.Threading;
+using Windows.UI.Core;
+using System.Threading.Tasks;
 
 // The Hub Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
 
@@ -98,6 +100,8 @@ namespace WayBook
                 if (string.IsNullOrEmpty(jsonResult))
                 {
                     Utilities.ShowMessage("网络连接失败，请检查网络连接！");
+                   // NotificationContent.Text = "网络连接失败，请检查网络连接！";
+                    //Utilities.ShowNotification(NotificationPanel);
                     return;
                 }
                 
@@ -114,10 +118,20 @@ namespace WayBook
             }
             GenerateStation();
 
-            //TimerCallback callback = Refresh;
+            await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                await GetBusPoint();
+            });
 
-            //System.Threading.Timer timer = new System.Threading.Timer(callback, null, 0, 5000);
-            await GetBusPoint();
+            CoreDispatcher dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => {
+                while (true)
+                {
+                    await GetBusPoint();
+                    await Task.Delay(10000);
+                }
+            });
+            //await GetBusPoint();
         }
         private void Refresh(object status)
         {

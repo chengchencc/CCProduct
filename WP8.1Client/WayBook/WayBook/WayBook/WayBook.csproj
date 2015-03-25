@@ -80,6 +80,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnimationDemoPage.xaml.cs">
+      <DependentUpon>AnimationDemoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,9 @@
     <Compile Include="DataModel\SampleDataSource.cs" />
     <Compile Include="DataModel\StationInfo.cs" />
     <Compile Include="DataModel\WayBookBase.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HubPage.xaml.cs">
       <DependentUpon>HubPage.xaml</DependentUpon>
     </Compile>
@@ -124,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\DarkGray.png" />
+    <Content Include="Assets\ic_drawer.png" />
     <Content Include="Assets\LightGray.png" />
     <Content Include="Assets\MediumGray.png" />
     <Content Include="Assets\HubBackground.theme-dark.png" />
@@ -149,6 +156,14 @@
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="AnimationDemoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="HubPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -206,6 +221,10 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DrawerLayout\DrawerLayout.csproj">
+      <Project>{553e064e-b9c7-4e4b-a098-2bc4720b214e}</Project>
+      <Name>DrawerLayout</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NotificationsExtensions\NotificationsExtensions.csproj">
       <Project>{6e87464b-b064-40ca-8161-7c18c337adff}</Project>
       <Name>NotificationsExtensions</Name>

@@ -8,6 +8,8 @@ using Windows.ApplicationModel.Resources;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace WayBook.Common
 {
@@ -71,13 +73,14 @@ namespace WayBook.Common
         #endregion
 
         #region message dialog
-        
-        public static async void ShowMessage(string message){
+
+        public static async void ShowMessage(string message)
+        {
 
             MessageDialog msgDialog = new MessageDialog(message);
             await msgDialog.ShowAsync();
         }
-        public async void ShowMessageWithTryAgain(string message, UICommandInvokedHandler tryAgainCommand,UICommandInvokedHandler closeCommand)
+        public async void ShowMessageWithTryAgain(string message, UICommandInvokedHandler tryAgainCommand, UICommandInvokedHandler closeCommand)
         {
 
             // Create the message dialog and set its content
@@ -107,6 +110,52 @@ namespace WayBook.Common
         //    //    NotifyType.StatusMessage);
         //}
         #endregion
+
+        #region Notification
+
+        public static void ShowNotification(StackPanel notificationPanel)
+        {
+
+            Storyboard ShowNotification = new Storyboard();
+            PopInThemeAnimation popInAnimation = new PopInThemeAnimation();
+            //popInAnimation.TargetName = notificationPanel.Name;
+
+            Storyboard HideNotification = new Storyboard();
+            PopOutThemeAnimation popOutAnimation = new PopOutThemeAnimation();
+            //popOutAnimation.TargetName = notificationPanel.Name;
+            popOutAnimation.BeginTime = new TimeSpan(0, 0, 3);
+
+
+            ShowNotification.Completed += (sender, e) =>
+            {
+                HideNotification.Begin();
+            };
+
+
+            Storyboard.SetTarget(popInAnimation, notificationPanel);
+            Storyboard.SetTarget(popOutAnimation,notificationPanel);
+            ShowNotification.Children.Add(popInAnimation);
+            HideNotification.Children.Add(popOutAnimation);
+
+
+            //if (!notificationPanel.Resources.ContainsKey("ShowNotification"))
+            //{
+            //    notificationPanel.Resources.Add("ShowNotification", ShowNotification);                
+            //}
+            //if (!notificationPanel.Resources.ContainsKey("HideNotification"))
+            //{
+            //    notificationPanel.Resources.Add("HideNotification", HideNotification);
+            //}
+
+
+            notificationPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            ShowNotification.Begin();
+
+        }
+
+
+        #endregion
+
 
     }
 }
