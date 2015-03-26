@@ -44,7 +44,7 @@ namespace DrawerLayout
              set { SetValue(IsDrawerOpenProperty, value); }
         }
 
-        public static readonly DependencyProperty IsDrawerOpenProperty = DependencyProperty.Register("IsDrawerOpen", typeof(bool), typeof(DrawerLayout), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsDrawerOpenProperty = DependencyProperty.Register("IsDrawerOpen", typeof(bool), typeof(DrawerLayoutBAK), new PropertyMetadata(false));
 
         private PropertyPath TranslatePath
         {

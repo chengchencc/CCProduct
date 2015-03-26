@@ -220,14 +220,22 @@ namespace WayBook
 
         private async System.Threading.Tasks.Task GetBusPoint()
         {
+            try
+            {
+
+
             #region GetData
             //var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buses/busline/370100/" + _busId);
-            var jsonResult = await RestfulClient.Get("http://60.216.101.229/server-ue2/rest/buses/busline/370100/" + _busId);
+
+            var url1 = "http://60.216.101.229/server-ue2/rest/buses/busline/370100/" + _busId;
+            var jsonResult = await RestfulClient.Get(url1);
             if (string.IsNullOrEmpty(jsonResult))
             {
                 Utilities.ShowMessage("网络连接失败，请检查网络连接！");
                 return;
             }
+
+
 
             var buses = JsonConvert.DeserializeObject<WayBookBase<List<RealTimeBus>>>(jsonResult);
             if (buses == null)
@@ -268,16 +276,22 @@ namespace WayBook
             GenerateBusPoint(buses);
 
             #endregion
+            }
+            catch (Exception)
+            {
+                Utilities.ShowMessage("网络连接失败，请检查网络连接！");
+            }
         }
 
         private void GenerateBusPoint(WayBookBase<List<RealTimeBus>> buses)
         {
             foreach (var item in buses.result)
             {
-                //if (item.stationSeqNum != item.dualSerialNum)
-                //{
-                //    continue;
-                //}
+
+                if (stations.Count*2 == item.dualSerialNum)
+                {
+                    continue;
+                }
                 //<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-15,100,0,0">
                 //         <Ellipse HorizontalAlignment="Center" Width="10" Height="10"  Fill="#FFF51717" StrokeThickness="1" />
                 //         <Button Content="鲁A18556" RequestedTheme="Light" RenderTransformOrigin="0.5,0.5" BorderThickness="1" BorderBrush="#FF7C1D1D" Foreground="#FFF55353"/>

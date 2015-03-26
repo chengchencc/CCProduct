@@ -42,7 +42,7 @@ namespace WayBook
             // Hub is only supported in Portrait orientation
             //DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
 
-            //this.NavigationCacheMode = NavigationCacheMode.Required;
+            this.NavigationCacheMode = NavigationCacheMode.Disabled;
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
@@ -82,6 +82,10 @@ namespace WayBook
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
             var sampleDataGroups = await SampleDataSource.GetGroupsAsync();
             this.DefaultViewModel["Groups"] = sampleDataGroups;
+
+            List<Position> p = GenPosition();
+
+            positionList.ItemsSource = p;
         }
 
         /// <summary>
@@ -197,7 +201,7 @@ namespace WayBook
 
         private void BusBorder_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (!Frame.Navigate(typeof(SectionPage),"1"))
+            if (!Frame.Navigate(typeof(BusPage),"1"))
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
@@ -210,5 +214,57 @@ namespace WayBook
         {
             Utilities.ShowMessage("未开通");
         }
+
+        private void test_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Frame.Navigate(typeof(SectionPage), "1"))
+            {
+                throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
+            }
+        }
+
+        private void positionList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var item = (Position)e.ClickedItem;
+            position.Content = item.Name;
+            //TODO:将选择的城市保存起来
+        }
+
+
+        private List<Position> GenPosition()
+        {
+            List<Position> p= new List<Position>();
+            p.Add(new Position { Id = "372330", Name = "三亚" });
+            p.Add(new Position { Id = "372330", Name = "江阴" });
+            p.Add(new Position { Id = "372330", Name = "泰州" });
+            p.Add(new Position { Id = "372330", Name = "扬州" });
+            p.Add(new Position { Id = "372330", Name = "镇江" });
+            p.Add(new Position { Id = "372330", Name = "七台河" });
+            p.Add(new Position { Id = "372330", Name = "石家庄" });
+            p.Add(new Position { Id = "372330", Name = "廊坊" });
+            p.Add(new Position { Id = "372330", Name = "泸州" });
+            p.Add(new Position { Id = "372330", Name = "许昌" });
+            p.Add(new Position { Id = "372330", Name = "济源" });
+            p.Add(new Position { Id = "372330", Name = "济南" });
+            p.Add(new Position { Id = "372330", Name = "济宁" });
+            p.Add(new Position { Id = "372330", Name = "泰安" });
+            p.Add(new Position { Id = "372330", Name = "淄博" });
+            p.Add(new Position { Id = "372330", Name = "威海" });
+            p.Add(new Position { Id = "372330", Name = "聊城" });
+            p.Add(new Position { Id = "372330", Name = "杭州" });
+            p.Add(new Position { Id = "372330", Name = "绍兴" });
+            p.Add(new Position { Id = "372330", Name = "祁阳" });
+            p.Add(new Position { Id = "372330", Name = "锦州" });
+            p.Add(new Position { Id = "372330", Name = "葫芦岛" });
+            return p;
+        }
+
     }
+
+    class Position
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+    }
+
 }

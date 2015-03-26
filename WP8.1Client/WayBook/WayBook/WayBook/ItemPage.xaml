@@ -32,35 +32,36 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Name="NotificationPanel" Orientation="Horizontal" Background="Red" Width="Auto" Height="40" Visibility="Visible" VerticalAlignment="Top">
+        <StackPanel Name="NotificationPanel" Visibility="Collapsed" Orientation="Horizontal" Background="Red" Width="Auto" Height="40"  VerticalAlignment="Top">
             <TextBlock Name="NotificationContent" Text="网络连接错误！" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
         <!-- Title Panel -->
-        <StackPanel Grid.Row="0" Margin="19,0,0,0" Orientation="Horizontal">
-            <!--<TextBlock x:Uid="Header" Text="application name" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0" />-->
-            <!--<TextBlock Text="115" FontSize="50"  />
-            <StackPanel VerticalAlignment="Bottom">
+        <Border Grid.Row="0" BorderBrush="#FF939393" BorderThickness="0,0,0,1" >
+        <StackPanel  Margin="5,0,0,10" Orientation="Horizontal">
+            <!--<TextBlock Text="115" FontSize="50" Foreground="#FFFDFCFC"  />
+            <StackPanel VerticalAlignment="Bottom" Margin="10,5,0,0">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="山东剧院"></TextBlock>
-                <TextBlock Text=""></TextBlock>
-                <TextBlock Text="唐冶公交枢纽"></TextBlock>
+                <TextBlock Text="山东剧院" FontSize="18" Foreground="#FFE2E1E1"></TextBlock>
+                    <TextBlock Text="" FontSize="18" Foreground="#FFE2E1E1"></TextBlock>
+                    <TextBlock Text="唐冶公交枢纽" FontSize="18" Foreground="#FFE2E1E1"></TextBlock>
             </StackPanel>
-                <TextBlock>115:票价一元 K115:票价两元</TextBlock>
-                <TextBlock>山东剧院 : 6:00－21:30唐冶公交枢纽 : 6:00－21:30</TextBlock>
+                <TextBlock FontSize="12" Foreground="#FFE2E1E1">115:票价一元 K115:票价两元</TextBlock>
+                <TextBlock FontSize="12" Foreground="#FFE2E1E1">山东剧院 : 6:00－21:30唐冶公交枢纽 : 6:00－21:30</TextBlock>
             </StackPanel>-->
-            <TextBlock Text="{Binding lineName}" FontSize="50"  />
-            <StackPanel VerticalAlignment="Bottom">
+
+            <TextBlock Text="{Binding lineName}" FontSize="50" Foreground="#FFFDFCFC"  />
+            <StackPanel VerticalAlignment="Bottom" Margin="10,5,0,0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding startStationName}"></TextBlock>
-                    <TextBlock Text="--"></TextBlock>
-                    <TextBlock Text="{Binding endStationName}"></TextBlock>
+                    <TextBlock Text="{Binding startStationName}" FontSize="18" Foreground="#FFE2E1E1"></TextBlock>
+                    <TextBlock Text="-->" FontSize="18" Foreground="#FFE2E1E1"></TextBlock>
+                    <TextBlock Text="{Binding endStationName}" FontSize="18" Foreground="#FFE2E1E1"></TextBlock>
                 </StackPanel>
-                <TextBlock Text="{Binding ticketPrice}"></TextBlock>
-                <TextBlock Text="{Binding operationTime}"></TextBlock>
+                <TextBlock FontSize="12" Foreground="#FFE2E1E1" Text="{Binding ticketPrice}"></TextBlock>
+                <TextBlock FontSize="12" Foreground="#FFE2E1E1" Text="{Binding operationTime}"></TextBlock>
             </StackPanel>
 
         </StackPanel>
-
+        </Border>
         <!-- 
             TODO: Content should be placed within the following grid 
                   to show details for the current item
@@ -103,9 +104,9 @@
         </ScrollViewer>
     </Grid>
     <Page.BottomAppBar >
-        <CommandBar Name="commandBar">
-            <AppBarButton x:Name="SearchBusLineBtn" Label="刷新" Click="SearchBusLineBtn_Click" Icon="Refresh" >
-            </AppBarButton>
+        <CommandBar Name="commandBar" Background="CornflowerBlue" ClosedDisplayMode="Minimal">
+            <!--<AppBarButton x:Name="SearchBusLineBtn" Label="刷新" Click="SearchBusLineBtn_Click" Icon="Refresh" >
+            </AppBarButton>-->
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

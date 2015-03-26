@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace DrawerLayout
 {
-    public class DrawerLayout : Grid
+    public class DrawerLayoutBothSide : Grid
     {
         #region Globals and events
 
@@ -50,8 +50,8 @@ namespace DrawerLayout
             set { SetValue(IsRightDrawerOpenProperty, value); }
         }
 
-        public static readonly DependencyProperty IsLeftDrawerOpenProperty = DependencyProperty.Register("IsLeftDrawerOpen", typeof(bool), typeof(DrawerLayout), new PropertyMetadata(false));
-        public static readonly DependencyProperty IsRightDrawerOpenProperty = DependencyProperty.Register("IsRightDrawerOpen", typeof(bool), typeof(DrawerLayout), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsLeftDrawerOpenProperty = DependencyProperty.Register("IsLeftDrawerOpen", typeof(bool), typeof(DrawerLayoutBothSide), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsRightDrawerOpenProperty = DependencyProperty.Register("IsRightDrawerOpen", typeof(bool), typeof(DrawerLayoutBothSide), new PropertyMetadata(false));
 
         private PropertyPath TranslatePath
         {
@@ -66,7 +66,7 @@ namespace DrawerLayout
 
         #region Methods
 
-        public DrawerLayout()
+        public DrawerLayoutBothSide()
         {
             IsLeftDrawerOpen = false;
             IsRightDrawerOpen = false;
@@ -235,14 +235,14 @@ namespace DrawerLayout
             Storyboard.SetTargetProperty(colorAnimationR2, ColorPath.Path);
             _fadeOutStoryboardRight.Children.Add(colorAnimationR2);
 
-            _mainFragment.ManipulationMode = ManipulationModes.All;
-            _mainFragment.ManipulationStarted += mainLeftFragment_ManipulationStarted;
+            //_mainFragment.ManipulationMode = ManipulationModes.All;
+            //_mainFragment.ManipulationStarted += mainLeftFragment_ManipulationStarted;
 
-            _listLeftFragment.ManipulationMode = ManipulationModes.All;
-            _listLeftFragment.ManipulationStarted += listLeftFragment_ManipulationStarted;
+            //_listLeftFragment.ManipulationMode = ManipulationModes.All;
+            //_listLeftFragment.ManipulationStarted += listLeftFragment_ManipulationStarted;
 
-            _listRightFragment.ManipulationMode = ManipulationModes.All;
-            _listRightFragment.ManipulationStarted += listRightFragment_ManipulationStarted;
+            //_listRightFragment.ManipulationMode = ManipulationModes.All;
+            //_listRightFragment.ManipulationStarted += listRightFragment_ManipulationStarted;
 
         }
         public void OpenLeftDrawer()

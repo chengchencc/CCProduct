@@ -23,16 +23,16 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-
-        <Grid Background="CornflowerBlue" Height="60">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Image Margin="5"  x:Name="DrawerIcon"  Grid.Column="0" Source="/Assets/ic_drawer.png" HorizontalAlignment="Left" Tapped="DrawerIcon_Tapped" />
-            <TextBlock Grid.Column="1" Text="微步" Style="{StaticResource ListViewItemTextBlockStyle }" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <!--<ComboBox  Grid.Column="2" BorderBrush="{x:Null}" HorizontalAlignment="Center">
+        <Border BorderBrush="#FF7E7E7E" BorderThickness="0,0,0,1">
+            <Grid Background="CornflowerBlue" Height="60">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Image Margin="5"  x:Name="DrawerIcon"  Grid.Column="0" Source="/Assets/ic_drawer.png" HorizontalAlignment="Left" Tapped="DrawerIcon_Tapped" />
+                <TextBlock Grid.Column="1" Text="微步" Style="{StaticResource ListViewItemTextBlockStyle }" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <!--<ComboBox  Grid.Column="2" BorderBrush="{x:Null}" HorizontalAlignment="Center">
                 <ComboBoxItem Content="济南" IsSelected="True"></ComboBoxItem>
                 <ComboBoxItem Content="杭州"></ComboBoxItem>
                 <ComboBoxItem Content="淄博"></ComboBoxItem>
@@ -40,45 +40,63 @@
                 <ComboBoxItem Content="泰安"></ComboBoxItem>
                 <ComboBoxItem Content="杭州"></ComboBoxItem>
             </ComboBox>-->
-            <Button Content="济南" Grid.Column="2" Tapped="Button_Tapped" HorizontalAlignment="Center" BorderBrush="{x:Null}"></Button>
-        </Grid>
-
-        <drawerLayout:DrawerLayout Grid.Row="1"  x:Name="DrawerLayout">
-            <Grid x:Name="MainFragment" Background="White">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <!--<UI:AdControl Grid.Row="0" Width="480" Height="80" Grid.ColumnSpan="2" AdUnitId="11387830" ApplicationId="8370d377f797"/>-->
-
-                 <ScrollViewer Grid.ColumnSpan="2" Background="Red">
-                    <Image Source="/Assets/ad1.jpg" Height="80" Stretch="Fill"></Image>
-                </ScrollViewer>
-                <Border Grid.Column="0" Grid.Row="1" Margin="5" Background="#FF37B9BF" Tapped="BusBorder_Tapped">
-                    <TextBlock Text="公交" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                </Border>
-                <Grid Grid.Column="1" Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Border Background="#FFFB3C3C" Margin="0,5,5,0" Tapped="TrainBorder_Tapped">
-                        <TextBlock Text="航班" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="1" Background="#FFFBD83C" Margin="0,5,5,5" Tapped="AirLineBorder_Tapped">
-                        <TextBlock Text="火车" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    </Border>
-                    
-                </Grid>
-                
+                <Button Name="position" Content="济南" Grid.Column="2" Tapped="Button_Tapped" HorizontalAlignment="Right" BorderBrush="{x:Null}"></Button>
             </Grid>
-            <Grid x:Name="ListLeftFragment" Visibility="Collapsed">
+        </Border>
+        <drawerLayout:DrawerLayoutBothSide Grid.Row="1"  x:Name="DrawerLayout">
+            <Grid x:Name="MainFragment" Background="White" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!--<UI:AdControl Grid.Row="0" Width="480" Height="80" Grid.ColumnSpan="2" AdUnitId="11387830" ApplicationId="8370d377f797"/>-->
+
+                    <ScrollViewer Grid.ColumnSpan="2" Background="Red">
+                        <Image Source="/Assets/ad1.jpg" Height="120" Stretch="Fill"></Image>
+                    </ScrollViewer>
+                    <Border Grid.Column="0" Grid.Row="1" Margin="5" Background="CornflowerBlue" Tapped="BusBorder_Tapped" ManipulationMode="None" >
+                        <TextBlock Text="公交" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    </Border>
+                    <Grid Grid.Column="1" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Background="#FFFB3C3C" Margin="0,5,5,0" Tapped="TrainBorder_Tapped">
+                            <TextBlock Text="航班" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        </Border>
+                        <Border Grid.Row="1" Background="#FFFBD83C" Margin="0,5,5,5" Tapped="AirLineBorder_Tapped">
+                            <TextBlock Text="火车" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        </Border>
+                    </Grid>
+
+
+                    <Grid Grid.Column="0" Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Background="DeepPink" Margin="5,0,5,5" Tapped="TrainBorder_Tapped">
+                            <TextBlock Text="出租车" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        </Border>
+                        <Border Grid.Row="1" Background="#FFBE3CFB" Margin="5,0,5,5" Tapped="AirLineBorder_Tapped">
+                            <TextBlock Text="自行车" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        </Border>
+                    </Grid>
+                    <Border Grid.Column="1" Grid.Row="2" Margin="0,0,5,5" Background="LightGreen" Tapped="AirLineBorder_Tapped" ManipulationMode="None">
+                        <TextBlock Text="快递" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    </Border>
+
+                </Grid>
+            </Grid>
+            <Grid x:Name="ListLeftFragment"  >
                 <ScrollViewer>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -136,10 +154,35 @@
                 </ScrollViewer>
 
             </Grid>
-            <Grid x:Name="ListRightFragment" Visibility="Collapsed">
-                <TextBlock Text="aaaaa" Foreground="Black" FontSize="30"></TextBlock>
+            <Grid x:Name="ListRightFragment" Background="White" >
+
+                <ListView FontSize="25"
+                          Name="positionList" ItemClick="positionList_ItemClick"
+                          
+                          >
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="BorderBrush" Value="#FFBFBFBF"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" FontSize="25" Foreground="Black" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+
+                    </ListView.ItemTemplate>
+
+                    <!--<ListViewItem Foreground="#FF0A0909" 
+                                  FontSize="25" BorderBrush="#FFBFBFBF" BorderThickness="0,0,0,1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
+                        <TextBlock Text="济南" HorizontalAlignment="Center"/>
+                    </ListViewItem>-->
+
+                </ListView>
             </Grid>
-        </drawerLayout:DrawerLayout>
+        </drawerLayout:DrawerLayoutBothSide>
 
 
     </Grid>
