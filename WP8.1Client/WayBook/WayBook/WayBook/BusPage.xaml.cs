@@ -101,7 +101,7 @@ namespace WayBook
         private void BusLineListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var itemId = (StationInfo)e.ClickedItem;
-            if (!Frame.Navigate(typeof(ItemPage), itemId))
+            if (!Frame.Navigate(typeof(ItemPageNew), itemId))
             {
                 var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
                 throw new Exception(resourceLoader.GetString("NavigationFailedExceptionMessage"));

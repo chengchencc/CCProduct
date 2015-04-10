@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -206,13 +207,45 @@ namespace WayBook.Common
         /// </summary>
         /// <param name="sender">Instance that triggered the event.</param>
         /// <param name="e">Event data describing the conditions that led to the event.</param>
-        private void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
+        private async void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
         {
             if (this.GoBackCommand.CanExecute(null))
             {
                 e.Handled = true;
                 this.GoBackCommand.Execute(null);
             }
+            else
+            {
+                e.Handled = true;
+                // Create the message dialog and set its content
+                var messageDialog = new MessageDialog("确定退出？");
+
+                // Add commands and set their callbacks; both buttons use the same callback function instead of inline event handlers
+                messageDialog.Commands.Add(new UICommand(
+                    "是",
+                    new UICommandInvokedHandler(this.YesCommandHandler)));
+                messageDialog.Commands.Add(new UICommand(
+                    "否",
+                    new UICommandInvokedHandler(this.CancleCommandHandler)));
+
+                // Set the command that will be invoked by default
+                messageDialog.DefaultCommandIndex = 0;
+
+                // Set the command to be invoked when escape is pressed
+                messageDialog.CancelCommandIndex = 1;
+
+                // Show the message dialog
+              await  messageDialog.ShowAsync();
+            }
+        }
+
+        private void YesCommandHandler(IUICommand command)
+        {
+            Application.Current.Exit();
+        }
+        private void CancleCommandHandler(IUICommand command)
+        {
+
         }
 #else
         /// <summary>

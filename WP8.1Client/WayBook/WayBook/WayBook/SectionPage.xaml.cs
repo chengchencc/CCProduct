@@ -164,8 +164,8 @@ namespace WayBook
                 }
                 else
                 {
-                    
-                    Utilities.ShowNotification(NotificationPanel);
+
+                    Utilities.ShowNotification(NotificationPanel, "网络连接失败，请检查网络连接！");
                     //Utilities.ShowMessage("网络连接失败，请检查网络连接！");
                     autoSuggestBox.ItemsSource = null;
                 }

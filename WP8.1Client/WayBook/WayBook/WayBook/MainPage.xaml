@@ -61,18 +61,21 @@
                     <ScrollViewer Grid.ColumnSpan="2" Background="Red">
                         <Image Source="/Assets/ad1.jpg" Height="120" Stretch="Fill"></Image>
                     </ScrollViewer>
-                    <Border Grid.Column="0" Grid.Row="1" Margin="5" Background="CornflowerBlue" Tapped="BusBorder_Tapped" ManipulationMode="None" >
-                        <TextBlock Text="公交" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <Border Grid.Column="0" Grid.Row="1" Margin="5" Background="#F9D356" Tapped="BusBorder_Tapped" >
+                        <StackPanel VerticalAlignment="Center">
+                        <Image Source="Assets/icon_bus.png" Width="108" Height="96"></Image>
+                        <TextBlock Text="公交" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        </StackPanel>
                     </Border>
                     <Grid Grid.Column="1" Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Border Background="#FFFB3C3C" Margin="0,5,5,0" Tapped="TrainBorder_Tapped">
+                        <Border Background="#61A9E3" Margin="0,5,5,0" Tapped="TrainBorder_Tapped">
                             <TextBlock Text="航班" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                         </Border>
-                        <Border Grid.Row="1" Background="#FFFBD83C" Margin="0,5,5,5" Tapped="AirLineBorder_Tapped">
+                        <Border Grid.Row="1" Background="#A77FE2" Margin="0,5,5,5" Tapped="AirLineBorder_Tapped">
                             <TextBlock Text="火车" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                         </Border>
                     </Grid>
@@ -83,20 +86,20 @@
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Border Background="DeepPink" Margin="5,0,5,5" Tapped="TrainBorder_Tapped">
+                        <Border Background="#8699AA" Margin="5,0,5,5" Tapped="TrainBorder_Tapped">
                             <TextBlock Text="出租车" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                         </Border>
-                        <Border Grid.Row="1" Background="#FFBE3CFB" Margin="5,0,5,5" Tapped="AirLineBorder_Tapped">
+                        <Border Grid.Row="1" Background="#BFD362" Margin="5,0,5,5" Tapped="AirLineBorder_Tapped">
                             <TextBlock Text="自行车" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                         </Border>
                     </Grid>
-                    <Border Grid.Column="1" Grid.Row="2" Margin="0,0,5,5" Background="LightGreen" Tapped="AirLineBorder_Tapped" ManipulationMode="None">
+                    <Border Grid.Column="1" Grid.Row="2" Margin="0,0,5,5" Background="#EF6F6E" Tapped="AirLineBorder_Tapped" ManipulationMode="None">
                         <TextBlock Text="快递" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                     </Border>
 
                 </Grid>
             </Grid>
-            <Grid x:Name="ListLeftFragment"  >
+            <Grid x:Name="ListLeftFragment" Visibility="Collapsed" >
                 <ScrollViewer>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -154,7 +157,7 @@
                 </ScrollViewer>
 
             </Grid>
-            <Grid x:Name="ListRightFragment" Background="White" >
+            <Grid x:Name="ListRightFragment" Background="White"  Visibility="Collapsed">
 
                 <ListView FontSize="25"
                           Name="positionList" ItemClick="positionList_ItemClick"

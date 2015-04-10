@@ -32,7 +32,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Name="NotificationPanel" Visibility="Collapsed" Orientation="Horizontal" Background="Red" Width="Auto" Height="40"  VerticalAlignment="Top">
+        <StackPanel Name="NotificationPanel" Visibility="Collapsed" Orientation="Horizontal" Background="Red" Width="Auto" Height="40"  VerticalAlignment="Top" Canvas.ZIndex="100">
             <TextBlock Name="NotificationContent" Text="网络连接错误！" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
         <!-- Title Panel -->

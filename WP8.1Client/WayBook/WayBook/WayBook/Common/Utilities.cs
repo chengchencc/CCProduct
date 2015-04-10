@@ -113,8 +113,15 @@ namespace WayBook.Common
 
         #region Notification
 
-        public static void ShowNotification(StackPanel notificationPanel)
+        public static void ShowNotification(StackPanel notificationPanel,string message)
         {
+            var notificationContent = notificationPanel.Children.OfType<TextBlock>().FirstOrDefault();
+            if (notificationContent==null)
+            {
+                throw new Exception("提示框格式定义不对！");
+            }
+            notificationContent.Text = message;
+
 
             Storyboard ShowNotification = new Storyboard();
             PopInThemeAnimation popInAnimation = new PopInThemeAnimation();

@@ -26,6 +26,7 @@ using System.Threading;
 using Windows.UI.Core;
 using System.Threading.Tasks;
 using WayBook.Services;
+using Windows.UI.Xaml.Media.Imaging;
 
 // The Hub Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
 
@@ -34,14 +35,17 @@ namespace WayBook
     /// <summary>
     /// A page that displays details for a single item within a group.
     /// </summary>
-    public sealed partial class ItemPage : Page
+    public sealed partial class ItemPageNew : Page
     {
         private readonly NavigationHelper navigationHelper;
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         string _busId = string.Empty;
         List<Station> stations;
+        int lineCount = 5;
+        double mainContentMarginLeft = 20;
+        double mainContentMarginRight = 50;
 
-        public ItemPage()
+        public ItemPageNew()
         {
             this.InitializeComponent();
 
@@ -67,6 +71,21 @@ namespace WayBook
             get { return this.defaultViewModel; }
         }
 
+        public Double ScreenWidth
+        {
+            get { return Window.Current.Bounds.Width; }
+        }
+
+        public Double MainMarginLeftAndRight
+        {
+            get { return mainContentMarginLeft + mainContentMarginRight; }
+        }
+
+        public Double UnitWidth
+        {
+            get { return (ScreenWidth - MainMarginLeftAndRight - 30) / (lineCount - 1); }
+        }
+
         /// <summary>
         /// Populates the page with content passed during navigation. Any saved state is also
         /// provided when recreating a page from a prior session.
@@ -84,6 +103,7 @@ namespace WayBook
             //var item = await SampleDataSource.GetItemAsync((string)e.NavigationParameter);
             //this.DefaultViewModel["Item"] = item;
             //ToastNotification toast = new ToastNotification();
+
             var stationInfo = e.NavigationParameter as StationInfo;
             if (stationInfo != null)
             {
@@ -100,8 +120,8 @@ namespace WayBook
                 var jsonResult = await RestfulClient.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + item.id);
                 if (string.IsNullOrEmpty(jsonResult))
                 {
-                   // Utilities.ShowMessage("网络连接失败，请检查网络连接！");
-                     Utilities.ShowNotification(NotificationPanel, "网络连接失败，请检查网络连接！");
+                    // Utilities.ShowMessage("网络连接失败，请检查网络连接！");
+                    Utilities.ShowNotification(NotificationPanel, "网络连接失败，请检查网络连接！");
                     return;
                 }
 
@@ -127,56 +147,140 @@ namespace WayBook
                     {
                         break;
                     }
-                    
+
                     await Task.Delay(10000);
                 }
             });
 
-            //CoreDispatcher dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-            //await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            //{
-            //    while (true)
-            //    {
-            //        await GetBusPoint();
-            //        await Task.Delay(10000);
-            //    }
-            //});
 
         }
 
         private void GenerateStation()
         {
-            int i = 1;
-            StationPanel.Children.Clear();
-            LinePanel.Children.Clear();
-            foreach (var stationItem in stations)
+            StationMap.Children.Clear();
+
+            // var marginTop = 40;
+            for (int i = 0; i < stations.Count; i++)
             {
-                Button b = new Button();
-                b.Content = stationItem.stationName;
-                b.RequestedTheme = ElementTheme.Light;
-                b.BorderThickness = new Thickness(0);
-
-                b.Margin = new Thickness(0, 100, 0, 0);
-                StationPanel.Children.Add(b);
-
-                Ellipse ellipse = new Ellipse();
-                ellipse.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Center;
-                ellipse.Width = 20;
-                ellipse.Height = 20;
-                ellipse.Fill = new SolidColorBrush(Colors.White);
-                ellipse.Stroke = new SolidColorBrush(Colors.DeepSkyBlue);
-                ellipse.StrokeThickness = 5;
-                if (i == 1)
+                var gridIndex = i / lineCount;
+                if (i % lineCount == 0)//新行第一个节点，要生成横线跟竖线
                 {
-                    ellipse.Margin = new Thickness(0, 118.75, 0, 0);
+                    #region 生成横线
+                    Border horizontalLine = new Border();
+                    horizontalLine.Background = new SolidColorBrush(Colors.OrangeRed);
+                    horizontalLine.BorderThickness = new Thickness(0);
+                    if (i + lineCount > stations.Count)
+                    {
+                        //只有最后一行多于一个元素才会生成横线
+                        if (stations.Count % lineCount - 1 > 0)
+                        {
+                            horizontalLine.Width = (stations.Count % lineCount - 1) * UnitWidth - 10;
+                        }
+
+                    }
+                    else
+                    {
+                        horizontalLine.Width = ScreenWidth - 30 - MainMarginLeftAndRight;
+                    }
+                    horizontalLine.Height = 4;
+                    horizontalLine.Margin = new Thickness(mainContentMarginLeft, 25 + gridIndex * UnitWidth, mainContentMarginRight, 0);
+                    horizontalLine.VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Top;
+                    if (gridIndex % 2 == 0)
+                    {
+                        horizontalLine.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left;
+                    }
+                    else
+                    {
+                        horizontalLine.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Right;
+                    }
+                    StationMap.Children.Add(horizontalLine);
+
+                    #endregion
+                    #region 生成竖线
+                    if (i + lineCount < stations.Count)
+                    {
+
+                        Border verticalLine = new Border();
+                        verticalLine.Background = new SolidColorBrush(Colors.OrangeRed);
+                        verticalLine.BorderThickness = new Thickness(0);
+                        verticalLine.Height = UnitWidth;
+                        verticalLine.Width = 4;
+                        if (gridIndex % 2 == 0)
+                        {
+                            verticalLine.Margin = new Thickness(ScreenWidth - MainMarginLeftAndRight - (30 / 2 + 2), gridIndex * UnitWidth + 28, 0, 0);
+                        }
+                        else
+                        {
+                            verticalLine.Margin = new Thickness(14, gridIndex * UnitWidth + 28, 0, 0);
+                        }
+
+                        verticalLine.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left;
+                        verticalLine.VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Top;
+                        StationMap.Children.Add(verticalLine);
+                    }
+                    #endregion
+                }
+                var station = stations[i];
+                #region Generate station node
+                StackPanel sp = new StackPanel();
+                if (i / lineCount % 2 == 0)
+                {
+                    sp.Margin = new Thickness((i % lineCount) * UnitWidth, gridIndex * UnitWidth, 0, 0);
                 }
                 else
                 {
-                    ellipse.Margin = new Thickness(0, 137.5, 0, 0);
+                    sp.Margin = new Thickness(((lineCount - 1) - (i % lineCount)) * UnitWidth, gridIndex * UnitWidth, 0, 0);
                 }
-                LinePanel.Children.Add(ellipse);
-                i++;
+                sp.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left;
+                sp.RenderTransformOrigin = new Point(0.5, 0.5);
+                Canvas.SetZIndex(sp, 10);
+
+                #region 生成站点名称
+                TextBlock tb = new TextBlock();
+                tb.Height = 15;
+                tb.Width = 90;
+                tb.TextTrimming = TextTrimming.WordEllipsis;
+                tb.Text = station.stationName;
+                var tbTransform = new CompositeTransform();
+                tbTransform.TranslateX = 20;
+                tbTransform.TranslateY = -8;
+                tbTransform.Rotation = -25;
+                tb.RenderTransform = tbTransform;
+                sp.Children.Add(tb);
+                #endregion
+                #region 生成站点图片
+                Image image = new Image();
+                if (i == 0)
+                {
+                    image.Source = new BitmapImage(new Uri(@"ms-appx:/Assets/sketch_start.png"));
+                    image.Margin = new Thickness(0, -8, 0, 0);
+                    image.Width = 40;
+                    image.Height = 40;
+                }
+                else if (i == stations.Count - 1)
+                {
+                    image.Source = new BitmapImage(new Uri(@"ms-appx:/Assets/sketch_finish.png"));
+                    image.Margin = new Thickness(0, -8, 0, 0);
+                    image.Width = 40;
+                    image.Height = 40;
+                }
+                else
+                {
+                    image.Source = new BitmapImage(new Uri(@"ms-appx:/Assets/staitonlist_station_noline.png"));
+                    image.Margin = new Thickness(0, -2, 0, 0);
+                    image.Width = 30;
+                    image.Height = 30;
+                }
+
+                image.Stretch = Stretch.UniformToFill;
+                image.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left;
+                sp.Children.Add(image);
+                #endregion
+
+                StationMap.Children.Add(sp);
+                #endregion
             }
+
         }
 
         /// <summary>
@@ -220,24 +324,22 @@ namespace WayBook
         #endregion
 
 
-        private async void SearchBusLineBtn_Click(object sender, RoutedEventArgs e)
-        {
-            await GetBusPoint();
-        }
+        //private async void SearchBusLineBtn_Click(object sender, RoutedEventArgs e)
+        //{
+        //    await GetBusPoint();
+        //}
 
         private async System.Threading.Tasks.Task<bool> GetBusPoint()
         {
             try
             {
                 BusService busService = new BusService();
-                var buses = await busService.GetRealTimeBuses(_busId,NotificationPanel);
+                var buses = await busService.GetRealTimeBuses(_busId, NotificationPanel);
                 if (buses == null)
                 {
                     return false;
                 }
                 #region Display
-                BusPanel.Children.Clear();
-
                 GenerateBusPoint(buses);
                 return true;
                 #endregion
@@ -253,6 +355,8 @@ namespace WayBook
 
         private void GenerateBusPoint(WayBookBase<List<RealTimeBus>> buses)
         {
+            busContent.Children.Clear();
+
             foreach (var item in buses.result)
             {
 
@@ -260,45 +364,68 @@ namespace WayBook
                 {
                     continue;
                 }
-                //<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-15,100,0,0">
-                //         <Ellipse HorizontalAlignment="Center" Width="10" Height="10"  Fill="#FFF51717" StrokeThickness="1" />
-                //         <Button Content="鲁A18556" RequestedTheme="Light" RenderTransformOrigin="0.5,0.5" BorderThickness="1" BorderBrush="#FF7C1D1D" Foreground="#FFF55353"/>
-                //     </StackPanel>
+                //<Image Source="Assets/sketch_busicon.png" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="85,0,0,0"/>
+                Image image = new Image();
+                image.Source = new BitmapImage(new Uri(@"ms-appx:/Assets/sketch_busicon.png"));
+                image.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left;
+                image.VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Top;
+                image.Width = 30;
+                image.Height = 30;
+                
 
-                StackPanel panel = new StackPanel();
-                panel.Orientation = Orientation.Horizontal;
-                panel.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left;
-                panel.VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Center;
-                panel.Margin = new Thickness(-15, 0, 0, 0);
 
-                Ellipse el = new Ellipse();
-                el.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Center;
-                el.Width = 10;
-                el.Height = 10;
-                el.Fill = new SolidColorBrush(Colors.OrangeRed);
-                el.StrokeThickness = 1;
-
-                Button btn = new Button();
-                btn.Content = item.cardId;
-                btn.RequestedTheme = ElementTheme.Light;
-                btn.Background = new SolidColorBrush(Colors.WhiteSmoke);
-                btn.BorderThickness = new Thickness(1);
-                btn.BorderBrush = new SolidColorBrush(Colors.OrangeRed);
-                btn.Foreground = new SolidColorBrush(Colors.OrangeRed);
-
-                panel.Children.Add(el);
-                panel.Children.Add(btn);
-
-                var position = item.stationSeqNum;
+                var position = item.stationSeqNum-1;
                 var preStation = stations[position - 1];
                 var nextStation = stations[position];
                 var stationDistance = GetDistance(preStation.lat, preStation.lng, nextStation.lat, nextStation.lng);
                 var busNextStationDistance = GetDistance(nextStation.lat, nextStation.lng, item.lat, item.lng);
-                PlaneProjection pro = new PlaneProjection();
-                pro.GlobalOffsetY = position * 100 + 100 - busNextStationDistance / stationDistance * 100 + position * 57.5;
 
-                panel.Projection = pro;
-                BusPanel.Children.Add(panel);
+                var lineIndex = position / lineCount;
+
+                if (busNextStationDistance > stationDistance)
+                {//加入到下一站的距离还大于两站距离 默认给他赋值为两站距离
+                    busNextStationDistance = stationDistance;
+                }
+                var distance = busNextStationDistance / stationDistance * UnitWidth;
+
+                if (position / lineCount % 2 == 0)
+                {
+                    if (position % lineCount == 0)
+                    {
+                        image.Margin = new Thickness((position % lineCount) * UnitWidth,
+                                lineIndex * UnitWidth-distance,
+                                0,
+                                0);
+                    }
+                    else
+                    {
+                        image.Margin = new Thickness((position % lineCount) * UnitWidth - distance,
+                                lineIndex * UnitWidth,
+                                0,
+                                0);
+                    }
+
+
+                }
+                else
+                {
+                    if (position % lineCount == 0)
+                    {
+
+                        image.Margin = new Thickness(((lineCount - 1) - (position % lineCount)) * UnitWidth,
+                            lineIndex * UnitWidth - distance,
+                            0,
+                            0);
+                    }
+                    else
+                    {
+                        image.Margin = new Thickness(((lineCount - 1) - (position % lineCount)) * UnitWidth +distance,
+                            lineIndex * UnitWidth,
+                            0,
+                            0);
+                    }
+                }
+                busContent.Children.Add(image);
             }
         }
 
