@@ -8,30 +8,32 @@ using RestSharp.Portable;
 using System.Net.NetworkInformation;
 using Newtonsoft.Json;
 using WayBook.DataModel;
+using System.Net;
 
 namespace WayBook.Common
 {
     public class RestfulClient
     {
+        public static Task<IRestResponse> LatestRequest { get; set; }
         public static async Task<RestfulResultModel<T>> Get<T>(string url) where T : new()
         {
             var result = new RestfulResultModel<T>();
             result.Model = default(T);
             result.State = RestfulResultState.ResponseDataError;
+            result.ResponseResult = new ResponseResult();
             if (!NetworkInterface.GetIsNetworkAvailable())
             {
-               result.State = RestfulResultState.NetworkNotAvailable;
+                result.State = RestfulResultState.NetworkNotAvailable;
             }
-            var responseString = string.Empty;
             try
             {
-                responseString = await Get(url);
+                result.ResponseResult = await Get(url);
             }
             catch (Exception)
             {
                 result.State = RestfulResultState.OtherError;
             }
-            if (string.IsNullOrEmpty(responseString))
+            if (result.ResponseResult.Status!= HttpStatusCode.OK)
             {
                 result.State = RestfulResultState.EmptyResponseData;
             }
@@ -39,7 +41,7 @@ namespace WayBook.Common
             {
                 try
                 {
-                    result.Model = JsonConvert.DeserializeObject<T>(responseString);
+                    result.Model = JsonConvert.DeserializeObject<T>(result.ResponseResult.Content);
                     result.State = RestfulResultState.Success;
                 }
                 catch (Exception)
@@ -58,28 +60,41 @@ namespace WayBook.Common
         /// <param name="url"></param>
         /// <param name="timeoutMilliSeconds"></param>
         /// <returns></returns>
-        public static async Task<string> Get(string url, int timeoutMilliSeconds = 10000)
+        public static async Task<ResponseResult> Get(string url, int timeoutMilliSeconds = 10000)
         {
 
-            var content = string.Empty;
+            var content = new ResponseResult();
             using (var client = new RestClient(url))
             {
                 try
                 {
-                   
+
                     if (timeoutMilliSeconds > 0) client.Timeout = new TimeSpan(0, 0, 0, timeoutMilliSeconds);
 
                     var request = new RestRequest();
                     request.Method = HttpMethod.Get;
                     request.AddHeader("cache-control", "no-cache");
-                    
-                    var response = await client.Execute(request);
-                    if (response.RawBytes != null)
-                        content = Encoding.GetEncoding(EncodingNames.UTF8).GetString(response.RawBytes, 0, response.RawBytes.Length);
+
+                    //var response = await client.Execute(request);
+                    var asyncHandler = client.Execute(request);
+                    LatestRequest = asyncHandler;
+                    var response = await asyncHandler;
+
+                    content.Status = response.StatusCode;
+
+                    if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                    {
+                        return content;
+                    }
+
+                    // if (response.RawBytes != null)
+
+                    content.Content = Encoding.GetEncoding(EncodingNames.UTF8).GetString(response.RawBytes, 0, response.RawBytes.Length);
 
                 }
                 catch (Exception ex)
                 {
+                    content.Status = HttpStatusCode.NotFound;
                     //AppLogs.WriteError("RestfullClient", ex.Message);
                     //AppLogs.WriteError("RestfullClient", ex.StackTrace);
                     //throw ex;
@@ -138,12 +153,12 @@ namespace WayBook.Common
 
     public enum RestfulResultState
     {
-        Success=0,
-        NetworkNotAvailable=1,
-        ResponseDataError =2,
-        DeserializeDataError=3,
+        Success = 0,
+        NetworkNotAvailable = 1,
+        ResponseDataError = 2,
+        DeserializeDataError = 3,
         EmptyResponseData = 4,
-        OtherError=5
+        OtherError = 5
     }
 
 
@@ -156,10 +171,17 @@ namespace WayBook.Common
         public const string ASCII = "ASCII";
     }
 
-    public class RestfulResultModel<T> where T:new()
+    public class RestfulResultModel<T> where T : new()
     {
         public RestfulResultState State { get; set; }
         public T Model { get; set; }
+        public ResponseResult ResponseResult { get; set; }
+    }
+
+    public class ResponseResult
+    {
+        public HttpStatusCode Status { get; set; }
+        public string Content { get; set; }
     }
 
 }

@@ -20,6 +20,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI;
 using Newtonsoft.Json;
 using WayBook.DataModel;
+using WayBook.Services;
 
 // The Hub Application template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -156,15 +157,29 @@ namespace WayBook
             {
                 // var GetBuslineUrl = Resources.SingleOrDefault(s => s.Key == "GetBuslineUrl");
                 //var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + sender.Text + "/0/20");
-                var jsonResult = await RestfulClient.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + sender.Text + "/0/20");
-                if (!string.IsNullOrEmpty(jsonResult))
+                var url = UrlServices.Instance.GetBusLineUrl(sender.Text);
+
+
+                if (RestfulClient.LatestRequest !=null&& !RestfulClient.LatestRequest.IsCompleted)
                 {
-                    var busLines = JsonConvert.DeserializeObject<BusLine>(jsonResult);
-                    autoSuggestBox.ItemsSource = busLines.result.result;
+                    RestfulClient.LatestRequest.AsAsyncAction().Cancel();
+                }
+                var jsonResult = await RestfulClient.Get(url);
+
+                if (!string.IsNullOrEmpty(jsonResult.Content))
+                {
+                    var busLines = JsonConvert.DeserializeObject<BusLine>(jsonResult.Content);
+                    if (busLines.status.code != 0)
+                    {
+                        Utilities.ShowMessage(busLines.status.msg);
+                        autoSuggestBox.ItemsSource = null;
+                    }
+                    else
+                        autoSuggestBox.ItemsSource = busLines.result.result;
                 }
                 else
                 {
-                    
+
                     //Utilities.ShowNotification(NotificationPanel);
                     Utilities.ShowMessage("网络连接失败，请检查网络连接！");
                     autoSuggestBox.ItemsSource = null;
@@ -176,7 +191,7 @@ namespace WayBook
         private void autoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             var selectedItem = (ResultItem)args.SelectedItem;
-            if (!Frame.Navigate(typeof(ItemPage), selectedItem))
+            if (!Frame.Navigate(typeof(ItemPageNew), selectedItem))
             {
                 var resourceLoader = ResourceLoader.GetForCurrentView("Resources");
                 throw new Exception(resourceLoader.GetString("NavigationFailedExceptionMessage"));

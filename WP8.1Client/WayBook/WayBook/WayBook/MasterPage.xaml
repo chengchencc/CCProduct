@@ -1,0 +1,30 @@
+﻿<Page xmlns:UI="using:Microsoft.Advertising.Mobile.UI" 
+    x:Class="WayBook.MasterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WayBook"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:WayBook.Data"
+    mc:Ignorable="d" 
+    Background="Black">
+
+    <Page.Resources>
+        <DataTemplate x:Key="HubSectionHeaderTemplate">
+            <TextBlock Margin="0,0,0,-9.5" Text="{Binding}"/>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Frame Grid.Row="0" Name="ScenarioFrame"/>
+        <Border Name="NotificationPanel" Grid.Row="0" Visibility="Collapsed" Canvas.ZIndex="100" Background="Red" Height="50" VerticalAlignment="Top" Padding="15,0,0,0">
+            <StackPanel>
+                <TextBlock Name="NotificationTitle" FontSize="20"  Height="30" Text="Title"></TextBlock>
+                <TextBlock Name="NotificationContent" FontSize="14" Height="20" VerticalAlignment="Bottom" Text="Content"></TextBlock>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

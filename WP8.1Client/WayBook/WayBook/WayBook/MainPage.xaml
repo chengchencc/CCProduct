@@ -32,15 +32,8 @@
                 </Grid.ColumnDefinitions>
                 <Image Margin="5"  x:Name="DrawerIcon"  Grid.Column="0" Source="/Assets/ic_drawer.png" HorizontalAlignment="Left" Tapped="DrawerIcon_Tapped" />
                 <TextBlock Grid.Column="1" Text="微步" Style="{StaticResource ListViewItemTextBlockStyle }" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <!--<ComboBox  Grid.Column="2" BorderBrush="{x:Null}" HorizontalAlignment="Center">
-                <ComboBoxItem Content="济南" IsSelected="True"></ComboBoxItem>
-                <ComboBoxItem Content="杭州"></ComboBoxItem>
-                <ComboBoxItem Content="淄博"></ComboBoxItem>
-                <ComboBoxItem Content="济宁"></ComboBoxItem>
-                <ComboBoxItem Content="泰安"></ComboBoxItem>
-                <ComboBoxItem Content="杭州"></ComboBoxItem>
-            </ComboBox>-->
-                <Button Name="position" Content="济南" Grid.Column="2" Tapped="Button_Tapped" HorizontalAlignment="Right" BorderBrush="{x:Null}"></Button>
+                <ComboBox Name="Region" Grid.Column="2" BorderBrush="{x:Null}" HorizontalAlignment="Right" SelectionChanged="Region_SelectionChanged" />
+                <Button Name="position" Content="济南" Grid.Column="2" Tapped="Button_Tapped" HorizontalAlignment="Right"  Visibility="Collapsed" BorderBrush="{x:Null}"></Button>
             </Grid>
         </Border>
         <drawerLayout:DrawerLayoutBothSide Grid.Row="1"  x:Name="DrawerLayout">
@@ -99,7 +92,7 @@
 
                 </Grid>
             </Grid>
-            <Grid x:Name="ListLeftFragment" Visibility="Collapsed" >
+            <Grid x:Name="ListLeftFragment" >
                 <ScrollViewer>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -157,11 +150,10 @@
                 </ScrollViewer>
 
             </Grid>
-            <Grid x:Name="ListRightFragment" Background="White"  Visibility="Collapsed">
-
+            <Grid x:Name="ListRightFragment" Background="White" >
+                <Grid>
                 <ListView FontSize="25"
                           Name="positionList" ItemClick="positionList_ItemClick"
-                          
                           >
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
@@ -184,6 +176,7 @@
                     </ListViewItem>-->
 
                 </ListView>
+                </Grid>
             </Grid>
         </drawerLayout:DrawerLayoutBothSide>
 

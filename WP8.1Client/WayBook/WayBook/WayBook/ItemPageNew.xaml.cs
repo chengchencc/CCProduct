@@ -44,10 +44,12 @@ namespace WayBook
         int lineCount = 5;
         double mainContentMarginLeft = 20;
         double mainContentMarginRight = 50;
-
+        
         public ItemPageNew()
         {
             this.InitializeComponent();
+
+            this.NavigationCacheMode = NavigationCacheMode.Disabled;
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
@@ -116,16 +118,18 @@ namespace WayBook
                 var item = (ResultItem)e.NavigationParameter;
                 //this.DefaultViewModel["Item"] = item;
                 _busId = item.id;
+                var url = UrlServices.Instance.GetStationsUrl(_busId);
+                var jsonResult = await RestfulClient.Get(url);
                 //var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + item.id);
-                var jsonResult = await RestfulClient.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + item.id);
-                if (string.IsNullOrEmpty(jsonResult))
+                //var jsonResult = await RestfulClient.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + item.id);
+                if (string.IsNullOrEmpty(jsonResult.Content))
                 {
                     // Utilities.ShowMessage("网络连接失败，请检查网络连接！");
                     Utilities.ShowNotification(NotificationPanel, "网络连接失败，请检查网络连接！");
                     return;
                 }
 
-                var stationsInfo = JsonConvert.DeserializeObject<WayBookBase<StationInfo>>(jsonResult);
+                var stationsInfo = JsonConvert.DeserializeObject<WayBookBase<StationInfo>>(jsonResult.Content);
                 if (stationsInfo == null)
                 {
                     return;
@@ -371,9 +375,12 @@ namespace WayBook
                 image.VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Top;
                 image.Width = 30;
                 image.Height = 30;
-                
 
 
+                if (item.stationSeqNum == 0)
+                {
+                    continue;
+                }
                 var position = item.stationSeqNum-1;
                 var preStation = stations[position - 1];
                 var nextStation = stations[position];

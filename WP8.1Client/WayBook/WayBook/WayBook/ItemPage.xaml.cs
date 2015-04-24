@@ -98,14 +98,14 @@ namespace WayBook
                 _busId = item.id;
                 //var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + item.id);
                 var jsonResult = await RestfulClient.Get("http://60.216.101.229/server-ue2/rest/buslines/370100/" + item.id);
-                if (string.IsNullOrEmpty(jsonResult))
+                if (string.IsNullOrEmpty(jsonResult.Content))
                 {
                    // Utilities.ShowMessage("网络连接失败，请检查网络连接！");
                      Utilities.ShowNotification(NotificationPanel, "网络连接失败，请检查网络连接！");
                     return;
                 }
 
-                var stationsInfo = JsonConvert.DeserializeObject<WayBookBase<StationInfo>>(jsonResult);
+                var stationsInfo = JsonConvert.DeserializeObject<WayBookBase<StationInfo>>(jsonResult.Content);
                 if (stationsInfo == null)
                 {
                     return;

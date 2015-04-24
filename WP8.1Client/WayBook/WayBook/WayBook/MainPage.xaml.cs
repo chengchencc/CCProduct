@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
+using WayBook.Services;
 
 // The Hub Application template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -34,6 +35,7 @@ namespace WayBook
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
         private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView("Resources");
 
+        public RegionServices RegionService { get; set; }
         public MainPage()
         {
             this.InitializeComponent();
@@ -47,6 +49,7 @@ namespace WayBook
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            RegionService = new RegionServices();
         }
 
         /// <summary>
@@ -83,10 +86,9 @@ namespace WayBook
             var sampleDataGroups = await SampleDataSource.GetGroupsAsync();
             this.DefaultViewModel["Groups"] = sampleDataGroups;
 
-            List<Position> p = GenPosition();
-
-            positionList.ItemsSource = p;
+            InitialRegion();
         }
+
 
         /// <summary>
         /// Preserves state associated with this page in case the application is suspended or the
@@ -201,7 +203,7 @@ namespace WayBook
 
         private void BusBorder_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (!Frame.Navigate(typeof(BusPage),"1"))
+            if (!Frame.Navigate(typeof(BusPage), "1"))
             {
                 throw new Exception(this.resourceLoader.GetString("NavigationFailedExceptionMessage"));
             }
@@ -230,33 +232,63 @@ namespace WayBook
             //TODO:将选择的城市保存起来
         }
 
+        private void InitialRegion()
+        {
+            List<Position> p = GenPosition();
+
+            positionList.ItemsSource = p;
+
+            Region.ItemsSource = p;
+            Region.DisplayMemberPath = "Name";
+            Region.SelectedValuePath = "Id";
+            var regionCode = RegionService.Get();
+            if (string.IsNullOrEmpty(regionCode))
+            {
+                regionCode = "370100";
+                DataServices.Instance.AddOrUpdate("Host", "http://60.216.101.229");
+                RegionService.AddOrUpdate(regionCode);
+            }
+            Region.SelectedValue = regionCode;
+        }
 
         private List<Position> GenPosition()
         {
-            List<Position> p= new List<Position>();
-            p.Add(new Position { Id = "372330", Name = "三亚" });
-            p.Add(new Position { Id = "372330", Name = "江阴" });
-            p.Add(new Position { Id = "372330", Name = "泰州" });
-            p.Add(new Position { Id = "372330", Name = "扬州" });
-            p.Add(new Position { Id = "372330", Name = "镇江" });
-            p.Add(new Position { Id = "372330", Name = "七台河" });
-            p.Add(new Position { Id = "372330", Name = "石家庄" });
-            p.Add(new Position { Id = "372330", Name = "廊坊" });
-            p.Add(new Position { Id = "372330", Name = "泸州" });
-            p.Add(new Position { Id = "372330", Name = "许昌" });
-            p.Add(new Position { Id = "372330", Name = "济源" });
-            p.Add(new Position { Id = "372330", Name = "济南" });
-            p.Add(new Position { Id = "372330", Name = "济宁" });
-            p.Add(new Position { Id = "372330", Name = "泰安" });
-            p.Add(new Position { Id = "372330", Name = "淄博" });
-            p.Add(new Position { Id = "372330", Name = "威海" });
-            p.Add(new Position { Id = "372330", Name = "聊城" });
-            p.Add(new Position { Id = "372330", Name = "杭州" });
-            p.Add(new Position { Id = "372330", Name = "绍兴" });
-            p.Add(new Position { Id = "372330", Name = "祁阳" });
-            p.Add(new Position { Id = "372330", Name = "锦州" });
-            p.Add(new Position { Id = "372330", Name = "葫芦岛" });
+            List<Position> p = new List<Position>();
+            p.Add(new Position { Id = "460200", Name = "三亚" });
+            p.Add(new Position { Id = "320281", Name = "江阴" });
+            p.Add(new Position { Id = "321200", Name = "泰州" });
+            p.Add(new Position { Id = "321000", Name = "扬州" });
+            p.Add(new Position { Id = "321100", Name = "镇江" });
+            p.Add(new Position { Id = "230900", Name = "七台河" });
+            p.Add(new Position { Id = "130100", Name = "石家庄" });
+            p.Add(new Position { Id = "131000", Name = "廊坊" });
+            p.Add(new Position { Id = "510500", Name = "泸州" });
+            p.Add(new Position { Id = "411000", Name = "许昌" });
+            p.Add(new Position { Id = "410881", Name = "济源" });
+            p.Add(new Position { Id = "370100", Name = "济南" });
+            p.Add(new Position { Id = "370800", Name = "济宁" });
+            p.Add(new Position { Id = "370900", Name = "泰安" });
+            p.Add(new Position { Id = "370300", Name = "淄博" });
+            p.Add(new Position { Id = "371000", Name = "威海" });
+            p.Add(new Position { Id = "371500", Name = "聊城" });
+            p.Add(new Position { Id = "330100", Name = "杭州" });
+            p.Add(new Position { Id = "330600", Name = "绍兴" });
+            p.Add(new Position { Id = "431121", Name = "祁阳" });
+            p.Add(new Position { Id = "210700", Name = "锦州" });
+            p.Add(new Position { Id = "211400", Name = "葫芦岛" });
             return p;
+        }
+
+        private async void Region_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var regionSelected = (ComboBox)sender;
+            if (regionSelected.SelectedValue != null && !string.IsNullOrEmpty(regionSelected.SelectedValue.ToString()))
+            {
+                RegionService.AddOrUpdate(regionSelected.SelectedValue.ToString());
+                var host = await RegionService.GetRegionHost(regionSelected.SelectedValue.ToString());
+                DataServices.Instance.AddOrUpdate("Host", host);
+            }
+            
         }
 
     }

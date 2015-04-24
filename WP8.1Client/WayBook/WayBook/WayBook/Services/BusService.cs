@@ -13,7 +13,7 @@ namespace WayBook.Services
     {
         public async Task<WayBookBase<List<RealTimeBus>>> GetRealTimeBuses(string busId,Windows.UI.Xaml.Controls.StackPanel NotificationPanel)
         {
-            var url1 = "http://60.216.101.229/server-ue2/rest/buses/busline/370100/" + busId;
+            var url1 = UrlServices.Instance.GetRealtimeBusesUrl(busId); // "http://60.216.101.229/server-ue2/rest/buses/busline/370100/" + busId;
             var jsonResult = await RestfulClient.Get<WayBookBase<List<RealTimeBus>>>(url1);
             if (jsonResult.State != RestfulResultState.Success)
             {
@@ -50,7 +50,7 @@ namespace WayBook.Services
 
             //var baiduMapCoords = await HttpClientWapper.Instance.Get(url);
             var baiduMapCoords = await RestfulClient.Get(url);
-            if (string.IsNullOrEmpty(baiduMapCoords))
+            if (string.IsNullOrEmpty(baiduMapCoords.Content))
             {
                 Utilities.ShowNotification(NotificationPanel, "网络连接失败，请检查网络连接！");
                 //Utilities.ShowMessage("网络连接失败，请检查网络连接！");
@@ -58,7 +58,7 @@ namespace WayBook.Services
             }
             try
             {
-                JsonObject jsonObject = JsonObject.Parse(baiduMapCoords);
+                JsonObject jsonObject = JsonObject.Parse(baiduMapCoords.Content);
                 JsonArray jsonArray = jsonObject["result"].GetArray();
 
                 for (int i = 0; i < jsonArray.Count; i++)

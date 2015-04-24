@@ -35,6 +35,7 @@ namespace WayBook.Common
                 throw new Exception("url为空！");
             }
             var uri = new Uri(url);
+
             //httpClient.DefaultRequestHeaders.Accept.Clear();
             //httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             //HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);

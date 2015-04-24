@@ -157,9 +157,9 @@ namespace WayBook
                 // var GetBuslineUrl = Resources.SingleOrDefault(s => s.Key == "GetBuslineUrl");
                 //var jsonResult = await HttpClientWapper.Instance.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + sender.Text + "/0/20");
                 var jsonResult = await RestfulClient.Get("http://60.216.101.229/server-ue2/rest/buslines/simple/370100/" + sender.Text + "/0/20");
-                if (!string.IsNullOrEmpty(jsonResult))
+                if (!string.IsNullOrEmpty(jsonResult.Content))
                 {
-                    var busLines = JsonConvert.DeserializeObject<BusLine>(jsonResult);
+                    var busLines = JsonConvert.DeserializeObject<BusLine>(jsonResult.Content);
                     autoSuggestBox.ItemsSource = busLines.result.result;
                 }
                 else
