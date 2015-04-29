@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "ConfirmAccount";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div>
+    <p>
+        您的账号已经激活. 请 @Html.ActionLink("点击这里登录", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    </p>
+</div>
