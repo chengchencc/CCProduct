@@ -169,7 +169,10 @@
       <SubType>
       </SubType>
     </Compile>
+    <Compile Include="Controllers\BasicDataController.cs" />
+    <Compile Include="Controllers\BuildingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InitialDataController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -178,10 +181,13 @@
       <SubType>
       </SubType>
     </Compile>
+    <Compile Include="Models\DbModels\Writeable\Comdict.cs" />
+    <Compile Include="Models\WriteableDbContext.cs" />
+    <Compile Include="Models\DbModels\ReadOnly\DbFirstTest.cs" />
     <Compile Include="MySqlConfiguration\MySqlInitializer.cs" />
     <Compile Include="MySqlConfiguration\MySqlConfiguration.cs" />
     <Compile Include="MySqlConfiguration\MySqlHistoryContext.cs" />
-    <Compile Include="Models\DBContext.cs" />
+    <Compile Include="Models\ReadOnlyDbContext.cs" />
     <Compile Include="Models\IdentityModels.cs">
       <SubType>
       </SubType>
@@ -192,6 +198,11 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\highchart\canvg-1.1\canvg.js" />
+    <Content Include="Content\highchart\canvg-1.1\MIT-LICENSE.txt" />
+    <Content Include="Content\highchart\canvg-1.1\rgbcolor.js" />
+    <Content Include="Content\highchart\drilldown.src.js" />
+    <Content Include="Content\highchart\highcharts.src.js" />
     <Content Include="Content\matrix\buttons.html" />
     <Content Include="Content\matrix\calendar.html" />
     <Content Include="Content\matrix\charts.html" />
@@ -214,6 +225,7 @@
     <Content Include="Content\matrix\error405.html" />
     <Content Include="Content\matrix\error500.html" />
     <Content Include="Content\matrix\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\matrix\font-awesome\googleFont.css" />
     <Content Include="Content\matrix\form-common.html" />
     <Content Include="Content\matrix\form-validation.html" />
     <Content Include="Content\matrix\form-wizard.html" />
@@ -356,9 +368,14 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_MatrixLayout.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\BasicData\Index.cshtml" />
+    <Content Include="Views\Buildings\Index.cshtml" />
+    <Content Include="Views\Buildings\OfficeBuildings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\ViewModels\" />
+    <Folder Include="Views\InitialData\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -366,6 +383,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Src\CC.Product.Core\CC.Product.Core.csproj">
+      <Project>{fee405da-08c4-4840-96ca-49ee941bea6d}</Project>
+      <Name>CC.Product.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Src\CC.Product.Domain\CC.Product.Domain.csproj">
+      <Project>{6e6fa9cb-057a-440e-b8b6-933828bfea97}</Project>
+      <Name>CC.Product.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
