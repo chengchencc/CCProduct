@@ -12,14 +12,14 @@ $(document).ready(function(){
 	});
 	$('#to-login').click(function(){
 		
-		$("#recoverform").hide();
-		$("#loginform").fadeIn();
+	    $("#recoverform").hide();
+	    $("#loginform").slideDown();//.fadeIn();
 	});
 	
 	
-	$('#to-login').click(function(){
+	//$('#to-login').click(function(){
 	
-	});
+	//});
     
     if($.browser.msie == true && $.browser.version.slice(0,3) < 10) {
         $('input[placeholder]').each(function(){ 

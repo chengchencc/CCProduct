@@ -19,17 +19,17 @@ namespace EDMWebsite.Models
             return userIdentity;
         }
     }
-    [System.Data.Entity.DbConfigurationType(typeof(MySqlConfiguration))]
+    //[System.Data.Entity.DbConfigurationType(typeof(MySqlConfiguration))]
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("MyDB", throwIfV1Schema: false)
+            : base("AccountDb", throwIfV1Schema: false)
         {
         }
 
         public static ApplicationDbContext Create()
         {
-            Database.SetInitializer(new MySqlInitializer());
+            //Database.SetInitializer(new MySqlInitializer());
 
             return new ApplicationDbContext();
         }

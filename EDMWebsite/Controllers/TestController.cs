@@ -15,8 +15,6 @@ namespace EDMWebsite.Controllers
         // GET: Test
         public ActionResult Index()
         {
-
-
             return View();
         }
     }

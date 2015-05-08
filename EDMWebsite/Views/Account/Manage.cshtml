@@ -1,13 +1,26 @@
 ﻿@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "用户管理";
+    Layout = "~/Views/Shared/_MatrixLayout.cshtml";
 }
+<style type="text/css">
+    .form-horizontal .control-group{
+        border-top:0px;
+    }
+</style>
 
-<h2>@ViewBag.Title.</h2>
+<!--breadcrumbs-->
+<div id="content-header">
+    <div id="breadcrumb">
+        <a href="#" title="用户管理" class="tip-bottom"><i class="icon-home"></i> @ViewBag.Title</a>
+        <a href="#" class="current">密码修改</a>
+    </div>
+</div>
+<!--End-breadcrumbs-->
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="row">
-    <div class="col-md-12">
+    <div class="span12">
         @if (ViewBag.HasLocalPassword)
         {
             @Html.Partial("_ChangePasswordPartial")
@@ -17,12 +30,10 @@
             @Html.Partial("_SetPasswordPartial")
         }
 
-        <section id="externalLogins">
-            @Html.Action("RemoveAccountList")
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+        @*<section id="externalLogins">
+                @Html.Action("RemoveAccountList")
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
+            </section>*@
     </div>
 </div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+

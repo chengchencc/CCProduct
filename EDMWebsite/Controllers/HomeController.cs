@@ -8,8 +8,13 @@ namespace EDMWebsite.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize(Roles="admin")]
         public ActionResult Index()
         {
+            using (WriteableSqlDbContext db = new WriteableSqlDbContext())
+            {
+                var a = db.DbFirstTestTables.ToList();
+            }
             return View();
         }
 
