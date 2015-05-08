@@ -1,29 +1,21 @@
 ﻿@{
     ViewBag.Title = "建筑分类能耗对比";
-    Layout = "~/Views/Shared/_MatrixLayout.cshtml";
+    Layout = "~/Views/Shared/_AceLayout.cshtml";
     var selector = ViewData["Buildings"] as List<EDMWebsite.Models.DbModels.Comdict>;
 }
 @section Styles {
-    <link rel="stylesheet" href="~/Content/matrix/css/select2.css" />
+
 }
 
 @section Scripts {
     <script src="~/Content/highchart/highcharts.src.js"></script>
     <script type="text/javascript">
         $(function () {
-            $("> a", "#buildings-manage").click();
-            //$("#buildings-manage").addClass('active');
 
-            //$("#basic-data").addClass("open");
-            $("> ul", "#buildings-manage").show();
-            $($("li", "#buildings-manage > ul")[0]).addClass("active");
-
-
-            $('select').select2();
-            $("#building-selector").on("change", function (e) {
-                console.log($(this).find("option:selected").text());
-            });
-
+            //$('select').select2();
+            //$("#building-selector").on("change", function (e) {
+            //    console.log($(this).find("option:selected").text());
+            //});
 
             $('#chartContainer').highcharts({
                 chart: {
@@ -75,17 +67,10 @@
     </script>
 }
 
-
-<!--breadcrumbs-->
-<div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> @ViewBag.Title</a></div>
-</div>
-<!--End-breadcrumbs-->
-
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="offset3 span6">
-            <select id="building-selector">
+        <div class="col-sm-offset-3 col-sm-6">
+            <select id="building-selector" class="chosen-select" data-placeholder="Choose a State...">
                 @foreach (var item in selector)
                 {
                     <option value=@item.Key>@item.Value</option>
@@ -96,22 +81,32 @@
 
 
     <div class="row-fluid">
-        <div class="span12">
+        <div class="col-xs-12">
             <div class="widget-box">
-                <div class="widget-title">
-                    <span class="icon"> <i class="icon-file"></i> </span>
-                    <h5>行政办公建筑能耗对比</h5>
+                <div class="widget-header widget-header-flat">
+                    <h5>
+                        <span class="icon"> <i class="ace-icon fa fa-bar-chart-o"></i> </span>
+                        行政办公建筑能耗对比
+                    </h5>
                 </div>
-                <div class="widget-content nopadding">
+                <div class="widget-body nopadding">
                     <div style="position: absolute;z-index: 1000;">
-                        <div data-toggle="buttons-radio" class="btn-group">
-                            <button class="btn btn-primary  " type="button">水</button>
-                            <button class="btn btn-primary  " type="button">电</button>
-                            <button class="btn btn-primary " type="button">暖</button>
+                        <div data-toggle="buttons" class="btn-group">
+                            <label class="btn btn-primary btn-sm">
+                                <input type="radio" value="1" />
+                                <i class="icon-only ace-icon glyphicon glyphicon-tint"></i>水
+                            </label>
+
+                            <label class="btn btn-warning btn-sm">
+                                <input type="radio" value="2" />
+                                <i class="icon-only ace-icon fa fa-bolt"></i>电
+                            </label>
+
+                            <label class="btn btn-danger btn-sm">
+                                <input type="radio" value="3" />
+                                <i class="icon-only ace-icon fa fa-certificate"></i>暖
+                            </label>
                         </div>
-                        <a href="#" class="btn btn-primary btn-mini">水</a>
-                        <a href="#" class="btn btn-success btn-mini">电</a>
-                        <a href="#" class="btn btn-danger btn-mini">暖</a>
                     </div>
                     <div id="chartContainer"></div>
 
