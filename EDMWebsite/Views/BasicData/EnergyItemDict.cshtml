@@ -1,0 +1,89 @@
+﻿@model IEnumerable<EDMWebsite.Models.DbModels.ReadOnly.T_DT_EnergyItemDict>
+
+@{
+    ViewBag.Title = "能耗分项";
+    Layout = "~/Views/Shared/_MatrixLayout.cshtml";
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $('select').select2();
+
+        })
+    </script>
+}
+
+<!--breadcrumbs-->
+<div id="content-header">
+    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> @ViewBag.Title</a></div>
+</div>
+<!--End-breadcrumbs-->
+
+<div class="container">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                </div>
+                <div class="widget-content  nopadding">
+                    <table class="table table-bordered data-table" id="energyTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.F_EnergyItemName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.F_ParentItemCode)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.F_EnergyItemType)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.F_EnergyItemUnit)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.F_EnergyItemFml)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.F_EnergyItemState)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.F_EnergyItemName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.F_ParentItemCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.F_EnergyItemType)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.F_EnergyItemUnit)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.F_EnergyItemFml)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.F_EnergyItemState)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.F_EnergyItemCode }, new { @class = "btn btn-primary btn-mini" })
+                                        @Html.ActionLink("Details", "Details", new { id = item.F_EnergyItemCode }, new { @class = "btn btn-success btn-mini" })
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.F_EnergyItemCode }, new { @class = "btn btn-danger btn-mini" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
