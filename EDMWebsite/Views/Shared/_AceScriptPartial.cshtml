@@ -121,6 +121,96 @@
 
         //$("select").select2();
 
+        var oTable1 = $(".data-table").DataTable({
+            bAutoWidth: false,
+            //"aoColumns": [
+            //  { "bSortable": false },
+            //  null, null, null, null, null,
+            //  { "bSortable": false }
+            //],
+            "aaSorting": [],
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            }
+            //,
+            //"sScrollY": "200px",
+            //"bPaginate": false,
+
+            //"sScrollX": "100%",
+            //"sScrollXInner": "120%",
+            //"bScrollCollapse": true,
+            //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
+            //you may want to wrap the table inside a "div.dataTables_borderWrap" element
+
+            //"iDisplayLength": 50
+        });
+
+        //var tableTools = new $.fn.dataTable.TableTools(oTable1, {
+        //    "sSwfPath": "../../copy_csv_xls_pdf.swf",
+        //    "buttons": [
+        //        "copy",
+        //        "csv",
+        //        "xls",
+        //        "pdf",
+        //        "print"
+        //    ]
+        //});
+        //$(tableTools.fnContainer()).insertBefore('.data-table');
+
+
+        //inside the function when ajax content is loaded
+
+        //somehow get a reference to our newly clicked(selected) element's parent "LI"
+        var activeA = $("a[href='" + window.location.pathname + "']", "#sidebar");
+        if (activeA!=undefined) {
+            var new_active = $(activeA).parent();//$("#sidebarTypography");//
+       
+        //remove ".active" class from all (previously) ".active" elements
+        $('.nav-list li.active').removeClass('active');
+
+        //add ".active" class to our newly selected item and all its parent "LI" elements
+        //new_active.addClass('active').parents('.nav-list li').addClass('active');
+        new_active.addClass('active').parents('.nav-list li').addClass('active open');
+
+        ////you can also update breadcrumbs:
+        //var breadcrumb_items = [];
+        ////$(this) is a reference to our clicked/selected element
+        //$(this).parents('.nav-list li').each(function () {
+        //    var link = $(this).find('> a');
+        //    var text = link.text();
+        //    var href = link.attr('href');
+        //    breadcrumb_items.push({ 'text': text, 'href': href });
+        //})
+        ////now we have a breadcrumbs list and can replace breadcrumbs area
+        }
+
+
     })
 
 </script>
+
+
+		<!-- page specific plugin scripts -->
+<script src="~/Content/ace_admin1.3.1/assets/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/ace_admin1.3.1/assets/js/jquery.dataTables.bootstrap.js"></script>

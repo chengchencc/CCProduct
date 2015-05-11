@@ -1279,11 +1279,14 @@
     <Content Include="Content\ace_admin1.3.1\mustache\php\vendor\Mustache\Tokenizer.php" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\site.css" />
     <Content Include="Content\highchart\canvg-1.1\canvg.js" />
     <Content Include="Content\highchart\canvg-1.1\MIT-LICENSE.txt" />
     <Content Include="Content\highchart\canvg-1.1\rgbcolor.js" />
     <Content Include="Content\highchart\drilldown.src.js" />
     <Content Include="Content\highchart\highcharts.src.js" />
+    <Content Include="Content\index.html" />
     <Content Include="Content\matrix\buttons.html" />
     <Content Include="Content\matrix\calendar.html" />
     <Content Include="Content\matrix\charts.html" />

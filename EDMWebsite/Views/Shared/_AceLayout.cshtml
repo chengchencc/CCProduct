@@ -21,8 +21,9 @@
     <link rel="stylesheet" href="~/Content/ace_admin1.3.1/assets/css/bootstrap-datetimepicker.css" />
     <link rel="stylesheet" href="~/Content/ace_admin1.3.1/assets/css/colorpicker.css" />
 
-
-
+    @*<link href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" rel="stylesheet">*@
+    @*<link href="https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">*@
+    
     <!-- page specific plugin styles -->
     <!-- text fonts -->
     <link rel="stylesheet" href="~/Content/ace_admin1.3.1/assets/css/ace-fonts.css" />
@@ -87,7 +88,7 @@
         <!-- /section:basics/sidebar -->
         <div class="main-content">
             <!-- #section:basics/content.breadcrumbs -->
-            @Html.Partial("_AceBreadcrumbsPartial")
+            @Html.Partial("_AceBreadcrumbsPartial",ViewData["Breadcrumbs"])
             <!-- /section:basics/content.breadcrumbs -->
             <div class="page-content">
                 <!-- #section:settings.box -->
@@ -187,8 +188,8 @@
                 <!-- #section:basics/footer -->
                 <div class="footer-content">
                     <span class="bigger-120">
-                        <span class="blue bolder">Ace</span>
-                        Application &copy; 2013-2014
+                        <span class="blue bolder">CC</span>
+                        工作室 &copy; 2013-2014
                     </span>
 
                     &nbsp; &nbsp;

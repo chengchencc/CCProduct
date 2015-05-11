@@ -1,17 +1,11 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-    Layout = null;
-}
-
-<html>
+﻿<html>
 <head>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta name="description" content="ChaphetsBlog">
     <meta name="author" content="ChengChen">
     <title>ChaphetsBlog</title>
-    <link rel="stylesheet" type="text/css" href="~/Content/css/site.css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/css/bootstrap.css" />
-    <link href="~/Content/css/about.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="Content/css/site.css" />
+    <link rel="stylesheet" type="text/css" href="Content/css/bootstrap.css" />
     <!--<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />-->
     <link rel="shortcut icon" href="/image/favicon.png">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -20,9 +14,10 @@
     <![endif]-->
 
 
-
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="Content/js/jquery-1.10.2.js"></script>
+    <!--<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
+    <script type="text/javascript" src="Content/js/bootstrap.js"></script>
+    <!--<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>-->
     <style type="text/css">
     </style>
 
@@ -39,13 +34,16 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a href="/" class=" navbar-brand">齐鲁工业大学</a>
+                    <a href="/" class=" navbar-brand">CC·工作室</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="/">首页</a></li>
-                        <li><a href="/Buildings/OfficeBuildings">能源管理系统</a></li>
-
+                        <li><a href="/index1">关于</a></li>
+                        <li><a href="/index2">蜜月</a></li>
+                        <li><a href="/index2">婚纱</a></li>
+                        <li><a href="/index2">写真</a></li>
+                        <li><a href="/index2">商业</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 工具
@@ -81,7 +79,7 @@
         <div class="container">
             <div class="text-center" style="background-color:transparent;color:white">
                 <h1 class="brand">
-                    <img src="~/Content/images/ico128.png" rel="image_src" alt="logo">
+                    <img src="/image/ico128.png" rel="image_src" alt="logo">
                     CC·工作室
                 </h1>
                 <p>
@@ -104,7 +102,7 @@
                     <p>All your designs can be <strong>Responsive CSS</strong> <br>and <strong>Fluid</strong></p>
                 </div>
                 <div class="col-md-6">
-                    <img src="../Content/images/developer.png" class="pull-left" alt="Features">
+                    <img src="../Content/image/developer.png" class="pull-left" alt="Features">
                     <h2><strong>网站开发</strong></h2>
                     <p>Drag-and-drop the same <strong>Bootstrap</strong> components to your own design.</p>
                     <p>Easy to integrate with <strong>any programming language</strong>, you just download the HTML and start coding the design into it.</p>
@@ -129,7 +127,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="thumbnail">
-                                <img alt="300x200" src="../Content/images/4.png">
+                                <img alt="300x200" src="../Content/image/4.png">
                                 <div class="caption">
                                     <h3>
                                         Thumbnail label
@@ -145,7 +143,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="thumbnail">
-                                <img alt="300x200" src="../Content/images/4.png">
+                                <img alt="300x200" src="../Content/image/4.png">
                                 <div class="caption">
                                     <h3>
                                         Thumbnail label
@@ -161,7 +159,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="thumbnail">
-                                <img alt="300x200" src="~/Content/images/4.png">
+                                <img alt="300x200" src="../Content/image/4.png">
                                 <div class="caption">
                                     <h3>
                                         Thumbnail label
@@ -177,7 +175,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="thumbnail">
-                                <img alt="300x200" src="~/Content/images/4.png">
+                                <img alt="300x200" src="../Content/image/4.png">
                                 <div class="caption">
                                     <h3>
                                         Thumbnail label
@@ -192,7 +190,7 @@
                             </div>
                         </div>
                     </div>
-                    <hr class="hr-width-10" />
+                    <hr class="hr-width-10"/>
                     <div class="row clearfix">
                         <div class="col-md-3 column">
                             <div class="page-header">
@@ -201,34 +199,34 @@
                             <div class="row partnerrow">
                                 <div class="col-xs-6 col-md-4">
                                     <a href="#">
-                                        <img alt="..." src="~/Content/images/partner1.jpg">
+                                        <img alt="..." src="../Content/image/partner1.jpg">
                                     </a>
                                 </div>
                                 <div class="col-xs-6 col-md-4">
                                     <a href="#">
-                                        <img alt="..." src="~/Content/images/partner1.jpg">
+                                        <img alt="..." src="../Content/image/partner1.jpg">
                                     </a>
                                 </div>
                                 <div class="col-xs-6 col-md-4">
                                     <a href="#">
-                                        <img alt="..." src="~/Content/images/partner1.jpg">
+                                        <img alt="..." src="../Content/image/partner1.jpg">
                                     </a>
                                 </div>
                             </div>
                             <div class="row partnerrow">
                                 <div class="col-xs-6 col-md-4">
                                     <a href="#">
-                                        <img data-src="holder.js/100%x100%" alt="..." src="~/Content/images/partner1.jpg">
+                                        <img data-src="holder.js/100%x100%" alt="..." src="../Content/image/partner1.jpg">
                                     </a>
                                 </div>
                                 <div class="col-xs-6 col-md-4">
                                     <a href="#">
-                                        <img data-src="holder.js/100%x180" alt="..." src="~/Content/images/partner1.jpg">
+                                        <img data-src="holder.js/100%x180" alt="..." src="../Content/image/partner1.jpg">
                                     </a>
                                 </div>
                                 <div class="col-xs-6 col-md-4">
                                     <a href="#">
-                                        <img data-src="holder.js/100%x180" alt="..." src="~/Content/images/partner1.jpg">
+                                        <img data-src="holder.js/100%x180" alt="..." src="../Content/image/partner1.jpg">
                                     </a>
                                 </div>
                             </div>
@@ -256,7 +254,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <a href="#" class="thumbnail">
-                                        <img data-src="holder.js/100%x180" alt="..." src="~/Content/images/map.png">
+                                        <img data-src="holder.js/100%x180" alt="..." src="../Content/image/map.png">
                                     </a>
                                 </div>
                             </div>
@@ -283,9 +281,9 @@
     </footer>
     <!--toolbar-->
     <div id="float-toolbar" class="text-center" style="color:white; position: fixed;z-index: 999; right:20px; bottom:100px; width:53px; height:154px;">
-        <div id="toolbar-gz" style="background:url(../../Content/images/icon.jpg) 0 0px;width:53px; height:104px;"></div>
+        <div id="toolbar-gz" style="background:url(../Content/image/icon.jpg) 0 0px;width:53px; height:104px;"></div>
         <hr style="border-top:0" />
-        <div id="toolbar-rtop" onclick="$('html,body').animate({ scrollTop: 0 }, 500)" style="display:none; background:url(../../Content/images/icon.jpg) 0 -118px ;width:53px;height:50px;"></div>
+        <div id="toolbar-rtop" onclick="$('html,body').animate({ scrollTop: 0 }, 500)" style="display:none; background:url(../Content/image/icon.jpg) 0 -118px ;width:53px;height:50px;"></div>
     </div>
 
     <!--<div id="share" onmouseover="$(this).find('.shareInfo').show();" onmouseout="$(this).find('.shareInfo').hide();" style="position: fixed;z-index: 999; right:100px;width:53px; height:104px;bottom:100px; background: url(/image/icon.jpg) 0 -118px">
@@ -364,7 +362,7 @@
                 placement: 'left', //placement of the popover. also can use  top | bottom | left | right | auto.
                 //title: '<div style="text-align:center; color:red; text-decoration:underline; font-size:14px;"> Muah ha ha</div>', //this is the top title bar of the popover. add some basic css
                 html: 'true', //needed to show html of course
-                content: '<div id="popOverBox" style="margin:-10px -10px 0px -10px"><img src="../../content/images/qrcode.png" width="150" height="150" /><div class="text-center" style="color:black">官方微信</div></div>' //this is the content of the html box. add the image here or anything you want really.
+                content: '<div id="popOverBox" style="margin:-10px -10px 0px -10px"><img src="../Content/image/qrcode.png" width="150" height="150" /><div class="text-center" style="color:black">官方微信</div></div>' //this is the content of the html box. add the image here or anything you want really.
                 //content: '<div id="popOverBox" style=""><dl><dt><img src="image/qrcode.png"></dt><dd>官方微信</dd></dl></div>' //this is the content of the html box. add the image here or anything you want really.
             });
 
@@ -378,5 +376,6 @@
         })
     </script>
 
+    -->
 </body>
 </html>

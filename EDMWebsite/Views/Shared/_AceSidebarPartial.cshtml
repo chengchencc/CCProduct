@@ -37,16 +37,157 @@
     </div><!-- /.sidebar-shortcuts -->
 
     <ul class="nav nav-list">
+
+        <li  id="buildings-manage">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-home"></i>
+                <span class="menu-text"> 建筑能耗监控 </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        行政办公建筑
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="/Buildings/OfficeBuildings">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                办公室
+                            </a>
+
+                            @*<b class="arrow"></b>*@
+                        </li>
+
+                        <li class="">
+                            <a href="mobile-menu-1.html">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                后勤楼
+                            </a>
+
+                            @*<b class="arrow"></b>*@
+                        </li>
+
+                        <li class="">
+                            <a href="mobile-menu-2.html">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                物管楼
+                            </a>
+
+                            @*<b class="arrow"></b>*@
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="">
+                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>教学楼</a><b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>场馆类</a><b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>食堂</a><b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>学生宿舍</a><b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>大型或特殊实验室</a><b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>医院</a><b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>其他</a><b class="arrow"></b>
+                </li>
+
+            </ul>
+        </li>
+
+
+
         <li class="active">
-            <a href="index.html">
+            <a href="/Buildings/Index">
                 <i class="menu-icon fa fa-tachometer"></i>
-                <span class="menu-text"> Dashboard </span>
+                <span class="menu-text"> 建筑能耗对比 </span>
             </a>
 
             <b class="arrow"></b>
         </li>
 
-        <li class="">
+
+@if (User.IsInRole("admin"))
+{
+    
+            <li class="active">
+            <a href="/Buildings/Index">
+                <i class="menu-icon glyphicon glyphicon-user"></i>
+                <span class="menu-text"> 管理员 </span>
+            </a>
+
+            <b class="arrow"></b>
+        </li>
+    
+    <li>
+        <a href="#" class="dropdown-toggle">
+            <i class="menu-icon fa fa-credit-card"></i>
+            <span class="menu-text"> 基础数据维护 </span>
+
+            <b class="arrow fa fa-angle-down"></b>
+        </a>
+
+        <b class="arrow"></b>
+
+        <ul class="submenu">
+
+            <li class="">
+                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>学校基本信息</a><b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>设备信息</a><b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>能源单价管理</a><b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>基准值设置</a><b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>数据中心</a><b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>建筑群</a><b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>建筑信息</a><b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>单位信息</a><b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>房间信息</a><b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>能耗分项</a><b class="arrow"></b>
+            </li>
+
+        </ul>
+    </li>
+
+
+
+}
+
+        @*<li class="">
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-desktop"></i>
                 <span class="menu-text"> UI &amp; Elements </span>
@@ -106,7 +247,7 @@
                     </ul>
                 </li>
 
-                <li class="">
+                <li class="" id="sidebarTypography">
                     <a href="typography.html">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Typography
@@ -472,7 +613,7 @@
                     <b class="arrow"></b>
                 </li>
             </ul>
-        </li>
+        </li>*@
     </ul><!-- /.nav-list -->
     <!-- #section:basics/sidebar.layout.minimize -->
     <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

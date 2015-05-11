@@ -29,6 +29,13 @@ namespace EDMWebsite.Controllers
                 ViewData["Buildings"] = buildingSelectors;
             }
 
+            //Generate breadcrumbs
+            Dictionary<string,string> breadcrumbs = new Dictionary<string,string>();
+            breadcrumbs.Add("http://www.baidu.com","建筑能耗监控");
+            breadcrumbs.Add("/buildings/xz","行政办公室");
+            breadcrumbs.Add("/buildings/TheOffice","办公室");
+            ViewData["Breadcrumbs"] = breadcrumbs;
+
             return View();
         }
     }
