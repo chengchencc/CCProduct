@@ -22,10 +22,21 @@ namespace EDMWebsite.Controllers
 
         public ActionResult EnergyItemDict()
         {
+            Dictionary<string, string> breadcrumbs = new Dictionary<string, string>();
+            breadcrumbs.Add("/BasicData/EnergyItemDict", "能耗分项");
+            ViewData["Breadcrumbs"] = breadcrumbs;
+
+
             var model = EDMContext.T_DT_EnergyItemDict.ToList();
 
             return View(model);
         }
+
+        public ActionResult SchoolInfo()
+        {
+            return View();
+        }
+
 
     }
 }

@@ -181,6 +181,7 @@
     </Compile>
     <Compile Include="Controllers\BasicDataController.cs" />
     <Compile Include="Controllers\BuildingsController.cs" />
+    <Compile Include="Controllers\CustomQueryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InitialDataController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -222,6 +223,8 @@
     </Compile>
     <Compile Include="Models\DbModels\Writeable\Comdict.cs" />
     <Compile Include="Models\DbModels\ReadOnly\DbFirstTest.cs" />
+    <Compile Include="Models\ViewModels\QueryModel.cs" />
+    <Compile Include="Models\ViewModels\ZTreeModel.cs" />
     <Compile Include="MySqlConfiguration\MySqlConfiguration.cs" />
     <Compile Include="MySqlConfiguration\MySqlHistoryContext.cs" />
     <Compile Include="Models\Context\ReadOnlySqlDbContext.cs" />
@@ -435,7 +438,15 @@
     <Content Include="Content\ace_admin1.3.1\assets\js\date-time\locales\bootstrap-datepicker.vi.js" />
     <Content Include="Content\ace_admin1.3.1\assets\js\date-time\locales\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Content\ace_admin1.3.1\assets\js\date-time\locales\bootstrap-datepicker.zh-TW.js" />
+    <Content Include="Content\ace_admin1.3.1\assets\js\date-time\locales\moment-local-zhcn.js" />
     <Content Include="Content\ace_admin1.3.1\assets\js\date-time\moment.min.js" />
+    <Content Include="Content\ace_admin1.3.1\assets\js\date-time\moment\bootstrap-datetimepicker.min.js" />
+    <Content Include="Content\ace_admin1.3.1\assets\js\date-time\moment\min\locales.js" />
+    <Content Include="Content\ace_admin1.3.1\assets\js\date-time\moment\min\locales.min.js" />
+    <Content Include="Content\ace_admin1.3.1\assets\js\date-time\moment\min\moment-with-locales.js" />
+    <Content Include="Content\ace_admin1.3.1\assets\js\date-time\moment\min\moment-with-locales.min.js" />
+    <Content Include="Content\ace_admin1.3.1\assets\js\date-time\moment\min\moment.min.js" />
+    <Content Include="Content\ace_admin1.3.1\assets\js\date-time\moment\min\tests.js" />
     <Content Include="Content\ace_admin1.3.1\assets\js\dropzone.min.js" />
     <Content Include="Content\ace_admin1.3.1\assets\js\excanvas.min.js" />
     <Content Include="Content\ace_admin1.3.1\assets\js\flot\jquery.flot.min.js" />
@@ -1423,10 +1434,43 @@
     <Content Include="Content\matrix\tables.html" />
     <Content Include="Content\matrix\widgets.html" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\zTree\css\demo.css" />
+    <Content Include="Content\zTree\css\metroStyle\img\line_conn.png" />
+    <Content Include="Content\zTree\css\metroStyle\img\loading.gif" />
+    <Content Include="Content\zTree\css\metroStyle\img\metro.gif" />
+    <Content Include="Content\zTree\css\metroStyle\img\metro.png" />
+    <Content Include="Content\zTree\css\metroStyle\metroStyle.css" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\1_close.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\1_open.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\2.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\3.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\4.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\5.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\6.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\7.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\8.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\diy\9.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\line_conn.gif" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\loading.gif" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\zTreeStandard.gif" />
+    <Content Include="Content\zTree\css\zTreeStyle\img\zTreeStandard.png" />
+    <Content Include="Content\zTree\css\zTreeStyle\zTreeStyle.css" />
+    <Content Include="Content\zTree\js\jquery-1.4.4.min.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.all-3.5.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.all-3.5.min.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.core-3.5.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.core-3.5.min.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.excheck-3.5.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.excheck-3.5.min.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.exedit-3.5.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.exedit-3.5.min.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.exedit.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.exhide-3.5.js" />
+    <Content Include="Content\zTree\js\jquery.ztree.exhide-3.5.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\matrix\font-awesome\css\Descr.WD3" />
@@ -2109,6 +2153,8 @@
     <Content Include="Views\Shared\_AceScriptPartial.cshtml" />
     <Content Include="Views\Shared\_AceSidebarPartial.cshtml" />
     <Content Include="Views\Shared\_AceBreadcrumbsPartial.cshtml" />
+    <Content Include="Views\CustomQuery\Index.cshtml" />
+    <Content Include="Views\BasicData\SchoolInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -1111,12 +1111,13 @@
 		<script src="../assets/js/fuelux/fuelux.tree.min.js"></script>
 
 		<!-- ace scripts -->
-		<script src="../assets/js/ace-elements.min.js"></script>
+        <!--<script src="../assets/js/ace-elements.min.js"></script>-->
+        <script src="../assets/js/uncompressed/ace-elements.js"></script>
 		<script src="../assets/js/ace.min.js"></script>
 
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
-			jQuery(function($){		$('#tree1').ace_tree({			dataSource: treeDataSource ,			multiSelect:true,			loadingHTML:'<div class="tree-loading"><i class="ace-icon fa fa-refresh fa-spin blue"></i></div>',			'open-icon' : 'ace-icon tree-minus',			'close-icon' : 'ace-icon tree-plus',			'selectable' : true,			'selected-icon' : 'ace-icon fa fa-check',			'unselected-icon' : 'ace-icon fa fa-times'		});		$('#tree2').ace_tree({			dataSource: treeDataSource2 ,			loadingHTML:'<div class="tree-loading"><i class="ace-icon fa fa-refresh fa-spin blue"></i></div>',			'open-icon' : 'ace-icon fa fa-folder-open',			'close-icon' : 'ace-icon fa fa-folder',			'selectable' : false,			'selected-icon' : null,			'unselected-icon' : null		});						$('#tree1')		.on('updated', function(e, result) {			//result.info  >> an array containing selected items			//result.item			//result.eventType >> (selected or unselected)		})		.on('selected', function(e) {		})		.on('unselected', function(e) {		})		.on('opened', function(e) {		})		.on('closed', function(e) {		});		/**		$('#tree1').on('loaded', function (evt, data) {		});		$('#tree1').on('opened', function (evt, data) {		});		$('#tree1').on('closed', function (evt, data) {		});		$('#tree1').on('selected', function (evt, data) {		});		*/});
+			jQuery(function($){		$('#tree1').ace_tree({			dataSource: treeDataSource ,			multiSelect: true,            folderSelect:true,			loadingHTML:'<div class="tree-loading"><i class="ace-icon fa fa-refresh fa-spin blue"></i></div>',			'open-icon' : 'ace-icon tree-minus',			'close-icon' : 'ace-icon tree-plus',			'selectable' : true,			'selected-icon': 'ace-icon glyphicon glyphicon-ok',			'unselected-icon': 'ace-icon glyphicon glyphicon-ok'		});		$('#tree2').ace_tree({			dataSource: treeDataSource2 ,			loadingHTML:'<div class="tree-loading"><i class="ace-icon fa fa-refresh fa-spin blue"></i></div>',			'open-icon' : 'ace-icon fa fa-folder-open',			'close-icon' : 'ace-icon fa fa-folder',			'selectable' : true,			'selected-icon': 'ace-icon fa fa-check',			'unselected-icon': 'ace-icon fa fa-times'		});						$('#tree1')		.on('updated', function(e, result) {			//result.info  >> an array containing selected items			//result.item			//result.eventType >> (selected or unselected)		})		.on('selected', function(e) {		})		.on('unselected', function(e) {		})		.on('opened', function(e) {		})		.on('closed', function(e) {		});		/**		$('#tree1').on('loaded', function (evt, data) {		});		$('#tree1').on('opened', function (evt, data) {		});		$('#tree1').on('closed', function (evt, data) {		});		$('#tree1').on('selected', function (evt, data) {		});		*/});
 		</script>
 
 		<!-- the following scripts are used in demo only for onpage help and you don't need them -->

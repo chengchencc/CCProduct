@@ -1,4 +1,5 @@
-﻿@{
+﻿@model EDMWebsite.Models.ViewModels.QueryModel
+@{
     ViewBag.Title = "建筑分类能耗对比";
     Layout = "~/Views/Shared/_AceLayout.cshtml";
     var selector = ViewData["Buildings"] as List<EDMWebsite.Models.DbModels.Comdict>;
@@ -9,6 +10,10 @@
 
 @section Scripts {
     <script src="~/Content/highchart/highcharts.src.js"></script>
+<script src="~/Content/ace_admin1.3.1/assets/js/date-time/moment/min/moment.min.js"></script>
+<script src="~/Content/ace_admin1.3.1/assets/js/date-time/moment/min/moment-with-locales.min.js"></script>
+<script src="~/content/ace_admin1.3.1/assets/js/date-time/locales/moment-local-zhcn.js"></script>
+<script src="~/Content/ace_admin1.3.1/assets/js/date-time/moment/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript">
         $(function () {
 
@@ -22,6 +27,7 @@
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
                     plotShadow: false
+                    
                 },
                 title: {
                     text: '行政办公建筑能耗对比, 2014'
@@ -40,17 +46,28 @@
                                 color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                             }
                         }
+                    },
+                    series:{
+                        events: {
+                                click: function (e) {
+                                    console.log(
+                                        e.point.name
+                                    )
+                                    window.open('/Buildings/OfficeBuildings');
+                                }
+                        }
                     }
                 },
                 series: [{
                     type: 'pie',
                     name: '占比',
                     data: [
-                        ['办公室', 45.0],
+                        ['物管楼', 45.0],
                         ['后勤楼', 26.8],
                         {
-                            name: '物管楼',
+                            name: '办公室',
                             y: 12.8,
+                            attr1:"aaaaaa",
                             sliced: true,
                             selected: true
                         },
@@ -58,11 +75,16 @@
                         ['博文楼', 6.2],
                         ['其他', 0.7]
                     ]
+                   
                 }]
             });
 
-
-        });
+            $('.datetimepicker').datetimepicker({
+                format: "YYYY-MM-DD HH:mm"
+            }).next().on(ace.click_event, function () {
+                $(this).prev().focus();
+            });
+        })
 
     </script>
 }
@@ -82,6 +104,68 @@
 
     <div class="row-fluid">
         <div class="col-xs-12">
+
+            @using (Html.BeginForm("OfficeBuildings", "Buildings", FormMethod.Post, new { @class = "form-horizontal", style = "padding-top:10px;" }))
+            {
+                <div id="smartSearch">
+                    <div class="form-group">
+                        <label for="startDate" class="col-sm-1 control-label no-padding-right">开始日期</label>
+                        <div class="col-sm-2">
+                            @Html.TextBoxFor(model => model.StartDate, new { @class = "col-xs-12 col-sm-12 datetimepicker", id = "startDate" })
+                            @*<input type="text" id="startDate" class="col-xs-12 col-sm-12 datetimepicker">*@
+                        </div>
+                        <label for="startDate" class="col-sm-1 control-label no-padding-right">结束日期</label>
+                        <div class="col-sm-2">
+                            @Html.TextBoxFor(model => model.EndDate, new { @class = "col-xs-12 col-sm-12 datetimepicker", id = "endDate" })
+                            @*<input type="text" id="endDate" class="col-xs-12 col-sm-12 datetimepicker">*@
+                        </div>
+                        <label for="startDate" class="col-sm-1 control-label no-padding-right">类型</label>
+                        <div class="col-sm-2">
+                            @*@Html.DropDownList("energyType", (List<SelectListItem>)ViewData["EnergyType"], new { @class = "chosen-select col-xs-12 col-sm-12 tag-input-style", multiple="" })*@
+                            @Html.ListBoxFor(model => model.EnergyType, (List<SelectListItem>)ViewData["EnergyType"], new { @class = "chosen-select col-xs-12 col-sm-12 tag-input-style", multiple = "" })
+                            @*<select multiple="" class="chosen-select col-xs-12 col-sm-12 tag-input-style" id="energyType">
+                                                                        onfocus="$('#modal-form').modal('toggle')">
+                                                                        @{
+                                                                            var selectList = ViewData["EnergyType"] as List<T_DT_EnergyItemDict>;
+                                                                            if (selectList == null)
+                                                                            {
+                                                                                selectList = new List<T_DT_EnergyItemDict>();
+                                                                            }
+                                                                        }
+                        @foreach (var item in selectList)
+                        {
+                            if (item.F_ParentItemCode == item.F_EnergyItemCode )
+                            {
+                                <optgroup label="电">
+                                                                            <option>电1</option>
+                                                                            <option>电2</option>
+                                                                            <option>电3</option>
+                                                                        </optgroup>
+                            }
+                        }
+                                                                        <optgroup label="电">
+                                                                            <option>电1</option>
+                                                                            <option>电2</option>
+                                                                            <option>电3</option>
+                                                                        </optgroup>
+
+                                                                        <option>电</option>
+                                                                        <option>火</option>
+                                                                        <option>煤</option>
+                                                                    </select>*@
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-primary btn-sm" id="simple-query-btn">查询</button>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+
+
+
+
             <div class="widget-box">
                 <div class="widget-header widget-header-flat">
                     <h5>

@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "能耗分项";
-    Layout = "~/Views/Shared/_MatrixLayout.cshtml";
+    Layout = "~/Views/Shared/_AceLayout.cshtml";
 }
 
 @section Scripts {
@@ -14,22 +14,92 @@
     </script>
 }
 
-<!--breadcrumbs-->
-<div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> @ViewBag.Title</a></div>
-</div>
-<!--End-breadcrumbs-->
 
-<div class="container">
-    <div class="row-fluid">
-        <div class="span12">
-            <div class="widget-box">
-                <div class="widget-title">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget-box  widget-color-orange">
+                <div class="widget-header widget-header-small">
+                    <h6 class="widget-title">
+                        <i class="ace-icon fa fa-sort"></i>
+                        能耗分项管理
+                    </h6>
+                    <div class="widget-toolbar">
+
+                        <a href="#" data-action="settings">
+                            <i class="ace-icon fa fa-cog"></i>
+                        </a>
+
+                        <a href="#" id="previewBtn">
+                            <i class="ace-icon fa fa-refresh"></i>
+                        </a>
+
+                        <a href="#" data-action="collapse">
+                            <i class="ace-icon fa fa-plus" data-icon-show="fa-plus" data-icon-hide="fa-minus"></i>
+                        </a>
+
+                        <a href="#" data-action="close">
+                            <i class="ace-icon fa fa-times"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="widget-content  nopadding">
-                    <table class="table table-bordered data-table" id="energyTable">
+                <div class="widget-body">
+                    @*toolbox*@
+                    <div class="widget-toolbox" style="display:none;">
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-success btn-white btn-round">
+                                    <i class="ace-icon fa fa-check bigger-110 green"></i>
+                                    Approve
+                                </button>
+
+                                <button class="btn btn-sm btn-danger btn-white btn-round">
+                                    <i class="ace-icon fa fa-times bigger-110 red2"></i>
+                                    Reject
+                                </button>
+                            </div>
+
+                            <div data-toggle="buttons" class="btn-group">
+                                <label class="btn btn-sm btn-default btn-white btn-round">
+                                    <i class="icon-only ace-icon fa fa-bold bigger-110"></i>
+
+                                    <input type="checkbox" value="1">
+                                </label>
+
+                                <label class="btn btn-sm btn-default btn-white btn-round">
+                                    <i class="icon-only ace-icon fa fa-italic bigger-110"></i>
+
+                                    <input type="checkbox" value="2">
+                                </label>
+                            </div>
+
+                            <div data-toggle="buttons" class="btn-group">
+                                <label class="btn btn-sm btn-primary btn-white btn-round">
+                                    <i class="icon-only ace-icon fa fa-align-left bigger-110"></i>
+
+                                    <input type="radio" value="1">
+                                </label>
+
+                                <label class="btn btn-sm btn-primary btn-white btn-round">
+                                    <i class="icon-only ace-icon fa fa-align-center bigger-110"></i>
+
+                                    <input type="radio" value="2">
+                                </label>
+
+                                <label class="btn btn-sm btn-primary btn-white btn-round">
+                                    <i class="icon-only ace-icon fa fa-align-right bigger-110"></i>
+
+                                    <input type="radio" value="3">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-hover  data-table" id="energyTable">
                         <thead>
                             <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.F_EnergyItemCode)
+                                </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.F_EnergyItemName)
                                 </th>
@@ -54,31 +124,34 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.F_EnergyItemName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.F_ParentItemCode)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.F_EnergyItemType)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.F_EnergyItemUnit)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.F_EnergyItemFml)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.F_EnergyItemState)
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.F_EnergyItemCode }, new { @class = "btn btn-primary btn-mini" })
-                                        @Html.ActionLink("Details", "Details", new { id = item.F_EnergyItemCode }, new { @class = "btn btn-success btn-mini" })
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.F_EnergyItemCode }, new { @class = "btn btn-danger btn-mini" })
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.F_EnergyItemCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.F_EnergyItemName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.F_ParentItemCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.F_EnergyItemType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.F_EnergyItemUnit)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.F_EnergyItemFml)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.F_EnergyItemState)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.F_EnergyItemCode }, new { @class = "btn btn-primary btn-xs" })
+                                    @Html.ActionLink("Details", "Details", new { id = item.F_EnergyItemCode }, new { @class = "btn btn-success btn-xs" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.F_EnergyItemCode }, new { @class = "btn btn-danger btn-xs" })
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -86,4 +159,3 @@
             </div>
         </div>
     </div>
-</div>

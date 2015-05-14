@@ -16,17 +16,17 @@
 		this.each(function() {
 			var $this = $(this);
 			$this.html('<div class="tree-folder" style="display:none;">\
-				<div class="tree-folder-header">\
-					<i class="'+ ace.vars['icon'] + $options['close-icon']+'"></i>\
-					<div class="tree-folder-name"></div>\
-				</div>\
-				<div class="tree-folder-content"></div>\
-				<div class="tree-loader" style="display:none"></div>\
-			</div>\
-			<div class="tree-item" style="display:none;">\
-				'+($options['unselected-icon'] == null ? '' : '<i class="'+ ace.vars['icon'] + $options['unselected-icon']+'"></i>')+'\
-				<div class="tree-item-name"></div>\
-			</div>');
+				                <div class="tree-folder-header">\
+					                <i class="'+ ace.vars['icon'] + $options['close-icon']+'"></i>\
+					                <div class="tree-folder-name"></div>\
+				                </div>\
+				                <div class="tree-folder-content"></div>\
+				                <div class="tree-loader" style="display:none"></div>\
+			                </div>\
+			                <div class="tree-item" style="display:none;">\
+				                '+($options['unselected-icon'] == null ? '' : '<i class="'+ ace.vars['icon'] + $options['unselected-icon']+'"></i>')+'\
+				                <div class="tree-item-name"></div>\
+			                </div>');
 			$this.addClass($options['selectable'] == true ? 'tree-selectable' : 'tree-unselectable');
 			
 			$this.tree($options);
