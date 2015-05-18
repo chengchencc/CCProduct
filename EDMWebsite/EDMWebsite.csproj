@@ -2155,6 +2155,7 @@
     <Content Include="Views\Shared\_AceBreadcrumbsPartial.cshtml" />
     <Content Include="Views\CustomQuery\Index.cshtml" />
     <Content Include="Views\BasicData\SchoolInfo.cshtml" />
+    <Content Include="Views\Account\UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
