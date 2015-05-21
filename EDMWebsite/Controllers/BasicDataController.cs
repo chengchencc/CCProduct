@@ -9,7 +9,7 @@ namespace EDMWebsite.Controllers
     public class BasicDataController : Controller
     {
         public EDMContext EDMContext { get; set; }
-
+        public WriteableSqlDbContext WSDb { get; set; }
         public BasicDataController()
         {
             EDMContext = new EDMContext();
@@ -36,6 +36,7 @@ namespace EDMWebsite.Controllers
         {
             return View();
         }
+
 
 
     }

@@ -20,12 +20,14 @@ namespace EDMWebsite
         static WriteableSqlDbContext()
         {
             //Database.SetInitializer( );
+            Database.SetInitializer<WriteableSqlDbContext>(new DropCreateDatabaseIfModelChanges<WriteableSqlDbContext>());
         }
 
         public DbSet<DbFirstTest> DbFirstTestTables { get; set; }
-
         public DbSet<Comdict> Comdicts { get; set; }
-        
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Building> Buildings { get; set; }
+        public DbSet<Institute> Institutes { get; set; }
 
     }
 

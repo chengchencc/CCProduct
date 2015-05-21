@@ -184,12 +184,14 @@
     <Compile Include="Controllers\CustomQueryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InitialDataController.cs" />
+    <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Context\WriteableSqlDbContext.cs" />
     <Compile Include="Models\Context\EDMContext.cs" />
+    <Compile Include="Models\DbModels\EntityBase.cs" />
     <Compile Include="Models\DbModels\ReadOnly\sysdiagram.cs" />
     <Compile Include="Models\DbModels\ReadOnly\T_BD_BuildAddFile.cs" />
     <Compile Include="Models\DbModels\ReadOnly\T_BD_BuildBaseInfo.cs" />
@@ -217,6 +219,9 @@
     <Compile Include="Models\DbModels\ReadOnly\T_ST_MeterProdInfo.cs" />
     <Compile Include="Models\DbModels\ReadOnly\T_ST_MeterUseInfo.cs" />
     <Compile Include="Models\DbModels\ReadOnly\T_UT_UnitBaseInfo.cs" />
+    <Compile Include="Models\DbModels\Writeable\Room.cs" />
+    <Compile Include="Models\DbModels\Writeable\Building.cs" />
+    <Compile Include="Models\DbModels\Writeable\Institute.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs">
       <SubType>
       </SubType>
@@ -2156,6 +2161,11 @@
     <Content Include="Views\CustomQuery\Index.cshtml" />
     <Content Include="Views\BasicData\SchoolInfo.cshtml" />
     <Content Include="Views\Account\UserList.cshtml" />
+    <Content Include="Views\Rooms\Create.cshtml" />
+    <Content Include="Views\Rooms\Delete.cshtml" />
+    <Content Include="Views\Rooms\Details.cshtml" />
+    <Content Include="Views\Rooms\Edit.cshtml" />
+    <Content Include="Views\Rooms\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
