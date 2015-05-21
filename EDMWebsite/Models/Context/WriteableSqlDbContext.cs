@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
+using EDMWebsite.Migrations;
 using EDMWebsite.Models.DbModels;
 
 
@@ -20,7 +21,8 @@ namespace EDMWebsite
         static WriteableSqlDbContext()
         {
             //Database.SetInitializer( );
-            Database.SetInitializer<WriteableSqlDbContext>(new DropCreateDatabaseIfModelChanges<WriteableSqlDbContext>());
+            //Database.SetInitializer<WriteableSqlDbContext>(new DropCreateDatabaseIfModelChanges<WriteableSqlDbContext>());
+            Database.SetInitializer<WriteableSqlDbContext>(new MigrateDatabaseToLatestVersion<WriteableSqlDbContext, Configuration>());
         }
 
         public DbSet<DbFirstTest> DbFirstTestTables { get; set; }

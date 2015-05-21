@@ -11,125 +11,116 @@ using EDMWebsite.Models.DbModels;
 
 namespace EDMWebsite.Controllers
 {
-    public class RoomsController : BaseController
+    public class BuildingInfoController : BaseController
     {
         private WriteableSqlDbContext db = new WriteableSqlDbContext();
 
-        // GET: Rooms
+        // GET: BuildingInfo
         public ActionResult Index()
         {
-            Dictionary<string, string> breadcrumbs = new Dictionary<string, string>();
-            breadcrumbs.Add("", "房间信息");
-            ViewData["Breadcrumbs"] = breadcrumbs;
-
-            var model = db.Rooms.ToList();
-            return View(model);
+            return View(db.Buildings.ToList());
         }
 
-        public ActionResult Test()
-        {
-            var room = db.Rooms.Find(4);
-            var build = db.Buildings.ToList()[0];//.Find(1);
-            room.Building = build;
-            db.Entry(room).State = EntityState.Modified;
-            db.SaveChanges();
-            var rrr = db.Rooms.Find(4).Building;
-            return Content("success");
-        }
-
-        // GET: Rooms/Details/5
+        // GET: BuildingInfo/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Room room = db.Rooms.Find(id);
-            if (room == null)
+            Building building = db.Buildings.Find(id);
+            if (building == null)
             {
                 return HttpNotFound();
             }
-            return View(room);
+            return View(building);
         }
 
-        // GET: Rooms/Create
+        // GET: BuildingInfo/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Rooms/Create
+        // POST: BuildingInfo/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Code,Name,Type,Area,Status")] Room room)
+        public ActionResult Create([Bind(Include = "Id,Code,Name,BuildingArea,FloorCount,Type,Status")] Building building)
         {
             if (ModelState.IsValid)
             {
-                db.Rooms.Add(room);
+                db.Buildings.Add(building);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(room);
+            return View(building);
         }
 
-        // GET: Rooms/Edit/5
+        // GET: BuildingInfo/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Room room = db.Rooms.Find(id);
-            if (room == null)
+            Building building = db.Buildings.Find(id);
+            if (building == null)
             {
                 return HttpNotFound();
             }
-            return View(room);
+            return View(building);
         }
 
-        // POST: Rooms/Edit/5
+        // POST: BuildingInfo/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Code,Name,Type,Area,Status")] Room room)
+        public ActionResult Edit([Bind(Include = "Id,Code,Name,BuildingArea,FloorCount,Type,Status")] Building building)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(room).State = EntityState.Modified;
+                db.Entry(building).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(room);
+            return View(building);
         }
 
-        // GET: Rooms/Delete/5
+        // GET: BuildingInfo/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Room room = db.Rooms.Find(id);
-            if (room == null)
+            Building building = db.Buildings.Find(id);
+            if (building == null)
             {
                 return HttpNotFound();
             }
-            return View(room);
+            return View(building);
         }
 
-        // POST: Rooms/Delete/5
+        // POST: BuildingInfo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Room room = db.Rooms.Find(id);
-            db.Rooms.Remove(room);
+            Building building = db.Buildings.Find(id);
+            db.Buildings.Remove(building);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+
+        public ActionResult BuildingRooms()
+        {
+            
+            return View();
         }
 
         protected override void Dispose(bool disposing)

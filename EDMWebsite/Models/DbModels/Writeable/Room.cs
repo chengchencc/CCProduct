@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -9,10 +10,22 @@ namespace EDMWebsite.Models.DbModels
     //[Table("DbFirstTest")]
     public class Room : EntityBase
     {
+        [Display(Name="编号")]
+        //[Index(IsUnique=true)]
         public string Code { get; set; }
+
+        [Display(Name = "名称")]
         public string Name { get; set; }
+
+        [Display(Name = "房屋类型")]
         public RoomType Type { get; set; }
+
+        [Display(Name = "房间面积")]
         public decimal Area { get; set; }
+
+        public Building Building { get; set; }
+
+        public Institute Institute { get; set; }
 
     }
 

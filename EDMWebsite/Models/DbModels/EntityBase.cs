@@ -21,15 +21,17 @@ namespace EDMWebsite.Models.DbModels
         public EntityStatus Status { get; set; }
 
         [Display(Name = "创建日期"), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]
+        [ScaffoldColumn(false)]
         public DateTime? CreatedDate { get; set; }
 
         [Display(Name = "修改日期"), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]
+        [ScaffoldColumn(false)]
         public DateTime? ModifiedDate { get; set; }
     }
 
     public enum EntityStatus
     {
-        Enabled = 1,
-        Disabled = 2
+        Enabled = 0,
+        Disabled = 1
     }
 }

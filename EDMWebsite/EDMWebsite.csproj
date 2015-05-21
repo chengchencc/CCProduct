@@ -180,15 +180,19 @@
       </SubType>
     </Compile>
     <Compile Include="Controllers\BasicDataController.cs" />
+    <Compile Include="Controllers\BuildingInfoController.cs" />
     <Compile Include="Controllers\BuildingsController.cs" />
     <Compile Include="Controllers\CustomQueryController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InitialDataController.cs" />
+    <Compile Include="Controllers\InstitutesController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Context\WriteableSqlDbContext.cs" />
     <Compile Include="Models\Context\EDMContext.cs" />
     <Compile Include="Models\DbModels\EntityBase.cs" />
@@ -2166,6 +2170,16 @@
     <Content Include="Views\Rooms\Details.cshtml" />
     <Content Include="Views\Rooms\Edit.cshtml" />
     <Content Include="Views\Rooms\Index.cshtml" />
+    <Content Include="Views\BuildingInfo\Create.cshtml" />
+    <Content Include="Views\BuildingInfo\Delete.cshtml" />
+    <Content Include="Views\BuildingInfo\Details.cshtml" />
+    <Content Include="Views\BuildingInfo\Edit.cshtml" />
+    <Content Include="Views\BuildingInfo\Index.cshtml" />
+    <Content Include="Views\Institutes\Create.cshtml" />
+    <Content Include="Views\Institutes\Delete.cshtml" />
+    <Content Include="Views\Institutes\Details.cshtml" />
+    <Content Include="Views\Institutes\Edit.cshtml" />
+    <Content Include="Views\Institutes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

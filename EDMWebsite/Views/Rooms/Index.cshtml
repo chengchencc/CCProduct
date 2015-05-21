@@ -60,11 +60,58 @@
             @Html.DisplayFor(modelItem => item.ModifiedDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @*<a href="#" id="btnEdit" attrId="@item.Id">Edit</a> |*@
+            @Html.ActionLink("编辑", "Edit", new { id = item.Id }, new { id = "btnEdit", attrId = item.Id, @class = "btn btn-primary btn-xs" }) 
+            @Html.ActionLink("详情", "Details", new { id = item.Id }, new { @class = "btn btn-success btn-xs" }) 
+            @Html.ActionLink("删除", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-xs" })
         </td>
     </tr>
 }
 
 </table>
+
+
+<div id="modal-form" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="blue bigger">Please fill the following form fields</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row" id="modal-content">
+
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-sm" data-dismiss="modal">
+                    <i class="ace-icon fa fa-times"></i>
+                    Cancel
+                </button>
+
+                <button class="btn btn-sm btn-primary">
+                    <i class="ace-icon fa fa-check"></i>
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div><!-- PAGE CONTENT ENDS -->
+
+
+@section Scripts {
+        <script type="text/javascript">
+            $(function () {
+                $("#btnEditCancle").click(function () {
+                    var attrId = $(this).attr("attrId");
+                    $.get("/Rooms/Edit?id=" + attrId, function (xhr) {
+                        $("#modal-content").html(xhr);
+                        $("#modal-form").modal("show");
+                    });
+                });
+            })
+        </script>
+}
