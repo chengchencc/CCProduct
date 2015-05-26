@@ -49,7 +49,9 @@
                             <label for="startDate" class="col-sm-1 control-label no-padding-right">类型</label>
                             <div class="col-sm-2">
                                 @*@Html.DropDownList("energyType", (List<SelectListItem>)ViewData["EnergyType"], new { @class = "chosen-select col-xs-12 col-sm-12 tag-input-style", multiple="" })*@
-                                @Html.ListBoxFor(model => model.EnergyType, (List<SelectListItem>)ViewData["EnergyType"], new { @class = "chosen-select col-xs-12 col-sm-12 tag-input-style", multiple = "" })
+                                @*@Html.ListBoxFor(model => model.EnergyType, (List<SelectListItem>)ViewData["EnergyType"], new { @class = "chosen-select col-xs-12 col-sm-12 tag-input-style", multiple = "" })*@
+                                @Html.TextBoxFor(model => model.EnergyType, new { @class = "col-xs-12 col-sm-12 tag-input-style", multiple = "", onfocus = "$('#modal-form').modal('toggle')" })
+                                @Html.HiddenFor(model=>model.EnergyTypeCodes)
                                 @*<select multiple="" class="chosen-select col-xs-12 col-sm-12 tag-input-style" id="energyType">
                                                                                     onfocus="$('#modal-form').modal('toggle')">
                                                                                     @{
@@ -241,12 +243,12 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-sm" data-dismiss="modal">
+                <button class="btn btn-sm" data-dismiss="modal" id="modal-cancle">
                     <i class="ace-icon fa fa-times"></i>
                     Cancel
                 </button>
 
-                <button class="btn btn-sm btn-primary">
+                <button class="btn btn-sm btn-primary" id="modal-ok">
                     <i class="ace-icon fa fa-check"></i>
                     Save
                 </button>
@@ -283,6 +285,31 @@
 
     <script type="text/javascript">
         $(function () {
+
+            $("#modal-ok").click(function () {
+                //var nodes = zTreeObj.selectNode();
+                var checkedNodes = zTreeObj.getCheckedNodes(true);
+                //$.each()
+                var ids = "";
+                var names = "";
+                for (var i = 0; i < checkedNodes.length; i++) {
+                    ids+=checkedNodes[i].id+",";
+                    names+=checkedNodes[i].name+",";
+                }
+
+                //checkedNodes.each(function (index,element) {
+                //    ids+=element.id+",";
+                //});
+                //alert(ids);
+                $("#EnergyTypeCodes").val(ids);
+                $("#EnergyType").val(names);
+
+
+                $('#modal-form').modal('toggle');
+
+            })
+
+
 
             $("#advancedQuery").click(function () {
                 $("#advancedQueryDiv").slideToggle();
@@ -497,7 +524,7 @@
             //    { id: 222, pId: 22, name: "随意勾选 2-2-2" },
             //    { id: 23, pId: 2, name: "随意勾选 2-3" }
             //];
-            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
 
 
             //$("#startDate").datetimepicker();
