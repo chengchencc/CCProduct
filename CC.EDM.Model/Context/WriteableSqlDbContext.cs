@@ -21,7 +21,7 @@ namespace EDMWebsite
         static WriteableSqlDbContext()
         {
             //Database.SetInitializer( );
-            //Database.SetInitializer<WriteableSqlDbContext>(new DropCreateDatabaseIfModelChanges<WriteableSqlDbContext>());
+            //Database.SetInitializer<WriteableSqlDbContext>(new DropCreateDatabaseAlways<WriteableSqlDbContext>());
             Database.SetInitializer<WriteableSqlDbContext>(new MigrateDatabaseToLatestVersion<WriteableSqlDbContext, Configuration>());
         }
 
@@ -30,6 +30,16 @@ namespace EDMWebsite
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Institute> Institutes { get; set; }
+
+        public DbSet<EnergyItemResult> EnergyItemResults { get; set; }
+        public DbSet<EnergyItemHourResult> EnergyItemHourResults { get; set; }
+        public DbSet<EnergyItemDayResult> EnergyItemDayResults { get; set; }
+        public DbSet<EnergyItemMonthResult> EnergyItemMonthResult { get; set; }
+        public DbSet<EnergyType> EnergyTypes { get; set; }
+        public DbSet<UnitPrice> UnitPrices { get; set; }
+
+
+
 
     }
 

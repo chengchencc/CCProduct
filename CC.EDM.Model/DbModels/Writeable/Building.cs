@@ -25,9 +25,9 @@ namespace EDMWebsite.Models.DbModels
 
         [Display(Name = "类型")]
         public BuildingType Type { get; set; }
+
         public virtual List<Room> Rooms { get; set; }
     }
-
     public enum BuildingType
     {
         教学及辅助用房,

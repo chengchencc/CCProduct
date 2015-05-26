@@ -55,6 +55,8 @@ namespace EDMWebsite.Controllers
         // GET: Rooms/Create
         public ActionResult Create()
         {
+            BindBuildingSelectList();
+            BindInstituteSelectList();
             return View();
         }
 
@@ -63,7 +65,7 @@ namespace EDMWebsite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Code,Name,Type,Area,Status")] Room room)
+        public ActionResult Create([Bind(Include = "Id,Code,Name,Type,Area,Status,BuildingId,InstituteId")] Room room)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +89,8 @@ namespace EDMWebsite.Controllers
             {
                 return HttpNotFound();
             }
+            BindBuildingSelectList();
+            BindInstituteSelectList();
             return View(room);
         }
 
@@ -95,7 +99,7 @@ namespace EDMWebsite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Code,Name,Type,Area,Status")] Room room)
+        public ActionResult Edit([Bind(Include = "Id,Code,Name,Type,Area,Status,BuildingId,InstituteId")] Room room)
         {
             if (ModelState.IsValid)
             {
@@ -140,5 +144,36 @@ namespace EDMWebsite.Controllers
             }
             base.Dispose(disposing);
         }
+
+        #region Helpers
+        private void BindBuildingSelectList()
+        {
+            var buildings = db.Buildings.ToList();
+            var buildingSelectList = new List<SelectListItem>();
+            foreach (var item in buildings)
+            {
+                var selectListItem = new SelectListItem();
+                selectListItem.Text = item.Name;
+                selectListItem.Value = item.Id.ToString();
+                buildingSelectList.Add(selectListItem);
+            }
+            ViewData["Buildings"] = buildingSelectList;
+        }
+
+        private void BindInstituteSelectList()
+        {
+            var institutes = db.Institutes.ToList();
+            var instituteSelectList = new List<SelectListItem>();
+            foreach (var item in institutes)
+            {
+                var selectListItem = new SelectListItem();
+                selectListItem.Text = item.Name;
+                selectListItem.Value = item.Id.ToString();
+                instituteSelectList.Add(selectListItem);
+            }
+            ViewData["Institutes"] = instituteSelectList;
+        }
+
+        #endregion
     }
 }

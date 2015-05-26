@@ -23,9 +23,22 @@ namespace EDMWebsite.Models.DbModels
         [Display(Name = "房间面积")]
         public decimal Area { get; set; }
 
-        public Building Building { get; set; }
+        [Display(Name="所属建筑")]
+        [Column("Building_Id")]
+        public int BuildingId { get; set; }
 
-        public Institute Institute { get; set; }
+        [Display(Name="所属学院")]
+        [Column("Institute_Id")]
+        public int InstituteId { get; set; }
+
+        //[ForeignKey("Building_Id")]
+        //[InverseProperty("Rooms")]
+        public virtual Building Building { get; set; }
+
+        public virtual Institute Institute { get; set; }
+
+        public virtual UnitPrice UnitPrice { get; set; }
+
 
     }
 
