@@ -473,6 +473,20 @@ namespace EDMWebsite.Controllers
             return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
         }
 
+        [Authorize(Roles = "admin")]
+        public ActionResult UserList()
+        {
+            Dictionary<string, string> breadcrumbs = new Dictionary<string, string>();
+            breadcrumbs.Add("", "用户列表");
+            ViewData["Breadcrumbs"] = breadcrumbs;
+
+            //IdentityDbContext identityDb = new IdentityDbContext();
+            //var listModel = identityDb.Users.ToList();
+            var listModel = UserManager.Users.ToList();
+            return View(listModel);
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && UserManager != null)

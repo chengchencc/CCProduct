@@ -37,5 +37,6 @@ namespace EDMWebsite.Models
         {
             base.OnModelCreating(modelBuilder);
         }
+
     }
 }

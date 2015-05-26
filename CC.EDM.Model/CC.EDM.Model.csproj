@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A18B6462-0EAB-460B-B1FE-CBC29B4B0996}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CC.EDM.Model</RootNamespace>
+    <AssemblyName>CC.EDM.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.0.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MySQL\Connector.NET 6.9\Assemblies\v4.5\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.CF, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MySQL\Connector.NET 6.9\Assemblies\v2.0\MySql.Data.CF.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MySQL\Connector.NET 6.9\Assemblies\v4.0\MySql.Data.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MySQL\Connector.NET 6.9\Assemblies\v4.5\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Context\EDMContext.cs" />
+    <Compile Include="Context\IdentityModels.cs" />
+    <Compile Include="Context\ReadOnlySqlDbContext.cs" />
+    <Compile Include="Context\WriteableSqlDbContext.cs" />
+    <Compile Include="DbModels\EntityBase.cs" />
+    <Compile Include="DbModels\ReadOnly\DbFirstTest.cs" />
+    <Compile Include="DbModels\ReadOnly\sysdiagram.cs" />
+    <Compile Include="DbModels\ReadOnly\T_BD_BuildAddFile.cs" />
+    <Compile Include="DbModels\ReadOnly\T_BD_BuildBaseInfo.cs" />
+    <Compile Include="DbModels\ReadOnly\T_BD_BuildEngyConsRenoInfo.cs" />
+    <Compile Include="DbModels\ReadOnly\T_BD_BuildExInfo.cs" />
+    <Compile Include="DbModels\ReadOnly\T_BD_BuildGroupBaseInfo.cs" />
+    <Compile Include="DbModels\ReadOnly\T_DC_CityTempInfo.cs" />
+    <Compile Include="DbModels\ReadOnly\T_DC_DataCenterBaseInfo.cs" />
+    <Compile Include="DbModels\ReadOnly\T_DT_EnergyItemDict.cs" />
+    <Compile Include="DbModels\ReadOnly\T_EC_EnergyItemDayResult.cs" />
+    <Compile Include="DbModels\ReadOnly\T_EC_EnergyItemHourResult.cs" />
+    <Compile Include="DbModels\ReadOnly\T_EC_EnergyItemResult.cs" />
+    <Compile Include="DbModels\ReadOnly\T_EC_RoomEnergyItemDayResult.cs" />
+    <Compile Include="DbModels\ReadOnly\T_EC_RoomEnergyItemHourResult.cs" />
+    <Compile Include="DbModels\ReadOnly\T_EC_RoomEnergyItemMonthResult.cs" />
+    <Compile Include="DbModels\ReadOnly\T_EC_RoomEnergyItemResult.cs" />
+    <Compile Include="DbModels\ReadOnly\T_EC_UnitEnergyItemDayResult.cs" />
+    <Compile Include="DbModels\ReadOnly\T_EC_UnitEnergyItemHourResult.cs" />
+    <Compile Include="DbModels\ReadOnly\T_EC_UnitEnergyItemResult.cs" />
+    <Compile Include="DbModels\ReadOnly\T_OV_MeterOrigValue.cs" />
+    <Compile Include="DbModels\ReadOnly\T_RM_RoomInfo.cs" />
+    <Compile Include="DbModels\ReadOnly\T_ST_CircuitMeterInfo.cs" />
+    <Compile Include="DbModels\ReadOnly\T_ST_DataCollectionInfo.cs" />
+    <Compile Include="DbModels\ReadOnly\T_ST_MeterParamInfo.cs" />
+    <Compile Include="DbModels\ReadOnly\T_ST_MeterProdInfo.cs" />
+    <Compile Include="DbModels\ReadOnly\T_ST_MeterUseInfo.cs" />
+    <Compile Include="DbModels\ReadOnly\T_UT_UnitBaseInfo.cs" />
+    <Compile Include="DbModels\Writeable\UnitPrice.cs" />
+    <Compile Include="DbModels\Writeable\Building.cs" />
+    <Compile Include="DbModels\Writeable\EnergyItemResult.cs" />
+    <Compile Include="DbModels\Writeable\EnergyType.cs" />
+    <Compile Include="DbModels\Writeable\Comdict.cs" />
+    <Compile Include="DbModels\Writeable\EnergyItemDayResult.cs" />
+    <Compile Include="DbModels\Writeable\EnergyItemHourResult.cs" />
+    <Compile Include="DbModels\Writeable\EnergyItemMonthResult.cs" />
+    <Compile Include="DbModels\Writeable\Institute.cs" />
+    <Compile Include="DbModels\Writeable\Room.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="MySqlConfiguration\MySqlConfiguration.cs" />
+    <Compile Include="MySqlConfiguration\MySqlHistoryContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AccountViewModels.cs" />
+    <Compile Include="ViewModels\QueryModel.cs" />
+    <Compile Include="ViewModels\ZTreeModel.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
