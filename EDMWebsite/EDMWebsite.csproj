@@ -181,7 +181,7 @@
     </Compile>
     <Compile Include="Controllers\BasicDataController.cs" />
     <Compile Include="Controllers\BuildingInfoController.cs" />
-    <Compile Include="Controllers\BuildingsController.cs" />
+    <Compile Include="Controllers\QueryController.cs" />
     <Compile Include="Controllers\CustomQueryController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2105,8 +2105,8 @@
     <Content Include="Views\Shared\_MatrixLayout.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\BasicData\Index.cshtml" />
-    <Content Include="Views\Buildings\Index.cshtml" />
-    <Content Include="Views\Buildings\OfficeBuildings.cshtml" />
+    <Content Include="Views\Query\Index.cshtml" />
+    <Content Include="Views\Query\OfficeBuildings.cshtml" />
     <Content Include="Views\BasicData\EnergyItemDict.cshtml" />
     <Content Include="Views\Shared\_AceLayout.cshtml" />
     <Content Include="Views\Shared\_AceNavbarPartial.cshtml" />
@@ -2131,6 +2131,9 @@
     <Content Include="Views\Institutes\Details.cshtml" />
     <Content Include="Views\Institutes\Edit.cshtml" />
     <Content Include="Views\Institutes\Index.cshtml" />
+    <Content Include="Views\Query\Rooms.cshtml" />
+    <Content Include="Views\Query\Buildings.cshtml" />
+    <Content Include="Views\Query\BuildingsOld.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

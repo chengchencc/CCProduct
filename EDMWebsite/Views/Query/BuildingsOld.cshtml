@@ -1,0 +1,597 @@
+﻿@model EDMWebsite.Models.ViewModels.QueryModel
+@{
+    ViewBag.Title = "行政办公建筑";
+    Layout = "~/Views/Shared/_AceLayout.cshtml";
+    var selector = ViewData["Buildings"] as List<EDMWebsite.Models.DbModels.Comdict>;
+}
+@section Styles {
+
+    @*<link href="~/Content/ace_admin1.3.1/assets/css/select2.css" rel="stylesheet" />*@
+    <link href="~/Content/ace_admin1.3.1/assets/css/datepicker.css" rel="stylesheet" />
+    @*<link href="~/Content/matrix/css/datepicker.css" rel="stylesheet" />*@
+    <link href="~/Content/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="row">
+                
+            </div>
+        <div class="row">
+            <div class="col-sm-12">
+                @*<div class="widget-box">
+
+                    <div class="widget-body" style="padding:10px;">
+                        <div class="widget-main" style="padding:10px;">*@
+
+                @*<form class="form-horizontal" style="padding-top:10px;">*@
+                @using (Html.BeginForm("BuildingsOld", "Query", FormMethod.Post, new { @class = "form-horizontal", style = "padding-top:10px;" }))
+                {
+                    @Html.HiddenFor(model=>model.ActiveTabId);
+                    
+                    
+                    <div class="row " style="margin-bottom:20px">
+                        <div class="col-sm-offset-3 col-sm-6">
+                            @*@Html.ListBoxFor(model => model.Buildings, (List<SelectListItem>)ViewData["Buildings"], new { @class = "chosen-select tag-input-style", multiple = "" })*@
+                            @Html.TextBoxFor(model => model.Rooms, new { @class = "col-xs-12 col-sm-12 tag-input-style", multiple = "", onfocus = "$('#modal-form-room').modal('toggle')" })
+                            @Html.HiddenFor(model => model.RoomCodes)
+                        </div>
+                    </div>
+
+    <div class="row">
+        <div id="smartSearch">
+            <div class="form-group">
+                <label for="startDate" class="col-sm-1 control-label no-padding-right">开始日期</label>
+                <div class="col-sm-2">
+                    @Html.TextBoxFor(model => model.StartDate, new { @class = "col-xs-12 col-sm-12 datetimepicker", id = "startDate" })
+                    @*<input type="text" id="startDate" class="col-xs-12 col-sm-12 datetimepicker">*@
+                </div>
+                <label for="startDate" class="col-sm-1 control-label no-padding-right">结束日期</label>
+                <div class="col-sm-2">
+                    @Html.TextBoxFor(model => model.EndDate, new { @class = "col-xs-12 col-sm-12 datetimepicker", id = "endDate" })
+                    @*<input type="text" id="endDate" class="col-xs-12 col-sm-12 datetimepicker">*@
+                </div>
+                <label for="startDate" class="col-sm-1 control-label no-padding-right">类型</label>
+                <div class="col-sm-2">
+                    @*@Html.DropDownList("energyType", (List<SelectListItem>)ViewData["EnergyType"], new { @class = "chosen-select col-xs-12 col-sm-12 tag-input-style", multiple="" })*@
+                    @*@Html.ListBoxFor(model => model.EnergyType, (List<SelectListItem>)ViewData["EnergyType"], new { @class = "chosen-select col-xs-12 col-sm-12 tag-input-style", multiple = "" })*@
+                    @Html.TextBoxFor(model => model.EnergyType, new { @class = "col-xs-12 col-sm-12 tag-input-style", multiple = "", onfocus = "$('#modal-form').modal('toggle')" })
+                    @Html.HiddenFor(model=>model.EnergyTypeCodes)
+                    @*<select multiple="" class="chosen-select col-xs-12 col-sm-12 tag-input-style" id="energyType">
+                                                                        onfocus="$('#modal-form').modal('toggle')">
+                                                                        @{
+                                                                            var selectList = ViewData["EnergyType"] as List<T_DT_EnergyItemDict>;
+                                                                            if (selectList == null)
+                                                                            {
+                                                                                selectList = new List<T_DT_EnergyItemDict>();
+                                                                            }
+                                                                        }
+                        @foreach (var item in selectList)
+                        {
+                            if (item.F_ParentItemCode == item.F_EnergyItemCode )
+                            {
+                                <optgroup label="电">
+                                                                            <option>电1</option>
+                                                                            <option>电2</option>
+                                                                            <option>电3</option>
+                                                                        </optgroup>
+                            }
+                        }
+                                                                        <optgroup label="电">
+                                                                            <option>电1</option>
+                                                                            <option>电2</option>
+                                                                            <option>电3</option>
+                                                                        </optgroup>
+
+                                                                        <option>电</option>
+                                                                        <option>火</option>
+                                                                        <option>煤</option>
+                                                                    </select>*@
+                </div>
+                <div class="col-sm-3">
+                    <button type="submit" class="btn btn-primary btn-sm" id="simple-query-btn">查询</button>
+                    <a href="#" id="advancedQuery">高级搜索选项 <i class="ace-icon fa fa-chevron-down" style="font-size: 10px;"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="advancedQueryDiv" style="display:none">
+            @*<hr />*@
+            <div class="form-group">
+
+                <label for="statisticDensity" class="col-sm-1 control-label no-padding-right">统计密度</label>
+                <div class="col-sm-2">
+                    <select class="col-xs-12 col-sm-12 " id="statisticDensity">
+                        <option>逐时能耗</option>
+                        <option>逐日能耗</option>
+                        <option>逐月能耗</option>
+                    </select>
+                </div>
+                <label for="statisticMethod" class="col-sm-1 control-label no-padding-right">统计类型</label>
+                <div class="col-sm-2">
+                    <select class="col-xs-12 col-sm-12" id="statisticMethod">
+                        <option value="0">能耗项求和统计</option>
+                        <option value="1">能耗项对比统计</option>
+                    </select>
+                    @{
+                    var a = new List<SelectListItem>();
+                    a.Add(new SelectListItem() { Text = "能耗项求和统计", Value = "0" });
+                    a.Add(new SelectListItem() { Text = "能耗项对比统计", Value = "1" });
+                    }
+
+                </div>
+                <div class="col-sm-3">
+                    @*<button class="btn btn-primary btn-sm" id="advanced-query-btn">查询</button>
+                        <a href="#" id="simpleQuery">智能搜索选项</a>*@
+                </div>
+                <div class="col-md-3">  </div>
+            </div>
+        </div>
+    </div>
+
+                }
+                @*</form>*@
+
+                @*</div>
+
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+        <div class="row">
+            <ul class="nav nav-tabs">
+                <li ><a data-toggle="tab" href="#tab1"><i class="blue ace-icon fa fa-calendar bigger-120"></i> 表格</a></li>
+                <li class="active"><a data-toggle="tab" href="#tab2"><i class="light-red ace-icon fa fa-bar-chart-o bigger-120"></i> 图形</a></li>
+                <li><a data-toggle="tab" href="#tab3">Tab3</a></li>
+            </ul>
+
+            <div class="tab-content no-padding">
+                <div id="tab1" class="tab-pane ">
+
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr onclick="alert('aaaa')">
+                                <th class="text-center">时间</th>
+                                <th class="text-center">能耗值</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Result != null)
+                            {
+                                foreach (KeyValuePair<string, string> item in Model.Result)
+                                {
+                                    <tr class="gradeU">
+                                        <td class="text-right">@item.Key</td>
+                                        <td class="center">@item.Value</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+                <div id="tab2" class="tab-pane active">
+
+                    <div id="chartContainer" class="text-center">
+
+
+                    </div>
+
+                </div>
+                <div id="tab3" class="tab-pane">
+                    <table class="table table-bordered table-hover  data-table">
+                        <thead>
+                            @*<tr>
+                    <th colspan="2">头1</th>
+                    <th colspan="2">头1</th>
+                    <th colspan="2">头1</th>
+                </tr>*@
+                            <tr>
+                                <th>建筑名</th>
+                                <th>能源编号</th>
+                                <th>能源名称</th>
+                                <th>用量</th>
+                                <th>日期</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*@foreach (var item in Model.DayResult)
+                {
+                    <tr>
+                        <td>@item.BuildInfo.F_BuildName</td>
+                        <td>@item.EnergyType.F_EnergyItemCode</td>
+                        <td>@item.EnergyType.F_EnergyItemName</td>
+                        <td>@item.EnergyDayResult.F_DayValue</td>
+                        <td>@item.EnergyDayResult.F_StartDay.ToString("yyyy-MM-dd")</td>
+
+                    </tr>
+                }*@
+                            @foreach (var item in Model.DayResult)
+                            {
+                                <tr>
+                                    <td>@item.T_BD_BuildBaseInfo.F_BuildName</td>
+                                    <td>@item.T_DT_EnergyItemDict.F_EnergyItemCode</td>
+                                    <td>@item.T_DT_EnergyItemDict.F_EnergyItemName</td>
+                                    <td>@item.F_DayValue</td>
+                                    <td>@item.F_StartDay.ToString("yyyy-MM-dd")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div id="modal-form" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="blue bigger">选择能耗类型</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12">
+                        <ul id="treeDemo" class="ztree"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-sm" data-dismiss="modal" id="modal-cancle">
+                    <i class="ace-icon fa fa-times"></i>
+                    Cancel
+                </button>
+
+                <button class="btn btn-sm btn-primary" id="modal-ok">
+                    <i class="ace-icon fa fa-check"></i>
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div><!-- PAGE CONTENT ENDS -->
+
+<div id="modal-form-room" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="blue bigger">选择房间</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12">
+                        <ul id="treeRooms" class="ztree"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-sm" data-dismiss="modal" id="modal-cancle">
+                    <i class="ace-icon fa fa-times"></i>
+                    Cancel
+                </button>
+
+                <button class="btn btn-sm btn-primary" id="modal-room-ok">
+                    <i class="ace-icon fa fa-check"></i>
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div><!-- PAGE CONTENT ENDS -->
+
+
+
+
+
+
+<div class=".hidden-phone" style="position:fixed;top:100px;right:20px;">
+    <button class="btn btn-warning" id="compareBtn">对比</button>
+
+</div>
+
+
+@section Scripts {
+    @*<script src="~/Content/highchart/highcharts.src.js"></script>*@
+    @*<script src="~/Content/matrix/js/bootstrap-datepicker.js"></script>*@
+    @*<script src="~/Content/ace_admin1.3.1/assets/js/date-time/moment.min.js"></script>*@
+    <script src="~/Content/ace_admin1.3.1/assets/js/date-time/moment/min/moment.min.js"></script>
+    <script src="~/Content/ace_admin1.3.1/assets/js/date-time/moment/min/moment-with-locales.min.js"></script>
+    <script src="~/content/ace_admin1.3.1/assets/js/date-time/locales/moment-local-zhcn.js"></script>
+    @*<script src="~/Content/ace_admin1.3.1/assets/js/date-time/bootstrap-datetimepicker.min.js"></script>*@
+    <script src="~/Content/ace_admin1.3.1/assets/js/date-time/moment/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Content/zTree/js/jquery.ztree.all-3.5.min.js"></script>
+
+    <script src="~/Content/highchart/highcharts.src.js"></script>
+    <script src="~/Content/highchart/drilldown.src.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            var activedTabId = $("#ActiveTabId").val();
+            $(".nav.nav-tabs > li >a").each(function (index,element) {
+                if ($(element).attr("href") =="#"+activedTabId) {
+                    $(element).click();
+                }
+            });
+
+            var setting = {
+                check: {
+                    enable: true,
+                    chkboxType: {
+                        "Y":"", "N":""
+                    }
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                }
+            };
+
+            var zNodes =@Html.Raw(ViewData["TypeNodes"]) ;
+            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            $("#modal-ok").click(function () {
+                //var nodes = zTreeObj.selectNode();
+                var checkedNodes = zTreeObj.getCheckedNodes(true);
+                //$.each()
+                var ids = "";
+                var names = "";
+                for (var i = 0; i < checkedNodes.length; i++) {
+                    ids+=checkedNodes[i].id+",";
+                    names+=checkedNodes[i].name+",";
+                }
+
+                //checkedNodes.each(function (index,element) {
+                //    ids+=element.id+",";
+                //});
+                //alert(ids);
+                $("#EnergyTypeCodes").val(ids);
+                $("#EnergyType").val(names);
+
+
+                $('#modal-form').modal('toggle');
+
+            })
+
+            var roomzNodes =@Html.Raw(ViewData["BuildingNodes"]) ;
+            roomzTreeObj = $.fn.zTree.init($("#treeRooms"), setting, roomzNodes);
+            $("#modal-room-ok").click(function () {
+                //var nodes = zTreeObj.selectNode();
+                var checkedNodes = roomzTreeObj.getCheckedNodes(true);
+                //$.each()
+                var ids = "";
+                var names = "";
+                for (var i = 0; i < checkedNodes.length; i++) {
+                    ids+=checkedNodes[i].id+",";
+                    names+=checkedNodes[i].name+",";
+                }
+
+                //checkedNodes.each(function (index,element) {
+                //    ids+=element.id+",";
+                //});
+                //alert(ids);
+                $("#RoomCodes").val(ids);
+                $("#Rooms").val(names);
+
+
+                $('#modal-form-room').modal('toggle');
+
+            })
+
+
+            $(".nav.nav-tabs > li >a").click(function () {
+                var id = $(".nav.nav-tabs > li >a").attr("href");
+                $("#ActiveTabId").val( id.slice(1,id.length-1));
+            });
+
+
+
+            @*var roomzNodes =@Html.Raw(ViewData["RoomNodes"]) ;
+           
+            roomzTreeObj = $.fn.zTree.init($("#treeRooms"), setting, zNodes);*@
+
+            $("#advancedQuery").click(function () {
+                $("#advancedQueryDiv").slideToggle();
+                //$("#simple-query-btn").fadeToggle();
+                if ($("#advancedQuery").html().indexOf("高级搜索选项")!=-1) {
+                    $("#advancedQuery").html("智能搜索选项 <i class='ace-icon fa fa-chevron-up' style='font-size: 10px;'></i>");
+                } else {
+                    $("#advancedQuery").html("高级搜索选项<i class='ace-icon fa fa-chevron-down' style='font-size: 10px;'></i>");
+                }
+
+            });
+            $("#simpleQuery").click(function () {
+                $("#advancedQueryDiv").slideToggle();
+                //$("#simple-query-btn").fadeToggle();
+                $("#advancedQuery").text("bbbb");
+
+            });
+
+ 
+            // using highcharts
+            colors = Highcharts.getOptions().colors;
+
+            Highcharts.setOptions({
+                lang: {
+                    drillUpText: '<< 返回 {series.name}'
+                }
+            });
+
+            $("#chartContainer").highcharts({
+                chart: {
+                    type: 'column'
+                },
+                pane:{
+                    center:["50%", "50%"]
+                },
+                title: {
+                    text: '分时用量情况'
+                },
+                subtitle: {
+                    text: '分时用量'
+                },
+                xAxis: {
+                    type: 'category'
+                    //categories: [
+                    //    'Jan',
+                    //    'Feb',
+                    //    'Mar',
+                    //    'Apr',
+                    //    'May',
+                    //    'Jun',
+                    //    'Jul',
+                    //    'Aug',
+                    //    'Sep',
+                    //    'Oct',
+                    //    'Nov',
+                    //    'Dec'
+                    //],
+                    //crosshair: true
+                },
+                //yAxis: {
+                //    min: 0,
+                //    title: {
+                //        text: 'Rainfall (mm)'
+                //    }
+                //},
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                legend: {
+                    enable: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enable: true
+                        }
+                    }
+                },
+                series:
+                    [{
+                        name: '各小时用量',
+                        colorByPoint: false,
+                        data: [
+                        {name: '01',y: 5,drilldown: '01'},
+                        {name: '02',y: 2,drilldown: '02'}, 
+                        {name: "03",y: 4},
+                        {name: "04",y: 5},
+                        {name: "05",y: 6},
+                        {name: "06",y: 4},
+                        {name: "07",y: 3},
+                        {name: "08",y: 1},
+                        {name: "09",y: 3},
+                        {name: "10",y: 3},
+                        {name: "11",y: 6},
+                        {name: "12",y: 2}
+                        ]
+                    }],
+                drilldown: {
+                    //series:[{
+                    //    name: 'MSIE versions',
+                    //    categories: ['MSIE 6.0', 'MSIE 7.0', 'MSIE 8.0', 'MSIE 9.0'],
+                    //    data: [10.85, 7.35, 33.06, 2.81],
+                    //    color: colors[0]
+                    //}]
+                    drillUpButton: {
+                        relativeTo: 'spacingBox',
+                        position: {
+                            y: 0,
+                            x: 0
+                        },
+                        theme: {
+                            fill: 'white',
+                            'stroke-width': 1,
+                            stroke: 'silver',
+                            r: 0,
+                            states: {
+                                hover: {
+                                    fill: '#bada55'
+                                },
+                                select: {
+                                    stroke: '#039',
+                                    fill: '#bada55'
+                                }
+                            }
+                        }
+
+                    },
+                    series: [{
+                        id: '01',
+                        name:"01时",
+                        colorByPoint: true,
+                        data: [
+                            ['水', 4],
+                            ['电', 2],
+                            ['暖', 1],
+                            ['汽油', 2],
+                            ['柴油', 1]
+                        ]
+                    }, {
+                        id: '02',
+                        data: [
+                            ['水', 5],
+                            ['电', 2],
+                            ['暖', 4],
+                            ['汽油', 1],
+                            ['柴油', 3]
+                        ]
+                    }]
+
+                },
+                credits: {
+                    enabled: false,
+                }
+
+            });
+
+
+
+            $("#compareBtn").popover({
+                trigger: 'click',
+                placement: 'left',
+                html: 'true',
+                title: "title",
+                content: 'aaaaaa',
+                template: '<div class="popover" style="z-index:1000;"><div class="arrow"></div>' +
+                          '<h3 class="popover-title"></h3><div class="popover-content">' +
+                          '</div><div class="popover-footer"><button type="button" class="btn btn-primary popover-submit">' +
+                          '<i class="icon-ok icon-white"></i></button>&nbsp;' +
+                          '<button type="button" class="btn btn-default popover-cancel">' +
+                          '<i class="icon-remove"></i></button></div></div>'
+            });
+
+            //$("#startDate").datetimepicker();
+            $('.datetimepicker').datetimepicker({
+                format:"YYYY-MM-DD HH:mm"
+            }).next().on(ace.click_event, function(){
+                $(this).prev().focus();
+            });
+        });
+
+
+
+    </script>
+}

@@ -10,5 +10,6 @@ namespace EDMWebsite.Models.ViewModels
         public string id { get; set; }
         public string pId { get; set; }
         public string name { get; set; }
+        public string nocheck { get; set; }
     }
 }

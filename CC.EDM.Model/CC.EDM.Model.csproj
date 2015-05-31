@@ -30,10 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
@@ -61,6 +63,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -115,9 +119,80 @@
     <Compile Include="MySqlConfiguration\MySqlConfiguration.cs" />
     <Compile Include="MySqlConfiguration\MySqlHistoryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RealEDMDb\BuildTypeInit.cs" />
+    <Compile Include="RealEDMDb\EngryConfigInit.cs" />
+    <Compile Include="RealEDMDb\G_DICTIONARY_T.cs" />
+    <Compile Include="RealEDMDb\G_DUCTNET_T.cs" />
+    <Compile Include="RealEDMDb\G_FLYPOINT_T.cs" />
+    <Compile Include="RealEDMDb\G_FLYROAD_T.cs" />
+    <Compile Include="RealEDMDb\G_VALVE_T.cs" />
+    <Compile Include="RealEDMDb\RealEDMDbContext.cs" />
+    <Compile Include="RealEDMDb\sysdiagram.cs" />
+    <Compile Include="RealEDMDb\testtable.cs" />
+    <Compile Include="RealEDMDb\T_BD_AlarmSet.cs" />
+    <Compile Include="RealEDMDb\T_BD_BuildAddFile.cs" />
+    <Compile Include="RealEDMDb\T_BD_BuildBaseInfo.cs" />
+    <Compile Include="RealEDMDb\T_BD_BuildEngyConsRenoInfo.cs" />
+    <Compile Include="RealEDMDb\T_BD_BuildExInfo.cs" />
+    <Compile Include="RealEDMDb\T_BD_BuildGroupBaseInfo.cs" />
+    <Compile Include="RealEDMDb\T_COM_About.cs" />
+    <Compile Include="RealEDMDb\T_COM_Admin.cs" />
+    <Compile Include="RealEDMDb\T_COM_AdminLog.cs" />
+    <Compile Include="RealEDMDb\T_COM_AdminMenu.cs" />
+    <Compile Include="RealEDMDb\T_COM_AdminRole.cs" />
+    <Compile Include="RealEDMDb\T_COM_AdminRolePriv.cs" />
+    <Compile Include="RealEDMDb\T_COM_Device.cs" />
+    <Compile Include="RealEDMDb\T_COM_News.cs" />
+    <Compile Include="RealEDMDb\T_COM_PosMap.cs" />
+    <Compile Include="RealEDMDb\T_COM_PriceList.cs" />
+    <Compile Include="RealEDMDb\T_COM_School.cs" />
+    <Compile Include="RealEDMDb\T_COM_UnitZhiBiao.cs" />
+    <Compile Include="RealEDMDb\T_COM_Zhibiao.cs" />
+    <Compile Include="RealEDMDb\T_DC_CityTempInfo.cs" />
+    <Compile Include="RealEDMDb\T_DC_DataCenterBaseInfo.cs" />
+    <Compile Include="RealEDMDb\T_DC_DataCenterUploadLog.cs" />
+    <Compile Include="RealEDMDb\T_DC_UploadCenterBaseInfo.cs" />
+    <Compile Include="RealEDMDb\T_DT_EnergyItemDict.cs" />
+    <Compile Include="RealEDMDb\T_DT_EnergyItemDict_tree.cs" />
+    <Compile Include="RealEDMDb\T_EC_CircuitEnergyItemDayResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_CircuitEnergyItemHourResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_CircuitEnergyItemMonthResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_CircuitEnergyItemResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_CircuitEnergyItemResultReal.cs" />
+    <Compile Include="RealEDMDb\T_EC_EnergyItemDayResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_EnergyItemHourResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_EnergyItemMonthResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_EnergyItemReal.cs" />
+    <Compile Include="RealEDMDb\T_EC_EnergyItemREAL_other.cs" />
+    <Compile Include="RealEDMDb\T_EC_EnergyItemResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_EnergyItemResult_Other.cs" />
+    <Compile Include="RealEDMDb\T_EC_RoomEnergyItemDayResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_RoomEnergyItemHourResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_RoomEnergyItemMonthResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_RoomEnergyItemResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_UnitEnergyItemDayResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_UnitEnergyItemHourResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_UnitEnergyItemMonthResult.cs" />
+    <Compile Include="RealEDMDb\T_EC_UnitEnergyItemResult.cs" />
+    <Compile Include="RealEDMDb\T_OV_MeterOrigValue.cs" />
+    <Compile Include="RealEDMDb\T_RM_RoomInfo.cs" />
+    <Compile Include="RealEDMDb\T_ST_CircuitBaseInfo.cs" />
+    <Compile Include="RealEDMDb\T_ST_CircuitMeterInfo.cs" />
+    <Compile Include="RealEDMDb\T_ST_DataCollectionInfo.cs" />
+    <Compile Include="RealEDMDb\T_ST_MeterParamInfo.cs" />
+    <Compile Include="RealEDMDb\T_ST_MeterProdInfo.cs" />
+    <Compile Include="RealEDMDb\T_ST_MeterUseInfo.cs" />
+    <Compile Include="RealEDMDb\T_US_UserInfo.cs" />
+    <Compile Include="RealEDMDb\T_UT_UnitBaseInfo.cs" />
+    <Compile Include="RealEDMDb\warn.cs" />
+    <Compile Include="RealEDMDb\warnRule.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\QueryModel.cs" />
     <Compile Include="ViewModels\ZTreeModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
