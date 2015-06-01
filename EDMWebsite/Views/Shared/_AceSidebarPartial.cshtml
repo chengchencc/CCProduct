@@ -38,7 +38,7 @@
 
     <ul class="nav nav-list">
 
-        <li  id="buildings-manage">
+        <li id="buildings-manage">
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-home"></i>
                 <span class="menu-text"> 建筑能耗监控 </span>
@@ -49,66 +49,41 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-                <li class="">
-                    <a href="#" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        行政办公建筑
-                        <b class="arrow fa fa-angle-down"></b>
-                    </a>
+                @{var buildingMenus = ViewData["BuildingsMenu"] as List<EDMWebsite.Models.ViewModels.BuildingsMenuItem>;}
+                @if (buildingMenus!=null)
+	{
+		 foreach (var buildingMenusItem in buildingMenus)
+	{
 
-                    <b class="arrow"></b>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    @buildingMenusItem.BuildingType.typename
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
 
+                <b class="arrow"></b>
+                @if (buildingMenusItem.BuildingList!=null&&buildingMenusItem.BuildingList.Count>0)
+	                {
                     <ul class="submenu">
-                        <li class="">
-                            <a href="/Buildings/OfficeBuildings">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                办公室
-                            </a>
 
-                            @*<b class="arrow"></b>*@
-                        </li>
+                        @foreach (var buildingItem in buildingMenusItem.BuildingList)
+	                    {
+                            <li class="">
+                                <a href="/Query/BuildingsOld/@buildingItem.F_BuildID" style="color:#95CEFF">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    @buildingItem.F_BuildName
+                                </a>
 
-                        <li class="">
-                            <a href="mobile-menu-1.html">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                后勤楼
-                            </a>
-
-                            @*<b class="arrow"></b>*@
-                        </li>
-
-                        <li class="">
-                            <a href="mobile-menu-2.html">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                物管楼
-                            </a>
-
-                            @*<b class="arrow"></b>*@
-                        </li>
+                                @*<b class="arrow"></b>*@
+                            </li>
+	                     }
                     </ul>
-                </li>
+	}
+            </li>
 
-                <li class="">
-                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>教学楼</a><b class="arrow"></b>
-                </li>
-                <li class="">
-                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>场馆类</a><b class="arrow"></b>
-                </li>
-                <li class="">
-                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>食堂</a><b class="arrow"></b>
-                </li>
-                <li class="">
-                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>学生宿舍</a><b class="arrow"></b>
-                </li>
-                <li class="">
-                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>大型或特殊实验室</a><b class="arrow"></b>
-                </li>
-                <li class="">
-                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>医院</a><b class="arrow"></b>
-                </li>
-                <li class="">
-                    <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>其他</a><b class="arrow"></b>
-                </li>
+	}
+	}
 
             </ul>
         </li>
@@ -116,7 +91,7 @@
 
 
         <li class="active">
-            <a href="/Buildings/Index">
+            <a href="/Query/CompareBuildingsOld">
                 <i class="menu-icon fa fa-tachometer"></i>
                 <span class="menu-text"> 建筑能耗对比 </span>
             </a>
@@ -140,82 +115,82 @@
             <b class="arrow"></b>
         </li>
 
-@if (User.IsInRole("admin"))
+        @if (User.IsInRole("admin"))
 {
 
-    <li>
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-credit-card"></i>
-            <span class="menu-text"> 系统管理 </span>
+            <li>
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-credit-card"></i>
+                    <span class="menu-text"> 系统管理 </span>
 
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
 
-        <b class="arrow"></b>
+                <b class="arrow"></b>
 
-        <ul class="submenu">
+                <ul class="submenu">
 
-            <li class="">
-                <a href="/Account/Userlist"><i class="menu-icon fa fa-caret-right"></i>用户管理</a><b class="arrow"></b>
-            </li>
-            <li class="">
-                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>用户权限配置</a><b class="arrow"></b>
-            </li>
+                    <li class="">
+                        <a href="/Account/Userlist"><i class="menu-icon fa fa-caret-right"></i>用户管理</a><b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>用户权限配置</a><b class="arrow"></b>
+                    </li>
 
-            <li class="">
-                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>系统配置</a><b class="arrow"></b>
-            </li>
+                    <li class="">
+                        <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>系统配置</a><b class="arrow"></b>
+                    </li>
 
-        </ul>
-    </li>
-
-    <li>
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-credit-card"></i>
-            <span class="menu-text"> 基础数据维护 </span>
-
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-
-        <b class="arrow"></b>
-
-        <ul class="submenu">
-
-            <li class="">
-                <a href="/BasicData/SchoolInfo"><i class="menu-icon fa fa-caret-right"></i>学校基本信息</a><b class="arrow"></b>
-            </li>
-            <li class="">
-                <a href="/BuildingInfo/Index"><i class="menu-icon fa fa-caret-right"></i>建筑信息</a><b class="arrow"></b>
-            </li>
-            <li class="">
-                <a href="/Institutes/Index"><i class="menu-icon fa fa-caret-right"></i>学院信息</a><b class="arrow"></b>
-            </li>
-            <li class="">
-                <a href="/Rooms/Index"><i class="menu-icon fa fa-caret-right"></i>房间信息</a><b class="arrow"></b>
-            </li>
-            <li class="">
-                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>设备信息</a><b class="arrow"></b>
-            </li>
-            <li class="">
-                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>能源单价管理</a><b class="arrow"></b>
-            </li>
-            <li class="">
-                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>基准值设置</a><b class="arrow"></b>
-            </li>
-            <li class="">
-                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>数据中心</a><b class="arrow"></b>
+                </ul>
             </li>
 
-            <li class="">
-                <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>建筑信息</a><b class="arrow"></b>
-            </li>
+            <li>
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-credit-card"></i>
+                    <span class="menu-text"> 基础数据维护 </span>
 
-            <li class="">
-                <a href="/BasicData/EnergyItemDict"><i class="menu-icon fa fa-caret-right"></i>能耗分项</a><b class="arrow"></b>
-            </li>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
 
-        </ul>
-    </li>
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+
+                    <li class="">
+                        <a href="/BasicData/SchoolInfo"><i class="menu-icon fa fa-caret-right"></i>学校基本信息</a><b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="/BuildingInfo/Index"><i class="menu-icon fa fa-caret-right"></i>建筑信息</a><b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="/Institutes/Index"><i class="menu-icon fa fa-caret-right"></i>学院信息</a><b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="/Rooms/Index"><i class="menu-icon fa fa-caret-right"></i>房间信息</a><b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>设备信息</a><b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>能源单价管理</a><b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>基准值设置</a><b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>数据中心</a><b class="arrow"></b>
+                    </li>
+
+                    <li class="">
+                        <a href="typography.html"><i class="menu-icon fa fa-caret-right"></i>建筑信息</a><b class="arrow"></b>
+                    </li>
+
+                    <li class="">
+                        <a href="/BasicData/EnergyItemDict"><i class="menu-icon fa fa-caret-right"></i>能耗分项</a><b class="arrow"></b>
+                    </li>
+
+                </ul>
+            </li>
 
 }
 

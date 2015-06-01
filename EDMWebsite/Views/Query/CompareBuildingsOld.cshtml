@@ -27,15 +27,15 @@
                 @using (Html.BeginForm("BuildingsOld", "Query", FormMethod.Post, new { @class = "form-horizontal", style = "padding-top:10px;" }))
                 {
                 @Html.HiddenFor(model => model.ActiveTabId);
-                        @Html.HiddenFor(model => model.RoomCodes)
 
 
-                @*<div class="row " style="margin-bottom:20px">
+                <div class="row " style="margin-bottom:20px">
                     <div class="col-sm-offset-3 col-sm-6">
+                        @*@Html.ListBoxFor(model => model.Buildings, (List<SelectListItem>)ViewData["Buildings"], new { @class = "chosen-select tag-input-style", multiple = "" })*@
                         @Html.TextBoxFor(model => model.Rooms, new { @class = "col-xs-12 col-sm-12 tag-input-style", multiple = "", onfocus = "$('#modal-form-room').modal('toggle')" ,placeholder="请选择建筑物......"})
                         @Html.HiddenFor(model => model.RoomCodes)
                     </div>
-                </div>*@
+                </div>
 
                 <div class="row">
                     <div id="smartSearch">
@@ -116,14 +116,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.HourResult)
+                            @foreach (var item in Model.DayResult)
                             {
                             <tr>
                                 <td>@item.T_BD_BuildBaseInfo.F_BuildName</td>
                                 <td>@item.T_DT_EnergyItemDict.F_EnergyItemCode</td>
                                 <td>@item.T_DT_EnergyItemDict.F_EnergyItemName</td>
-                                <td>@item.F_HourValue</td>
-                                <td>@item.F_StartHour.ToString("yyyy-MM-dd HH")</td>
+                                <td>@item.F_DayValue</td>
+                                <td>@item.F_StartDay.ToString("yyyy-MM-dd")</td>
                             </tr>
                             }
                         </tbody>

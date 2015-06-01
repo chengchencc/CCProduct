@@ -470,7 +470,7 @@ namespace EDMWebsite.Controllers
 
 
         [HttpGet]
-        public ActionResult BuildingsOld()
+        public ActionResult CompareBuildingsOld()
         {
 
             //using (EDMContext edmDb = new EDMContext())
@@ -536,11 +536,12 @@ namespace EDMWebsite.Controllers
             QueryModel model = new QueryModel();
             model.StartDate = DateTime.Now;
             model.EndDate = DateTime.Now;
+            model.ChartSeries = "[]";
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult BuildingsOld(QueryModel model)
+        public ActionResult CompareBuildingsOld(QueryModel model)
         {
             #region 页面帮助与下拉框数据绑定
             #region 能耗类型
@@ -587,19 +588,17 @@ namespace EDMWebsite.Controllers
 
             #region 建筑下拉框 （已经不用了）
             //建筑下拉框
-            List<SelectListItem> buildings = new List<SelectListItem>();
-            foreach (var item in WriteableDb.Buildings)
-            {
-                SelectListItem si = new SelectListItem();
-                si.Text = item.Name;
-                si.Value = item.Id.ToString();
-                buildings.Add(si);
-            }
-            ViewData["Buildings"] = buildings;
+            //List<SelectListItem> buildings = new List<SelectListItem>();
+            //foreach (var item in WriteableDb.Buildings)
+            //{
+            //    SelectListItem si = new SelectListItem();
+            //    si.Text = item.Name;
+            //    si.Value = item.Id.ToString();
+            //    buildings.Add(si);
+            //}
+            //ViewData["Buildings"] = buildings;
             #endregion
             #endregion
-
-            var codes = model.RoomCodes.Trim().Trim(',').Split(',');
 
             //var buildId = "370100D003I01";
             //var re = from energyDayItem in edmDb.T_EC_EnergyItemDayResult
@@ -612,7 +611,15 @@ namespace EDMWebsite.Controllers
             var query = edmDb.T_EC_EnergyItemDayResult
                  .Include("T_BD_BuildBaseInfo")
                  .Include("T_DT_EnergyItemDict")
-                 .Where(s => codes.Contains(s.F_BuildID));
+                 .Where(s=>1==1);
+                 //.Where(s => codes.Contains(s.F_BuildID));
+
+            if (!string.IsNullOrEmpty(model.RoomCodes)
+    && !string.IsNullOrEmpty(model.RoomCodes.Trim(',')))
+            {
+                var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+                query = query.Where(s=>roomCodesArray.Contains(s.F_BuildID));
+            }
             if (model.StartDate != null)
             {
                query = query.Where(s => s.F_StartDay > model.StartDate);
@@ -629,8 +636,215 @@ namespace EDMWebsite.Controllers
             }
             model.DayResult = query.ToList();
 
+
+            #region Chart Result
+
+            List<ChartSeriesItem> seriesList = new List<ChartSeriesItem>();
+
+            var energyTypeGroups = model.DayResult.GroupBy(s => s.T_DT_EnergyItemDict);//group by energy type
+            var a = energyTypeGroups.ToList();
+            foreach (var item in energyTypeGroups)
+            {
+               ChartSeriesItem seriesItem1 = new ChartSeriesItem();
+               seriesItem1.name = item.Key.F_EnergyItemName;
+               //foreach (var groupItem in item)
+               //{
+                   var buildGroups = item.GroupBy(s => s.T_BD_BuildBaseInfo);//group by build to sum the amount of energy in this data 
+                   foreach (var buildGroup in buildGroups)
+                   {
+                       ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
+                       dataItem.id = buildGroup.Key.F_BuildID;
+                       dataItem.name = buildGroup.Key.F_BuildName;
+                       dataItem.y = buildGroup.Sum(s=>s.F_DayValue);
+                       seriesItem1.data.Add(dataItem);
+                   }
+
+               //}
+               seriesList.Add(seriesItem1);
+            }
+            model.ChartSeries = JsonConvert.SerializeObject(seriesList);
+
+            #endregion
+
+
+
             return View(model);
         }
+
+        [HttpGet]
+        public ActionResult BuildingsOld(string id)
+        {
+            GenerateEnergyTypeTreeModel();
+            GenerateBuildingTreeModel();
+
+            QueryModel model = new QueryModel();
+            model.StartDate = new DateTime(DateTime.Now.Year, 5, DateTime.Now.Day, 0, 0, 0);
+            model.EndDate = new DateTime(DateTime.Now.Year, 5, DateTime.Now.Day + 1, 0, 0, 0);
+            //model.StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            //model.EndDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day+1, 0, 0, 0);
+            model.ChartSeries = "[]";
+
+            QueryByHour(model, id);
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult BuildingsOld(QueryModel model)
+        {
+            #region 页面帮助与下拉框数据绑定
+            GenerateBuildingTreeModel();
+            GenerateEnergyTypeTreeModel();
+            #endregion
+
+
+            QueryByDay(model);
+
+
+            return View(model);
+        }
+
+        private void QueryByDay(QueryModel model)
+        {
+            var query = edmDb.T_EC_EnergyItemDayResult
+                 .Include("T_BD_BuildBaseInfo")
+                 .Include("T_DT_EnergyItemDict")
+                 .Where(s => 1 == 1);
+            //.Where(s => codes.Contains(s.F_BuildID));
+
+            if (!string.IsNullOrEmpty(model.RoomCodes)
+    && !string.IsNullOrEmpty(model.RoomCodes.Trim(',')))
+            {
+                var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+                query = query.Where(s => roomCodesArray.Contains(s.F_BuildID));
+            }
+            if (model.StartDate != null)
+            {
+                query = query.Where(s => s.F_StartDay > model.StartDate);
+            }
+            if (model.EndDate != null)
+            {
+                query = query.Where(s => s.F_EndDay < model.EndDate);
+            }
+            if (!string.IsNullOrEmpty(model.EnergyTypeCodes)
+                && !string.IsNullOrEmpty(model.EnergyTypeCodes.Trim(',')))
+            {
+                var energyTypeCodesArray = model.EnergyTypeCodes.Trim(',').Split(',');
+                query = query.Where(s => energyTypeCodesArray.Contains(s.F_EnergyItemCode));
+            }
+            model.DayResult = query.ToList();
+
+
+            #region Chart Result
+
+            List<ChartSeriesItem> seriesList = new List<ChartSeriesItem>();
+
+            var energyTypeGroups = model.DayResult.GroupBy(s => s.T_DT_EnergyItemDict);//group by energy type
+            var a = energyTypeGroups.ToList();
+            foreach (var item in energyTypeGroups)
+            {
+                ChartSeriesItem seriesItem1 = new ChartSeriesItem();
+                seriesItem1.name = item.Key.F_EnergyItemName;
+                //foreach (var groupItem in item)
+                //{
+                var buildGroups = item.GroupBy(s => s.T_BD_BuildBaseInfo);//group by build to sum the amount of energy in this data 
+                foreach (var buildGroup in buildGroups)
+                {
+                    ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
+                    dataItem.id = buildGroup.Key.F_BuildID;
+                    dataItem.name = buildGroup.Key.F_BuildName;
+                    dataItem.y = buildGroup.Sum(s => s.F_DayValue);
+                    seriesItem1.data.Add(dataItem);
+                }
+
+                //}
+                seriesList.Add(seriesItem1);
+            }
+            model.ChartSeries = JsonConvert.SerializeObject(seriesList);
+
+            #endregion
+
+        }
+
+        private void QueryByHour(QueryModel model,string buildId)
+        {
+            var query = edmDb.T_EC_EnergyItemHourResult
+     .Include(s => s.T_BD_BuildBaseInfo)
+     .Include(s => s.T_DT_EnergyItemDict)
+     .Where(s => s.F_BuildID == buildId && s.F_StartHour >= model.StartDate && s.F_EndHour <= model.EndDate)
+     .OrderBy(s=>s.F_StartHour);
+
+            model.HourResult = query.ToList();
+
+
+            #region Chart Result
+
+            List<ChartSeriesItem> seriesList = new List<ChartSeriesItem>();
+
+            var energyTypeGroups = model.HourResult.GroupBy(s => s.T_DT_EnergyItemDict);//group by energy type
+            foreach (var item in energyTypeGroups)
+            {
+                ChartSeriesItem seriesItem1 = new ChartSeriesItem();
+                seriesItem1.name = item.Key.F_EnergyItemName;
+                //foreach (var groupItem in item)
+                //{
+                var hourGroups = item.OrderBy(s=>s.F_StartHour).GroupBy(s => s.F_StartHour);//group by build to sum the amount of energy in this data 
+                foreach (var buildGroup in hourGroups)
+                {
+                    ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
+                    dataItem.id = buildGroup.Key.ToString("yyyy-MM-dd HH");
+                    dataItem.name = buildGroup.Key.ToString("yyyy-MM-dd HH");
+                    dataItem.y = buildGroup.Sum(s => s.F_HourValue);
+                    seriesItem1.data.Add(dataItem);
+                }
+
+                //}
+                seriesList.Add(seriesItem1);
+            }
+            model.ChartSeries = JsonConvert.SerializeObject(seriesList);
+
+            #endregion
+        }
+
+        #region helper
+
+        private void GenerateBuildingTreeModel()
+        {
+            //建筑字典
+            List<ZTreeModel> BuildingNodes = new List<ZTreeModel>();
+            foreach (var buildType in edmDb.BuildTypeInits)
+            {
+                BuildingNodes.Add(new ZTreeModel() { id = buildType.contain, name = buildType.typename, nocheck = "true", pId = buildType.contain });
+                var childrens = edmDb.T_BD_BuildBaseInfo.Where(s => s.F_BuildID.Contains(buildType.contain));
+                foreach (var builditem in childrens)
+                {
+                    BuildingNodes.Add(new ZTreeModel() { id = builditem.F_BuildID, name = builditem.F_BuildName, pId = buildType.contain });
+                }
+            }
+            ViewData["BuildingNodes"] = JsonConvert.SerializeObject(BuildingNodes);
+        }
+        private void GenerateEnergyTypeTreeModel()
+        {
+            // 能耗字典
+            var energyItemDict = edmDb.T_DT_EnergyItemDict.OrderBy(s => s.F_EnergyItemCode).ToList();
+            List<ZTreeModel> nodes = new List<ZTreeModel>();
+            foreach (var item in energyItemDict)
+            {
+                ZTreeModel newItem = new ZTreeModel();
+                newItem.id = item.F_EnergyItemCode;
+                newItem.name = item.F_EnergyItemName;
+                newItem.pId = item.F_ParentItemCode;
+                newItem.nocheck = "false";
+
+                nodes.Add(newItem);
+            }
+
+            var jsonNodes = JsonConvert.SerializeObject(nodes);
+            ViewData["TypeNodes"] = jsonNodes;
+        }
+
+        #endregion
 
 
     }

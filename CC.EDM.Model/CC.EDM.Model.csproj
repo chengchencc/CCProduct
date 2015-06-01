@@ -60,6 +60,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\MySQL\Connector.NET 6.9\Assemblies\v4.5\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -187,6 +191,8 @@
     <Compile Include="RealEDMDb\warn.cs" />
     <Compile Include="RealEDMDb\warnRule.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
+    <Compile Include="ViewModels\ChartResult.cs" />
+    <Compile Include="ViewModels\BuildingsMenuItem.cs" />
     <Compile Include="ViewModels\QueryModel.cs" />
     <Compile Include="ViewModels\ZTreeModel.cs" />
   </ItemGroup>

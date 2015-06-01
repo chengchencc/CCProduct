@@ -2133,6 +2133,7 @@
     <Content Include="Views\Institutes\Index.cshtml" />
     <Content Include="Views\Query\Rooms.cshtml" />
     <Content Include="Views\Query\Buildings.cshtml" />
+    <Content Include="Views\Query\CompareBuildingsOld.cshtml" />
     <Content Include="Views\Query\BuildingsOld.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -21,8 +21,15 @@ namespace EDMWebsite.Models.ViewModels
         public string RoomCodes { get; set; }
         public Dictionary<string, string> Result { get; set; }
         public List<T_EC_EnergyItemDayResult> DayResult { get; set; }
+        public List<T_EC_EnergyItemHourResult> HourResult { get; set; }
+        public string ChartSeries { get; set; }
         public string ActiveTabId { get; set; }
+
+
+
     }
+
+
 
     public class DayResult
     {
@@ -31,5 +38,8 @@ namespace EDMWebsite.Models.ViewModels
         public T_BD_BuildBaseInfo BuildInfo { get; set; }
 
     }
+
+
+
 
 }
