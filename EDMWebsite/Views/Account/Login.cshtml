@@ -21,15 +21,20 @@
     @*<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>*@
 </head>
 <body>
+    <div id="logo" style="margin-top:-10%">
+        <img src="~/content/images/head.jpg" alt="Logo" />
+    </div>
+
+
     <div id="loginbox">
         @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-vertical", role = "form", id = "loginform" }))
         {
             <div class="control-group normal_text">
                 <h3>
                     @*<img src="~/Content/matrix/img/logo.png" alt="Logo" />*@
-                    齐鲁工业大学
+                    能源管理
                 </h3>
-                <p>能源管理</p>
+                @*<p>能源管理</p>*@
             </div>
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "help-inline text-error" })

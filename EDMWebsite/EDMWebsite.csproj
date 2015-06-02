@@ -1271,6 +1271,7 @@
     <Content Include="Content\Images\favicon.png" />
     <Content Include="Content\Images\francine.jpg" />
     <Content Include="Content\Images\hayley.jpg" />
+    <Content Include="Content\Images\head.jpg" />
     <Content Include="Content\Images\header-bg.png" />
     <Content Include="Content\Images\ico128.png" />
     <Content Include="Content\Images\icon.jpg" />
@@ -1290,6 +1291,7 @@
     <Content Include="Content\Images\stan.jpg" />
     <Content Include="Content\Images\steve %281%29.jpg" />
     <Content Include="Content\Images\steve.jpg" />
+    <Content Include="Content\Images\background.jpg" />
     <Content Include="Content\Images\theme_editor.png" />
     <Content Include="Content\Images\transaction-bg.png" />
     <Content Include="Content\Images\yidongdianyuan-405-480.png" />
