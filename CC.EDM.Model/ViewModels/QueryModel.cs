@@ -11,22 +11,37 @@ namespace EDMWebsite.Models.ViewModels
         public QueryModel()
         {
             DayResult = new List<T_EC_EnergyItemDayResult>();
+            HourResult = new List<T_EC_EnergyItemHourResult>();
+            MonthResult = new List<T_EC_EnergyItemMonthResult>();
         }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
         public List<string> EnergyType { get; set; }
         public string EnergyTypeCodes { get; set; }
+
+        public StatisticWay StatisticWay { get; set; }
+
         public List<string> Buildings { get; set; }
         public List<string> Rooms { get; set; }
         public string RoomCodes { get; set; }
+
         public Dictionary<string, string> Result { get; set; }
         public List<T_EC_EnergyItemDayResult> DayResult { get; set; }
         public List<T_EC_EnergyItemHourResult> HourResult { get; set; }
+        public List<T_EC_EnergyItemMonthResult> MonthResult { get; set; }
         public string ChartSeries { get; set; }
         public string ActiveTabId { get; set; }
 
 
 
+    }
+
+    public enum StatisticWay{
+        智能选择=0,
+        逐时能耗=1,
+        逐日能耗=2,
+        逐月能耗=3
     }
 
 

@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-using EDMWebsite.Models.DbModels.ReadOnly;
 
 namespace EDMWebsite.Models.DbModels
 {

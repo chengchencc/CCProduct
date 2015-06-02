@@ -31,5 +31,9 @@ namespace CC.EDM.Model.RealEDMDb
         public decimal? F_MonthEquValue { get; set; }
 
         public short F_State { get; set; }
+
+        public virtual T_BD_BuildBaseInfo T_BD_BuildBaseInfo { get; set; }
+
+        public virtual T_DT_EnergyItemDict T_DT_EnergyItemDict { get; set; }
     }
 }

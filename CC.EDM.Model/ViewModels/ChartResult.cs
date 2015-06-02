@@ -28,6 +28,7 @@ namespace EDMWebsite.Models.ViewModels
         public string id { get; set; }
         //public string color { get; set; }
         //public string dataLabels { get; set; }
+        public string unit { get; set; }
         
     }
 }

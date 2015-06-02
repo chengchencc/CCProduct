@@ -11,10 +11,10 @@ namespace EDMWebsite.Controllers
         [Authorize(Roles="admin")]
         public ActionResult Index()
         {
-            using (WriteableSqlDbContext db = new WriteableSqlDbContext())
-            {
-                var a = db.DbFirstTestTables.ToList();
-            }
+            //using (WriteableSqlDbContext db = new WriteableSqlDbContext())
+            //{
+            //    var a = db.DbFirstTestTables.ToList();
+            //}
             return View();
         }
 

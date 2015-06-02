@@ -46,6 +46,10 @@
     <Reference Include="MySql.Data.CF, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="MySql.Data.Entity, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -117,9 +121,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -1258,6 +1259,7 @@
     <Content Include="Content\highchart\canvg-1.1\rgbcolor.js" />
     <Content Include="Content\highchart\drilldown.src.js" />
     <Content Include="Content\highchart\highcharts.src.js" />
+    <Content Include="Content\highchart\HighchartsConfig.js" />
     <Content Include="Content\Images\1.png" />
     <Content Include="Content\Images\2.png" />
     <Content Include="Content\Images\3.png" />
@@ -2060,6 +2062,7 @@
     <Content Include="Content\ace_admin1.3.1\mustache\js\package.json" />
     <Content Include="Content\ace_admin1.3.1\mustache\js\README.md" />
     <Content Include="Content\ace_admin1.3.1\mustache\php\README.md" />
+    <Content Include="Controllers\_HourResultPartial.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -2135,6 +2138,9 @@
     <Content Include="Views\Query\Buildings.cshtml" />
     <Content Include="Views\Query\CompareBuildingsOld.cshtml" />
     <Content Include="Views\Query\BuildingsOld.cshtml" />
+    <Content Include="Views\Query\_HourResultPartial.cshtml" />
+    <Content Include="Views\Query\_DayResultPartial.cshtml" />
+    <Content Include="Views\Query\_MonthResultPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

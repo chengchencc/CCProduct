@@ -21,7 +21,7 @@ namespace CC.EDM.Domain.DI
         {
 
             For<IIocTest>().Use<IocTest>();
-
+            For<IQueryService>().Use<QueryService>();
         }
 
     }

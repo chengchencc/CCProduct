@@ -26,8 +26,10 @@
         {
             <div class="control-group normal_text">
                 <h3>
-                    <img src="~/Content/matrix/img/logo.png" alt="Logo" />
+                    @*<img src="~/Content/matrix/img/logo.png" alt="Logo" />*@
+                    齐鲁工业大学
                 </h3>
+                <p>能源管理</p>
             </div>
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "help-inline text-error" })
@@ -63,10 +65,10 @@
 
             <div class="form-actions">
                 <span class="pull-left">
-                    <a href="#" class="flip-link btn btn-info" id="to-recover">Lost password?</a>
+                    <a href="#" class="flip-link btn btn-info" id="to-recover">忘记密码</a>
                 </span>
                 <span class="pull-right">
-                    <button type="submit" class="btn btn-success"> Login</button>
+                    <button type="submit" class="btn btn-success"> 登陆</button>
                 </span>
             </div>
         }
@@ -85,7 +87,7 @@
             <div class="form-actions">
                 <div class="col-md-offset-2 col-md-10">
                     <span class="pull-left"><a href="#" class="flip-link btn btn-success" id="to-login">&laquo; 返回登录</a></span>
-                    <span class="pull-right"><input type="submit" class="btn btn-info" value="Email Link" /></span>
+                    <span class="pull-right"><input type="submit" class="btn btn-info" value="重置密码" /></span>
                     
                 </div>
             </div>

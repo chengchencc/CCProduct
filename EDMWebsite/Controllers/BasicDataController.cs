@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CC.EDM.Model.RealEDMDb;
 
 namespace EDMWebsite.Controllers
 {
     public class BasicDataController : Controller
     {
-        public EDMContext EDMContext { get; set; }
+        public RealEDMDbContext EDMContext { get; set; }
         public WriteableSqlDbContext WSDb { get; set; }
         public BasicDataController()
         {
-            EDMContext = new EDMContext();
+            EDMContext = new RealEDMDbContext();
         }
         // GET: BasicData
         public ActionResult Index()

@@ -81,34 +81,6 @@
     <Compile Include="Context\ReadOnlySqlDbContext.cs" />
     <Compile Include="Context\WriteableSqlDbContext.cs" />
     <Compile Include="DbModels\EntityBase.cs" />
-    <Compile Include="DbModels\ReadOnly\DbFirstTest.cs" />
-    <Compile Include="DbModels\ReadOnly\sysdiagram.cs" />
-    <Compile Include="DbModels\ReadOnly\T_BD_BuildAddFile.cs" />
-    <Compile Include="DbModels\ReadOnly\T_BD_BuildBaseInfo.cs" />
-    <Compile Include="DbModels\ReadOnly\T_BD_BuildEngyConsRenoInfo.cs" />
-    <Compile Include="DbModels\ReadOnly\T_BD_BuildExInfo.cs" />
-    <Compile Include="DbModels\ReadOnly\T_BD_BuildGroupBaseInfo.cs" />
-    <Compile Include="DbModels\ReadOnly\T_DC_CityTempInfo.cs" />
-    <Compile Include="DbModels\ReadOnly\T_DC_DataCenterBaseInfo.cs" />
-    <Compile Include="DbModels\ReadOnly\T_DT_EnergyItemDict.cs" />
-    <Compile Include="DbModels\ReadOnly\T_EC_EnergyItemDayResult.cs" />
-    <Compile Include="DbModels\ReadOnly\T_EC_EnergyItemHourResult.cs" />
-    <Compile Include="DbModels\ReadOnly\T_EC_EnergyItemResult.cs" />
-    <Compile Include="DbModels\ReadOnly\T_EC_RoomEnergyItemDayResult.cs" />
-    <Compile Include="DbModels\ReadOnly\T_EC_RoomEnergyItemHourResult.cs" />
-    <Compile Include="DbModels\ReadOnly\T_EC_RoomEnergyItemMonthResult.cs" />
-    <Compile Include="DbModels\ReadOnly\T_EC_RoomEnergyItemResult.cs" />
-    <Compile Include="DbModels\ReadOnly\T_EC_UnitEnergyItemDayResult.cs" />
-    <Compile Include="DbModels\ReadOnly\T_EC_UnitEnergyItemHourResult.cs" />
-    <Compile Include="DbModels\ReadOnly\T_EC_UnitEnergyItemResult.cs" />
-    <Compile Include="DbModels\ReadOnly\T_OV_MeterOrigValue.cs" />
-    <Compile Include="DbModels\ReadOnly\T_RM_RoomInfo.cs" />
-    <Compile Include="DbModels\ReadOnly\T_ST_CircuitMeterInfo.cs" />
-    <Compile Include="DbModels\ReadOnly\T_ST_DataCollectionInfo.cs" />
-    <Compile Include="DbModels\ReadOnly\T_ST_MeterParamInfo.cs" />
-    <Compile Include="DbModels\ReadOnly\T_ST_MeterProdInfo.cs" />
-    <Compile Include="DbModels\ReadOnly\T_ST_MeterUseInfo.cs" />
-    <Compile Include="DbModels\ReadOnly\T_UT_UnitBaseInfo.cs" />
     <Compile Include="DbModels\Writeable\UnitPrice.cs" />
     <Compile Include="DbModels\Writeable\Building.cs" />
     <Compile Include="DbModels\Writeable\EnergyItemResult.cs" />
@@ -130,7 +102,7 @@
     <Compile Include="RealEDMDb\G_FLYPOINT_T.cs" />
     <Compile Include="RealEDMDb\G_FLYROAD_T.cs" />
     <Compile Include="RealEDMDb\G_VALVE_T.cs" />
-    <Compile Include="RealEDMDb\RealEDMDbContext.cs" />
+    <Compile Include="Context\RealEDMDbContext.cs" />
     <Compile Include="RealEDMDb\sysdiagram.cs" />
     <Compile Include="RealEDMDb\testtable.cs" />
     <Compile Include="RealEDMDb\T_BD_AlarmSet.cs" />
@@ -199,6 +171,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DbModels\ReadOnly\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

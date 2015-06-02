@@ -25,7 +25,6 @@ namespace EDMWebsite
             Database.SetInitializer<WriteableSqlDbContext>(new MigrateDatabaseToLatestVersion<WriteableSqlDbContext, Configuration>());
         }
 
-        public DbSet<DbFirstTest> DbFirstTestTables { get; set; }
         public DbSet<Comdict> Comdicts { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Building> Buildings { get; set; }
