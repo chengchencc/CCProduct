@@ -2064,7 +2064,6 @@
     <Content Include="Content\ace_admin1.3.1\mustache\js\package.json" />
     <Content Include="Content\ace_admin1.3.1\mustache\js\README.md" />
     <Content Include="Content\ace_admin1.3.1\mustache\php\README.md" />
-    <Content Include="Controllers\_HourResultPartial.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -2143,6 +2142,8 @@
     <Content Include="Views\Query\_HourResultPartial.cshtml" />
     <Content Include="Views\Query\_DayResultPartial.cshtml" />
     <Content Include="Views\Query\_MonthResultPartial.cshtml" />
+    <Content Include="Views\Account\AddUser.cshtml" />
+    <Content Include="Views\Account\LoginByUserName.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

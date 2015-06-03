@@ -16,10 +16,9 @@ using Owin;
 namespace EDMWebsite.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationUserManager _userManager;
-
         public AccountController()
         {
         }
@@ -41,6 +40,8 @@ namespace EDMWebsite.Controllers
             }
         }
 
+        #region Default Account Manager
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -60,7 +61,7 @@ namespace EDMWebsite.Controllers
             if (ModelState.IsValid)
             {
                 var usert = await UserManager.FindByEmailAsync(model.Email);
-                if (usert!=null)
+                if (usert != null)
                 {
                     var user = await UserManager.FindAsync(usert.UserName, model.Password);
                     if (user != null)
@@ -140,7 +141,7 @@ namespace EDMWebsite.Controllers
             {
                 return View("Error");
             }
-            
+
             IdentityResult result = await UserManager.ConfirmEmailAsync(userId, code);
             if (result.Succeeded)
             {
@@ -179,10 +180,10 @@ namespace EDMWebsite.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                 await UserManager.SendEmailAsync(user.Id, "重置密码", "请点击 <a href=\"" + callbackUrl + "\">这里</a>来重置你的密码！");
-                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "重置密码", "请点击 <a href=\"" + callbackUrl + "\">这里</a>来重置你的密码！");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -472,31 +473,149 @@ namespace EDMWebsite.Controllers
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
             return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
         }
-
+#endregion
         [Authorize(Roles = "admin")]
         public ActionResult UserList()
         {
-            Dictionary<string, string> breadcrumbs = new Dictionary<string, string>();
-            breadcrumbs.Add("", "用户列表");
-            ViewData["Breadcrumbs"] = breadcrumbs;
 
-            //IdentityDbContext identityDb = new IdentityDbContext();
+
+            //using (IdentityDbContext identityDb = new IdentityDbContext())
+            //{
+            //    var ro = identityDb.Roles.ToList();
+            //}
             //var listModel = identityDb.Users.ToList();
-            var listModel = UserManager.Users.ToList();
-            return View(listModel);
-        }
+            var RoleManager =HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            var roles = RoleManager.Roles.ToList();
+            ViewData["Roles"] = roles; 
 
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && UserManager != null)
+            var userList = UserManager.Users.ToList();
+
+            var model = new List<UserWithRolesViewModel>();
+            foreach (var userItem in userList)
             {
-                UserManager.Dispose();
-                UserManager = null;
+                UserWithRolesViewModel modelItem = new UserWithRolesViewModel();
+                modelItem.User = userItem;
+                modelItem.Roles = UserManager.GetRoles(userItem.Id).ToList();
+                model.Add(modelItem);
             }
-            base.Dispose(disposing);
+
+            return View(model);
         }
 
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public ActionResult AddUser()
+        {
+            return View();
+        }
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> AddUser(AddUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser() { UserName = model.Name, Email = "123@mail.com" };
+                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("UserList", "Account");
+                }
+                else
+                {
+                    AddErrors(result);
+                }
+            }
+
+            return View(model);
+        }
+
+
+        //
+        // GET: /Account/Login
+        [AllowAnonymous]
+        public ActionResult LoginByUserName(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        //
+        // POST: /Account/Login
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> LoginByUserName(LoginByNameViewModel model, string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                //var usert = await UserManager.FindByNameAsync(model.UserName);// .FindByEmailAsync(model.Email);
+                //if (usert != null)
+                //{
+                    var user = await UserManager.FindAsync(model.UserName, model.Password);
+                    if (user != null)
+                    {
+                        //if (UserManager.IsEmailConfirmed(user.Id))
+                        //{
+                            await SignInAsync(user, model.RememberMe);
+                            return RedirectToLocal(returnUrl);
+                        //}
+                        //else
+                        //{
+                        //    ModelState.AddModelError("", "请去邮箱激活账号！");
+                        //}
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "用户名或密码错误！");
+                    }
+                //}
+                //else
+                //{
+                //    ModelState.AddModelError("", "用户名或密码错误！");//用户不存在
+                //}
+
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public ActionResult DeleteRole(string userId,string roleName)
+        {
+           IdentityResult re = UserManager.RemoveFromRole(userId, roleName);
+           if (re.Succeeded)
+           {
+               return Content("success");
+           }
+           else
+           {
+               
+               return Content(re.Errors.ToString());               
+           }
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public ActionResult AddRoleToUser(string userId, string roleName)
+        {
+            var isInRole = UserManager.IsInRole(userId, roleName);
+            if (isInRole)
+            {
+                return Content("用户已经是"+roleName);
+            }
+            IdentityResult re = UserManager.AddToRole(userId, roleName);
+            if (re.Succeeded)
+            {
+                return Content("success");
+            }
+            else
+            {
+                return Content(re.Errors.ToString());
+            }
+        }
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
@@ -607,5 +726,17 @@ namespace EDMWebsite.Controllers
             }
         }
         #endregion
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && UserManager != null)
+            {
+                UserManager.Dispose();
+                UserManager = null;
+            }
+            base.Dispose(disposing);
+        }
+
+
     }
 }
