@@ -5,21 +5,21 @@ using System.Linq;
 
 namespace EDMWebsite
 {
-    public partial class EDMContext : DbContext
-    {
-        public EDMContext()
-            : base("name=EDMContext")
-        {
-        }
-        static EDMContext()
-        {
-            Database.SetInitializer<ReadOnlySqlDbContext>(null);
-        }
+    //public partial class EDMContext : DbContext
+    //{
+    //    public EDMContext()
+    //        : base("name=EDMContext")
+    //    {
+    //    }
+    //    static EDMContext()
+    //    {
+    //        Database.SetInitializer<ReadOnlySqlDbContext>(null);
+    //    }
 
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
+    //    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    //    {
 
-        }
-    }
+    //    }
+    //}
 }

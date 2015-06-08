@@ -4,12 +4,15 @@ namespace EDMWebsite.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using EDMWebsite.Models;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<EDMWebsite.WriteableSqlDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<WriteableSqlDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
+            //SetSqlGenerator("MySql.Data.MySqlClient", new MySql.Data.Entity.MySqlMigrationSqlGenerator()); 
             ContextKey = "EDMWebsite.WriteableSqlDbContext";
         }
 

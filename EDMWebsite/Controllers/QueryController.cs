@@ -194,132 +194,6 @@ namespace EDMWebsite.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public ActionResult Buildings()
-        {
-            var energyItemDict = edmDb.T_DT_EnergyItemDict.OrderBy(s => s.F_EnergyItemCode).ToList();
-            List<ZTreeModel> nodes = new List<ZTreeModel>();
-            foreach (var item in energyItemDict)
-            {
-                ZTreeModel newItem = new ZTreeModel();
-                newItem.id = item.F_EnergyItemCode;
-                newItem.name = item.F_EnergyItemName;
-                newItem.pId = item.F_ParentItemCode;
-                newItem.nocheck = "false";
-
-                nodes.Add(newItem);
-            }
-
-            var jsonNodes = JsonConvert.SerializeObject(nodes);
-
-            //能耗类型下拉框
-            ViewData["TypeNodes"] = jsonNodes;
-            List<SelectListItem> energyType = new List<SelectListItem>();
-            foreach (var item in energyItemDict)
-            {
-                SelectListItem si = new SelectListItem();
-                si.Text = item.F_EnergyItemName;
-                si.Value = item.F_EnergyItemCode;
-                energyType.Add(si);
-            }
-            ViewData["EnergyType"] = energyType;
-
-            //建筑下拉框
-            List<SelectListItem> buildings = new List<SelectListItem>();
-            foreach (var item in WriteableDb.Buildings)
-            {
-                SelectListItem si = new SelectListItem();
-                si.Text = item.Name;
-                si.Value = item.Id.ToString();
-                buildings.Add(si);
-            }
-            ViewData["Buildings"] = buildings;
-
-
-            //Generate breadcrumbs
-            Dictionary<string, string> breadcrumbs = new Dictionary<string, string>();
-            breadcrumbs.Add("http://www.baidu.com", "建筑能耗监控");
-            //breadcrumbs.Add("/buildings/xz", "行政办公室");
-            //breadcrumbs.Add("/buildings/TheOffice", "办公室");
-            ViewData["Breadcrumbs"] = breadcrumbs;
-
-            QueryModel model = new QueryModel();
-            model.StartDate = DateTime.Now;
-            model.EndDate = DateTime.Now;
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult Buildings(QueryModel model)
-        {
-            #region 能耗类型
-            var energyItemDict = edmDb.T_DT_EnergyItemDict.OrderBy(s => s.F_EnergyItemCode).ToList();
-            List<ZTreeModel> nodes = new List<ZTreeModel>();
-            foreach (var item in energyItemDict)
-            {
-                ZTreeModel newItem = new ZTreeModel();
-                newItem.id = item.F_EnergyItemCode;
-                newItem.name = item.F_EnergyItemName;
-                newItem.pId = item.F_ParentItemCode;
-                nodes.Add(newItem);
-            }
-
-            var jsonNodes = JsonConvert.SerializeObject(nodes);
-
-            //能耗类型下拉框
-            ViewData["TypeNodes"] = jsonNodes;
-            //List<SelectListItem> energyType = new List<SelectListItem>();
-            //foreach (var item in energyItemDict)
-            //{
-            //    SelectListItem si = new SelectListItem();
-            //    si.Text = item.F_EnergyItemName;
-            //    si.Value = item.F_EnergyItemCode;
-            //    energyType.Add(si);
-            //}
-            //ViewData["EnergyType"] = energyType;
-            #endregion
-
-            var buildId = "370100D003I01";
-
-            //var re = from energyDayItem in edmDb.T_EC_EnergyItemDayResult
-            //         join buildInfo in edmDb.T_BD_BuildBaseInfo on energyDayItem.F_BuildID equals buildInfo.F_BuildID
-            //         join energyTypes in edmDb.T_DT_EnergyItemDict on energyDayItem.F_EnergyItemCode equals energyTypes.F_EnergyItemCode
-            //         where energyDayItem.F_BuildID == buildId
-            //         select new DayResult { EnergyType= energyTypes, EnergyDayResult= energyDayItem, BuildInfo= buildInfo };
-
-
-            model.DayResult = edmDb.T_EC_EnergyItemDayResult
-                .Include("T_BD_BuildBaseInfo")
-                .Include("T_DT_EnergyItemDict")
-                .Where(s => s.F_BuildID == buildId)
-                .ToList();
-
-            //建筑下拉框
-            List<SelectListItem> buildings = new List<SelectListItem>();
-            foreach (var item in WriteableDb.Buildings)
-            {
-                SelectListItem si = new SelectListItem();
-                si.Text = item.Name;
-                si.Value = item.Id.ToString();
-                buildings.Add(si);
-            }
-            ViewData["Buildings"] = buildings;
-
-
-            //Generate breadcrumbs
-            Dictionary<string, string> breadcrumbs = new Dictionary<string, string>();
-            breadcrumbs.Add("http://www.baidu.com", "建筑能耗监控");
-            breadcrumbs.Add("/buildings/xz", "行政办公室");
-            breadcrumbs.Add("/buildings/TheOffice", "办公室");
-            ViewData["Breadcrumbs"] = breadcrumbs;
-
-
-            //model.Result = new Dictionary<string, string>();
-
-
-
-            return View(model);
-        }
 
         [HttpGet]
         public ActionResult Rooms()
@@ -472,7 +346,220 @@ namespace EDMWebsite.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public ActionResult Institutes()
+        {
+            var energyItemDict = edmDb.T_DT_EnergyItemDict.OrderBy(s => s.F_EnergyItemCode).ToList();
+            List<ZTreeModel> nodes = new List<ZTreeModel>();
+            foreach (var item in energyItemDict)
+            {
+                ZTreeModel newItem = new ZTreeModel();
+                newItem.id = item.F_EnergyItemCode;
+                newItem.name = item.F_EnergyItemName;
+                newItem.pId = item.F_ParentItemCode;
+                newItem.nocheck = "false";
 
+                nodes.Add(newItem);
+            }
+
+            var jsonNodes = JsonConvert.SerializeObject(nodes);
+
+            //学院下拉框
+            List<SelectListItem> institutes = new List<SelectListItem>();
+            foreach (var item in WriteableDb.Institutes)
+            {
+                SelectListItem si = new SelectListItem();
+                si.Text = item.Name;
+                si.Value = item.Id.ToString();
+                institutes.Add(si);
+            }
+            ViewData["Institutes"] = institutes;
+
+            QueryModel model = new QueryModel();
+            model.StartDate = DateTime.Now;
+            model.EndDate = DateTime.Now.AddDays(-1);
+            model.ChartSeries = "[]";
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Institutes(QueryModel model)
+        {
+            #region 帮助绑定
+            var energyItemDict = edmDb.T_DT_EnergyItemDict.OrderBy(s => s.F_EnergyItemCode).ToList();
+            List<ZTreeModel> nodes = new List<ZTreeModel>();
+            foreach (var item in energyItemDict)
+            {
+                ZTreeModel newItem = new ZTreeModel();
+                newItem.id = item.F_EnergyItemCode;
+                newItem.name = item.F_EnergyItemName;
+                newItem.pId = item.F_ParentItemCode;
+                newItem.nocheck = "false";
+
+                nodes.Add(newItem);
+            }
+
+            var jsonNodes = JsonConvert.SerializeObject(nodes);
+
+            //学院下拉框
+            List<SelectListItem> institutes = new List<SelectListItem>();
+            foreach (var item in WriteableDb.Institutes)
+            {
+                SelectListItem si = new SelectListItem();
+                si.Text = item.Name;
+                si.Value = item.Id.ToString();
+                institutes.Add(si);
+            }
+            ViewData["Institutes"] = institutes;
+            #endregion
+
+            if (model.StatisticWay == StatisticWay.逐时能耗)
+            {
+                QueryService.QueryByHourForBuildings(model);
+            }
+            else if (model.StatisticWay == StatisticWay.逐日能耗)
+            {
+                QueryService.QueryByDayForBuildingsOld(model);
+            }
+            else if (model.StatisticWay == StatisticWay.逐月能耗)
+            {
+                QueryService.QueryByMonthForBuildingsOld(model);
+            }
+
+
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult Buildings()
+        {
+            var energyItemDict = edmDb.T_DT_EnergyItemDict.OrderBy(s => s.F_EnergyItemCode).ToList();
+            List<ZTreeModel> nodes = new List<ZTreeModel>();
+            foreach (var item in energyItemDict)
+            {
+                ZTreeModel newItem = new ZTreeModel();
+                newItem.id = item.F_EnergyItemCode;
+                newItem.name = item.F_EnergyItemName;
+                newItem.pId = item.F_ParentItemCode;
+                newItem.nocheck = "false";
+
+                nodes.Add(newItem);
+            }
+
+            var jsonNodes = JsonConvert.SerializeObject(nodes);
+
+            //能耗类型下拉框
+            ViewData["TypeNodes"] = jsonNodes;
+            List<SelectListItem> energyType = new List<SelectListItem>();
+            foreach (var item in energyItemDict)
+            {
+                SelectListItem si = new SelectListItem();
+                si.Text = item.F_EnergyItemName;
+                si.Value = item.F_EnergyItemCode;
+                energyType.Add(si);
+            }
+            ViewData["EnergyType"] = energyType;
+
+            //建筑下拉框
+            List<SelectListItem> buildings = new List<SelectListItem>();
+            foreach (var item in WriteableDb.Buildings)
+            {
+                SelectListItem si = new SelectListItem();
+                si.Text = item.Name;
+                si.Value = item.Id.ToString();
+                buildings.Add(si);
+            }
+            ViewData["Buildings"] = buildings;
+
+
+            //Generate breadcrumbs
+            Dictionary<string, string> breadcrumbs = new Dictionary<string, string>();
+            breadcrumbs.Add("http://www.baidu.com", "建筑能耗监控");
+            //breadcrumbs.Add("/buildings/xz", "行政办公室");
+            //breadcrumbs.Add("/buildings/TheOffice", "办公室");
+            ViewData["Breadcrumbs"] = breadcrumbs;
+
+            QueryModel model = new QueryModel();
+            model.StartDate = DateTime.Now;
+            model.EndDate = DateTime.Now;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Buildings(QueryModel model)
+        {
+            #region 能耗类型
+            var energyItemDict = edmDb.T_DT_EnergyItemDict.OrderBy(s => s.F_EnergyItemCode).ToList();
+            List<ZTreeModel> nodes = new List<ZTreeModel>();
+            foreach (var item in energyItemDict)
+            {
+                ZTreeModel newItem = new ZTreeModel();
+                newItem.id = item.F_EnergyItemCode;
+                newItem.name = item.F_EnergyItemName;
+                newItem.pId = item.F_ParentItemCode;
+                nodes.Add(newItem);
+            }
+
+            var jsonNodes = JsonConvert.SerializeObject(nodes);
+
+            //能耗类型下拉框
+            ViewData["TypeNodes"] = jsonNodes;
+            //List<SelectListItem> energyType = new List<SelectListItem>();
+            //foreach (var item in energyItemDict)
+            //{
+            //    SelectListItem si = new SelectListItem();
+            //    si.Text = item.F_EnergyItemName;
+            //    si.Value = item.F_EnergyItemCode;
+            //    energyType.Add(si);
+            //}
+            //ViewData["EnergyType"] = energyType;
+            #endregion
+
+            var buildId = "370100D003I01";
+
+            //var re = from energyDayItem in edmDb.T_EC_EnergyItemDayResult
+            //         join buildInfo in edmDb.T_BD_BuildBaseInfo on energyDayItem.F_BuildID equals buildInfo.F_BuildID
+            //         join energyTypes in edmDb.T_DT_EnergyItemDict on energyDayItem.F_EnergyItemCode equals energyTypes.F_EnergyItemCode
+            //         where energyDayItem.F_BuildID == buildId
+            //         select new DayResult { EnergyType= energyTypes, EnergyDayResult= energyDayItem, BuildInfo= buildInfo };
+
+
+            model.DayResult = edmDb.T_EC_EnergyItemDayResult
+                .Include("T_BD_BuildBaseInfo")
+                .Include("T_DT_EnergyItemDict")
+                .Where(s => s.F_BuildID == buildId)
+                .ToList();
+
+            //建筑下拉框
+            List<SelectListItem> buildings = new List<SelectListItem>();
+            foreach (var item in WriteableDb.Buildings)
+            {
+                SelectListItem si = new SelectListItem();
+                si.Text = item.Name;
+                si.Value = item.Id.ToString();
+                buildings.Add(si);
+            }
+            ViewData["Buildings"] = buildings;
+
+
+            //Generate breadcrumbs
+            Dictionary<string, string> breadcrumbs = new Dictionary<string, string>();
+            breadcrumbs.Add("http://www.baidu.com", "建筑能耗监控");
+            breadcrumbs.Add("/buildings/xz", "行政办公室");
+            breadcrumbs.Add("/buildings/TheOffice", "办公室");
+            ViewData["Breadcrumbs"] = breadcrumbs;
+
+
+            //model.Result = new Dictionary<string, string>();
+
+
+
+            return View(model);
+        }
+
+        #region Old Query
         [HttpGet]
         public ActionResult CompareBuildingsOld()
         {
@@ -507,15 +594,15 @@ namespace EDMWebsite.Controllers
 
             if (model.StatisticWay == StatisticWay.逐时能耗)
             {
-                QueryService.QueryByHourForBuildings(model);
+                QueryService.QueryByHourForBuildingsOld(model);
             }
             else if (model.StatisticWay == StatisticWay.逐日能耗)
             {
-                QueryService.QueryByDayForBuildings(model);
+                QueryService.QueryByDayForBuildingsOld(model);
             }
             else if (model.StatisticWay == StatisticWay.逐月能耗)
             {
-                QueryService.QueryByMonthForBuildings(model);
+                QueryService.QueryByMonthForBuildingsOld(model);
             }
 
 
@@ -544,13 +631,13 @@ namespace EDMWebsite.Controllers
             {
                 QueryService.QueryByHourForOneBuilding(model);
             }
-            else if(model.StatisticWay == StatisticWay.逐日能耗)
+            else if (model.StatisticWay == StatisticWay.逐日能耗)
             {
                 QueryService.QueryByDayForOneBuilding(model);
             }
             else if (model.StatisticWay == StatisticWay.逐月能耗)
             {
-                QueryService.QueryByMonthForOneBuilding(model);                
+                QueryService.QueryByMonthForOneBuilding(model);
             }
 
             //QueryService.QueryByHour(model, id);
@@ -562,7 +649,7 @@ namespace EDMWebsite.Controllers
         [HttpPost]
         public ActionResult BuildingsOld(QueryModel model)
         {
-            #region Binding Dictionary Helpers and dropdown list 
+            #region Binding Dictionary Helpers and dropdown list
             GenerateBuildingTreeModel();
             GenerateEnergyTypeTreeModel();
             #endregion
@@ -583,7 +670,7 @@ namespace EDMWebsite.Controllers
 
             return View(model);
         }
-
+        #endregion
 
         #region helper
 

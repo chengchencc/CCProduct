@@ -7,32 +7,39 @@ using System.Data.Entity;
 using CC.EDM.Model.RealEDMDb;
 using EDMWebsite.Models.ViewModels;
 using Newtonsoft.Json;
-
+using EDMWebsite;
+using EDMWebsite.Models.DbModels;
 namespace CC.EDM.Domain.Services
 {
     public interface IQueryService
     {
-        void QueryByHourForBuildings(QueryModel model);
-        void QueryByDayForBuildings(QueryModel model);
-        void QueryByMonthForBuildings(QueryModel model);
+        void QueryByHourForBuildingsOld(QueryModel model);
+        void QueryByDayForBuildingsOld(QueryModel model);
+        void QueryByMonthForBuildingsOld(QueryModel model);
 
         void QueryByHourForOneBuilding(QueryModel model);
         void QueryByDayForOneBuilding(QueryModel model);
         void QueryByMonthForOneBuilding(QueryModel model);
+
+        void QueryByHourForBuildings(QueryModel model);
+
     }
     public class QueryService : IQueryService
     {
-        public RealEDMDbContext edmDb { get; set; }
+        public RealEDMDbContext EdmDb { get; set; }
+        public WriteableSqlDbContext NewEdmDb { get; set; }
 
         public QueryService()
         {
-            edmDb = new RealEDMDbContext();
+            EdmDb = new RealEDMDbContext();
+            NewEdmDb = new WriteableSqlDbContext();
         }
-        
-        public void QueryByHourForBuildings(QueryModel model)
+
+        #region Old
+        public void QueryByHourForBuildingsOld(QueryModel model)
         {
 
-            var query = edmDb.T_EC_EnergyItemHourResult
+            var query = EdmDb.T_EC_EnergyItemHourResult
                  .Include("T_BD_BuildBaseInfo")
                  .Include("T_DT_EnergyItemDict")
                  .Where(s => 1 == 1);
@@ -90,10 +97,10 @@ namespace CC.EDM.Domain.Services
 
         }
 
-        public void QueryByDayForBuildings(QueryModel model)
+        public void QueryByDayForBuildingsOld(QueryModel model)
         {
 
-            var query = edmDb.T_EC_EnergyItemDayResult
+            var query = EdmDb.T_EC_EnergyItemDayResult
                  .Include("T_BD_BuildBaseInfo")
                  .Include("T_DT_EnergyItemDict")
                  .Where(s => 1 == 1);
@@ -151,10 +158,10 @@ namespace CC.EDM.Domain.Services
 
         }
         
-        public void QueryByMonthForBuildings(QueryModel model)
+        public void QueryByMonthForBuildingsOld(QueryModel model)
         {
 
-            var query = edmDb.T_EC_EnergyItemMonthResult
+            var query = EdmDb.T_EC_EnergyItemMonthResult
                  .Include("T_BD_BuildBaseInfo")
                  .Include("T_DT_EnergyItemDict")
                  .Where(s => 1 == 1);
@@ -218,7 +225,7 @@ namespace CC.EDM.Domain.Services
 
         public void QueryByHourForOneBuilding(QueryModel model)
         {
-            var query = edmDb.T_EC_EnergyItemHourResult
+            var query = EdmDb.T_EC_EnergyItemHourResult
      .Include(s => s.T_BD_BuildBaseInfo)
      .Include(s => s.T_DT_EnergyItemDict)
      .Where(s => s.F_BuildID == model.RoomCodes);
@@ -273,7 +280,7 @@ namespace CC.EDM.Domain.Services
 
         public void QueryByDayForOneBuilding(QueryModel model)
         {
-            var query = edmDb.T_EC_EnergyItemDayResult
+            var query = EdmDb.T_EC_EnergyItemDayResult
                              .Include(s => s.T_BD_BuildBaseInfo)
                              .Include(s => s.T_DT_EnergyItemDict)
                              .Where(s => s.F_BuildID == model.RoomCodes );
@@ -329,7 +336,7 @@ namespace CC.EDM.Domain.Services
 
         public void QueryByMonthForOneBuilding(QueryModel model)
         {
-            var query = edmDb.T_EC_EnergyItemMonthResult
+            var query = EdmDb.T_EC_EnergyItemMonthResult
      .Include(s => s.T_BD_BuildBaseInfo)
      .Include(s => s.T_DT_EnergyItemDict)
      .Where(s => s.F_BuildID == model.RoomCodes );
@@ -381,6 +388,67 @@ namespace CC.EDM.Domain.Services
             model.ChartSeries = JsonConvert.SerializeObject(seriesList);
 
             #endregion
+        }
+
+        #endregion
+
+        public void QueryByHourForBuildings(QueryModel model)
+        {
+
+            var query = NewEdmDb.EnergyItemHourResults
+                .Include(s=>s.Room)
+                 .Where(s => 1 == 1);
+            //.Where(s => codes.Contains(s.F_BuildID));
+
+            if (model.Rooms!=null && model.Rooms.Count>0)
+            {
+                //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+                query = query.Where(s => model.Rooms.Contains(s.Room.InstituteId.ToString()));
+            }
+            //if (model.StartDate != null)
+            //{
+            //    query = query.Where(s => s.F_StartHour >= model.StartDate);
+            //}
+            //if (model.EndDate != null)
+            //{
+            //    query = query.Where(s => s.F_EndHour <= model.EndDate);
+            //}
+            //if (!string.IsNullOrEmpty(model.EnergyTypeCodes)
+            //    && !string.IsNullOrEmpty(model.EnergyTypeCodes.Trim(',')))
+            //{
+            //    var energyTypeCodesArray = model.EnergyTypeCodes.Trim(',').Split(',');
+            //    query = query.Where(s => energyTypeCodesArray.Contains(s.F_EnergyItemCode));
+            //}
+            //model.HourResult = query.ToList();
+            var a = query.ToList();
+
+            #region Chart Result
+
+            List<ChartSeriesItem> seriesList = new List<ChartSeriesItem>();
+
+            var energyTypeGroups = model.HourResult.GroupBy(s => s.T_DT_EnergyItemDict);//group by energy type
+            foreach (var item in energyTypeGroups)
+            {
+                ChartSeriesItem seriesItem1 = new ChartSeriesItem();
+                seriesItem1.name = item.Key.F_EnergyItemName;
+
+                var buildGroups = item.GroupBy(s => s.T_BD_BuildBaseInfo);//group by build to sum the amount of energy in this data 
+                foreach (var buildGroup in buildGroups)
+                {
+                    ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
+                    dataItem.id = buildGroup.Key.F_BuildID;
+                    dataItem.name = buildGroup.Key.F_BuildName;
+                    dataItem.y = buildGroup.Sum(s => s.F_HourValue);
+                    dataItem.unit = item.Key.F_EnergyItemUnit;
+                    seriesItem1.data.Add(dataItem);
+                }
+
+                seriesList.Add(seriesItem1);
+            }
+            model.ChartSeries = JsonConvert.SerializeObject(seriesList);
+
+            #endregion
+
         }
 
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using EDMWebsite.Models.DbModels;
+using EDMWebsite.Models;
 
 namespace EDMWebsite.Controllers
 {
@@ -41,5 +42,16 @@ namespace EDMWebsite.Controllers
 
             return Content("Success");
         }
+
+        public ActionResult MysqlTest()
+        {
+            using (DeviceDbContext db = new DeviceDbContext())
+            {
+                var tb_data  = db.tb_data.ToList();
+            }
+
+            return Content("success");
+        }
+
     }
 }

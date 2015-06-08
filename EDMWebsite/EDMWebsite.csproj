@@ -2064,6 +2064,7 @@
     <Content Include="Content\ace_admin1.3.1\mustache\js\package.json" />
     <Content Include="Content\ace_admin1.3.1\mustache\js\README.md" />
     <Content Include="Content\ace_admin1.3.1\mustache\php\README.md" />
+    <None Include="Properties\PublishProfiles\EDMWebsite.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -2082,6 +2083,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -2144,6 +2146,7 @@
     <Content Include="Views\Query\_MonthResultPartial.cshtml" />
     <Content Include="Views\Account\AddUser.cshtml" />
     <Content Include="Views\Account\LoginByUserName.cshtml" />
+    <Content Include="Views\Query\Institutes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

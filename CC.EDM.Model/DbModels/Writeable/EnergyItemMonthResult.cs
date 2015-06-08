@@ -34,9 +34,11 @@ namespace EDMWebsite.Models.DbModels
         [Display(Name = "设备编号")]
         public string EnergyDeviceCode { get; set; }
 
+        [Index]
         [Display(Name = "能耗类型")]
         public virtual EnergyType EnergyType { get; set; }
 
+        [Index]
         public virtual Room Room { get; set; }
     }
 

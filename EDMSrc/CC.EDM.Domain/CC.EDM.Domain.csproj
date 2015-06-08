@@ -67,6 +67,7 @@
     <Compile Include="DI\Bootstrapper.cs" />
     <Compile Include="DI\ControllerRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SyncDataService.cs" />
     <Compile Include="Services\QueryService.cs" />
     <Compile Include="Services\IocTest.cs" />
   </ItemGroup>

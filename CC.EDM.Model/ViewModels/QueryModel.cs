@@ -38,10 +38,10 @@ namespace EDMWebsite.Models.ViewModels
     }
 
     public enum StatisticWay{
-        智能选择=0,
-        逐时能耗=1,
-        逐日能耗=2,
-        逐月能耗=3
+        逐时能耗=0,
+        逐日能耗=1,
+        逐月能耗=2,
+        //智能选择=3
     }
 
 
