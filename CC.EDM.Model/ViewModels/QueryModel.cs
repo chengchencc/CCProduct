@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using CC.EDM.Model.RealEDMDb;
+using EDMWebsite.Models.DbModels;
 
 namespace EDMWebsite.Models.ViewModels
 {
@@ -30,6 +31,11 @@ namespace EDMWebsite.Models.ViewModels
         public List<T_EC_EnergyItemDayResult> DayResult { get; set; }
         public List<T_EC_EnergyItemHourResult> HourResult { get; set; }
         public List<T_EC_EnergyItemMonthResult> MonthResult { get; set; }
+
+        public List<EnergyItemHourResult> NewHourResult { get; set; }
+        public List<EnergyItemDayResult> NewDayResult { get; set; }
+        public List<EnergyItemMonthResult> NewMonthResult { get; set; }
+
         public string ChartSeries { get; set; }
         public string ActiveTabId { get; set; }
 

@@ -21,8 +21,18 @@ namespace CC.EDM.Domain.Services
         void QueryByDayForOneBuilding(QueryModel model);
         void QueryByMonthForOneBuilding(QueryModel model);
 
-        void QueryByHourForBuildings(QueryModel model);
 
+        void QueryByHourForRooms(QueryModel model);
+        void QueryByDayForRooms(QueryModel model);
+        void QueryByMonthForRooms(QueryModel model);
+
+        void QueryByHourForInstitutes(QueryModel model);
+        void QueryByDayForInstitutes(QueryModel model);
+        void QueryByMonthForInstitutes(QueryModel model);
+
+        void QueryByHourForBuildings(QueryModel model);
+        void QueryByDayForBuildings(QueryModel model);
+        void QueryByMonthForBuildings(QueryModel model);
     }
     public class QueryService : IQueryService
     {
@@ -157,7 +167,7 @@ namespace CC.EDM.Domain.Services
             #endregion
 
         }
-        
+
         public void QueryByMonthForBuildingsOld(QueryModel model)
         {
 
@@ -229,7 +239,7 @@ namespace CC.EDM.Domain.Services
      .Include(s => s.T_BD_BuildBaseInfo)
      .Include(s => s.T_DT_EnergyItemDict)
      .Where(s => s.F_BuildID == model.RoomCodes);
-     //.OrderBy(s => s.F_StartHour);
+            //.OrderBy(s => s.F_StartHour);
 
             if (model.StartDate != null)
             {
@@ -247,7 +257,7 @@ namespace CC.EDM.Domain.Services
             }
 
 
-            model.HourResult = query.OrderBy(s=>s.F_StartHour).ToList();
+            model.HourResult = query.OrderBy(s => s.F_StartHour).ToList();
 
 
             #region Chart Result
@@ -266,7 +276,7 @@ namespace CC.EDM.Domain.Services
                 {
                     ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
                     dataItem.id = buildGroup.Key.ToString("yyyy-MM-dd HH");
-                    dataItem.name = buildGroup.Key.ToString("HH")+"时";
+                    dataItem.name = buildGroup.Key.ToString("HH") + "时";
                     dataItem.y = buildGroup.Sum(s => s.F_HourValue);
                     dataItem.unit = item.Key.F_EnergyItemUnit;
                     seriesItem1.data.Add(dataItem);
@@ -283,7 +293,7 @@ namespace CC.EDM.Domain.Services
             var query = EdmDb.T_EC_EnergyItemDayResult
                              .Include(s => s.T_BD_BuildBaseInfo)
                              .Include(s => s.T_DT_EnergyItemDict)
-                             .Where(s => s.F_BuildID == model.RoomCodes );
+                             .Where(s => s.F_BuildID == model.RoomCodes);
 
             if (model.StartDate != null)
             {
@@ -339,7 +349,7 @@ namespace CC.EDM.Domain.Services
             var query = EdmDb.T_EC_EnergyItemMonthResult
      .Include(s => s.T_BD_BuildBaseInfo)
      .Include(s => s.T_DT_EnergyItemDict)
-     .Where(s => s.F_BuildID == model.RoomCodes );
+     .Where(s => s.F_BuildID == model.RoomCodes);
 
             if (model.StartDate != null)
             {
@@ -392,58 +402,350 @@ namespace CC.EDM.Domain.Services
 
         #endregion
 
-        public void QueryByHourForBuildings(QueryModel model)
+        #region Rooms
+        public void QueryByHourForRooms(QueryModel model)
         {
 
             var query = NewEdmDb.EnergyItemHourResults
-                .Include(s=>s.Room)
+                .Include(s => s.Room)
                  .Where(s => 1 == 1);
             //.Where(s => codes.Contains(s.F_BuildID));
 
-            if (model.Rooms!=null && model.Rooms.Count>0)
+            if (model.Rooms != null && model.Rooms.Count > 0)
             {
                 //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
-                query = query.Where(s => model.Rooms.Contains(s.Room.InstituteId.ToString()));
+                query = query.Where(s => model.Rooms.Contains(s.Room.Id.ToString()));
             }
-            //if (model.StartDate != null)
-            //{
-            //    query = query.Where(s => s.F_StartHour >= model.StartDate);
-            //}
-            //if (model.EndDate != null)
-            //{
-            //    query = query.Where(s => s.F_EndHour <= model.EndDate);
-            //}
-            //if (!string.IsNullOrEmpty(model.EnergyTypeCodes)
-            //    && !string.IsNullOrEmpty(model.EnergyTypeCodes.Trim(',')))
-            //{
-            //    var energyTypeCodesArray = model.EnergyTypeCodes.Trim(',').Split(',');
-            //    query = query.Where(s => energyTypeCodesArray.Contains(s.F_EnergyItemCode));
-            //}
+            if (model.StartDate != null)
+            {
+                query = query.Where(s => s.StartDate >= model.StartDate);
+            }
+            if (model.EndDate != null)
+            {
+                query = query.Where(s => s.EndDate <= model.EndDate);
+            }
+            if (!string.IsNullOrEmpty(model.EnergyTypeCodes)
+                && !string.IsNullOrEmpty(model.EnergyTypeCodes.Trim(',')))
+            {
+                var energyTypeCodesArray = model.EnergyTypeCodes.Trim(',').Split(',');
+                query = query.Where(s => energyTypeCodesArray.Contains(s.EnergyType.F_EnergyItemCode));
+            }
             //model.HourResult = query.ToList();
-            var a = query.ToList();
+            model.NewHourResult = query.ToList();
 
             #region Chart Result
 
             List<ChartSeriesItem> seriesList = new List<ChartSeriesItem>();
 
-            var energyTypeGroups = model.HourResult.GroupBy(s => s.T_DT_EnergyItemDict);//group by energy type
+            var energyTypeGroups = model.NewHourResult.GroupBy(s => s.EnergyType);//group by energy type
             foreach (var item in energyTypeGroups)
             {
-                ChartSeriesItem seriesItem1 = new ChartSeriesItem();
-                seriesItem1.name = item.Key.F_EnergyItemName;
+                ChartSeriesItem seriesItem = new ChartSeriesItem();
+                seriesItem.name = item.Key.F_EnergyItemName;
 
-                var buildGroups = item.GroupBy(s => s.T_BD_BuildBaseInfo);//group by build to sum the amount of energy in this data 
+                var buildGroups = item.GroupBy(s => s.Room);//group by build to sum the amount of energy in this data 
                 foreach (var buildGroup in buildGroups)
                 {
                     ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
-                    dataItem.id = buildGroup.Key.F_BuildID;
-                    dataItem.name = buildGroup.Key.F_BuildName;
-                    dataItem.y = buildGroup.Sum(s => s.F_HourValue);
+                    dataItem.id = buildGroup.Key.Id.ToString();
+                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.y = buildGroup.Sum(s => s.EnergyValue);
                     dataItem.unit = item.Key.F_EnergyItemUnit;
-                    seriesItem1.data.Add(dataItem);
+                    seriesItem.data.Add(dataItem);
                 }
 
-                seriesList.Add(seriesItem1);
+                seriesList.Add(seriesItem);
+            }
+            model.ChartSeries = JsonConvert.SerializeObject(seriesList);
+
+            #endregion
+
+        }
+        public void QueryByDayForRooms(QueryModel model)
+        {
+
+            var query = NewEdmDb.EnergyItemDayResults
+                .Include(s => s.Room)
+                 .Where(s => 1 == 1);
+            //.Where(s => codes.Contains(s.F_BuildID));
+
+            if (model.Rooms != null && model.Rooms.Count > 0)
+            {
+                //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+                query = query.Where(s => model.Rooms.Contains(s.Room.InstituteId.ToString()));
+            }
+            if (model.StartDate != null)
+            {
+                query = query.Where(s => s.StartDate >= model.StartDate);
+            }
+            if (model.EndDate != null)
+            {
+                query = query.Where(s => s.EndDate <= model.EndDate);
+            }
+            if (!string.IsNullOrEmpty(model.EnergyTypeCodes)
+                && !string.IsNullOrEmpty(model.EnergyTypeCodes.Trim(',')))
+            {
+                var energyTypeCodesArray = model.EnergyTypeCodes.Trim(',').Split(',');
+                query = query.Where(s => energyTypeCodesArray.Contains(s.EnergyType.F_EnergyItemCode));
+            }
+            //model.HourResult = query.ToList();
+            model.NewDayResult = query.ToList();
+
+            #region Chart Result
+
+            List<ChartSeriesItem> seriesList = new List<ChartSeriesItem>();
+
+            var energyTypeGroups = model.NewDayResult.GroupBy(s => s.EnergyType);//group by energy type
+            foreach (var item in energyTypeGroups)
+            {
+                ChartSeriesItem seriesItem = new ChartSeriesItem();
+                seriesItem.name = item.Key.F_EnergyItemName;
+
+                var buildGroups = item.GroupBy(s => s.Room);//group by build to sum the amount of energy in this data 
+                foreach (var buildGroup in buildGroups)
+                {
+                    ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
+                    dataItem.id = buildGroup.Key.Id.ToString();
+                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.y = buildGroup.Sum(s => s.EnergyValue);
+                    dataItem.unit = item.Key.F_EnergyItemUnit;
+                    seriesItem.data.Add(dataItem);
+                }
+
+                seriesList.Add(seriesItem);
+            }
+            model.ChartSeries = JsonConvert.SerializeObject(seriesList);
+
+            #endregion
+
+        }
+        public void QueryByMonthForRooms(QueryModel model)
+        {
+
+            var query = NewEdmDb.EnergyItemMonthResult
+                .Include(s => s.Room)
+                 .Where(s => 1 == 1);
+            //.Where(s => codes.Contains(s.F_BuildID));
+
+            if (model.Rooms != null && model.Rooms.Count > 0)
+            {
+                //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+                query = query.Where(s => model.Rooms.Contains(s.Room.InstituteId.ToString()));
+            }
+            if (model.StartDate != null)
+            {
+                query = query.Where(s => s.StartDate >= model.StartDate);
+            }
+            if (model.EndDate != null)
+            {
+                query = query.Where(s => s.EndDate <= model.EndDate);
+            }
+            if (!string.IsNullOrEmpty(model.EnergyTypeCodes)
+                && !string.IsNullOrEmpty(model.EnergyTypeCodes.Trim(',')))
+            {
+                var energyTypeCodesArray = model.EnergyTypeCodes.Trim(',').Split(',');
+                query = query.Where(s => energyTypeCodesArray.Contains(s.EnergyType.F_EnergyItemCode));
+            }
+            //model.HourResult = query.ToList();
+            model.NewMonthResult = query.ToList();
+
+            #region Chart Result
+
+            List<ChartSeriesItem> seriesList = new List<ChartSeriesItem>();
+
+            var energyTypeGroups = model.NewMonthResult.GroupBy(s => s.EnergyType);//group by energy type
+            foreach (var item in energyTypeGroups)
+            {
+                ChartSeriesItem seriesItem = new ChartSeriesItem();
+                seriesItem.name = item.Key.F_EnergyItemName;
+
+                var buildGroups = item.GroupBy(s => s.Room);//group by build to sum the amount of energy in this data 
+                foreach (var buildGroup in buildGroups)
+                {
+                    ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
+                    dataItem.id = buildGroup.Key.Id.ToString();
+                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.y = buildGroup.Sum(s => s.EnergyValue);
+                    dataItem.unit = item.Key.F_EnergyItemUnit;
+                    seriesItem.data.Add(dataItem);
+                }
+
+                seriesList.Add(seriesItem);
+            }
+            model.ChartSeries = JsonConvert.SerializeObject(seriesList);
+
+            #endregion
+
+        }
+        #endregion
+
+        #region Institutes
+        public void QueryByHourForInstitutes(QueryModel model)
+        {
+
+            var query = NewEdmDb.EnergyItemHourResults
+                .Include(s => s.Room)
+                 .Where(s => 1 == 1);
+
+            if (model.Rooms != null && model.Rooms.Count > 0)
+            {
+                query = query.Where(s => model.Rooms.Contains(s.Room.InstituteId.ToString()));
+            }
+            if (model.StartDate != null)
+            {
+                query = query.Where(s => s.StartDate >= model.StartDate);
+            }
+            if (model.EndDate != null)
+            {
+                query = query.Where(s => s.EndDate <= model.EndDate);
+            }
+            if (!string.IsNullOrEmpty(model.EnergyTypeCodes)
+                && !string.IsNullOrEmpty(model.EnergyTypeCodes.Trim(',')))
+            {
+                var energyTypeCodesArray = model.EnergyTypeCodes.Trim(',').Split(',');
+                query = query.Where(s => energyTypeCodesArray.Contains(s.EnergyType.F_EnergyItemCode));
+            }
+            //model.HourResult = query.ToList();
+            model.NewHourResult = query.ToList();
+
+            #region Chart Result
+
+            List<ChartSeriesItem> seriesList = new List<ChartSeriesItem>();
+
+            var energyTypeGroups = model.NewHourResult.GroupBy(s => s.EnergyType);//group by energy type
+            foreach (var item in energyTypeGroups)
+            {
+                ChartSeriesItem seriesItem = new ChartSeriesItem();
+                seriesItem.name = item.Key.F_EnergyItemName;
+
+                var buildGroups = item.GroupBy(s => s.Room.Institute);//group by build to sum the amount of energy in this data 
+                foreach (var buildGroup in buildGroups)
+                {
+                    ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
+                    dataItem.id = buildGroup.Key.Id.ToString();
+                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.y = buildGroup.Sum(s => s.EnergyValue);
+                    dataItem.unit = item.Key.F_EnergyItemUnit;
+                    seriesItem.data.Add(dataItem);
+                }
+
+                seriesList.Add(seriesItem);
+            }
+            model.ChartSeries = JsonConvert.SerializeObject(seriesList);
+
+            #endregion
+
+        }
+        public void QueryByDayForInstitutes(QueryModel model)
+        {
+
+            var query = NewEdmDb.EnergyItemDayResults
+                .Include(s => s.Room)
+                 .Where(s => 1 == 1);
+            //.Where(s => codes.Contains(s.F_BuildID));
+
+            if (model.Rooms != null && model.Rooms.Count > 0)
+            {
+                //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+                query = query.Where(s => model.Rooms.Contains(s.Room.InstituteId.ToString()));
+            }
+            if (model.StartDate != null)
+            {
+                query = query.Where(s => s.StartDate >= model.StartDate);
+            }
+            if (model.EndDate != null)
+            {
+                query = query.Where(s => s.EndDate <= model.EndDate);
+            }
+            if (!string.IsNullOrEmpty(model.EnergyTypeCodes)
+                && !string.IsNullOrEmpty(model.EnergyTypeCodes.Trim(',')))
+            {
+                var energyTypeCodesArray = model.EnergyTypeCodes.Trim(',').Split(',');
+                query = query.Where(s => energyTypeCodesArray.Contains(s.EnergyType.F_EnergyItemCode));
+            }
+            //model.HourResult = query.ToList();
+            model.NewDayResult = query.ToList();
+
+            #region Chart Result
+
+            List<ChartSeriesItem> seriesList = new List<ChartSeriesItem>();
+
+            var energyTypeGroups = model.NewDayResult.GroupBy(s => s.EnergyType);//group by energy type
+            foreach (var item in energyTypeGroups)
+            {
+                ChartSeriesItem seriesItem = new ChartSeriesItem();
+                seriesItem.name = item.Key.F_EnergyItemName;
+
+                var buildGroups = item.GroupBy(s => s.Room.Institute);//group by build to sum the amount of energy in this data 
+                foreach (var buildGroup in buildGroups)
+                {
+                    ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
+                    dataItem.id = buildGroup.Key.Id.ToString();
+                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.y = buildGroup.Sum(s => s.EnergyValue);
+                    dataItem.unit = item.Key.F_EnergyItemUnit;
+                    seriesItem.data.Add(dataItem);
+                }
+
+                seriesList.Add(seriesItem);
+            }
+            model.ChartSeries = JsonConvert.SerializeObject(seriesList);
+
+            #endregion
+
+        }
+        public void QueryByMonthForInstitutes(QueryModel model)
+        {
+
+            var query = NewEdmDb.EnergyItemMonthResult
+                .Include(s => s.Room)
+                 .Where(s => 1 == 1);
+            //.Where(s => codes.Contains(s.F_BuildID));
+
+            if (model.Rooms != null && model.Rooms.Count > 0)
+            {
+                //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+                query = query.Where(s => model.Rooms.Contains(s.Room.InstituteId.ToString()));
+            }
+            if (model.StartDate != null)
+            {
+                query = query.Where(s => s.StartDate >= model.StartDate);
+            }
+            if (model.EndDate != null)
+            {
+                query = query.Where(s => s.EndDate <= model.EndDate);
+            }
+            if (!string.IsNullOrEmpty(model.EnergyTypeCodes)
+                && !string.IsNullOrEmpty(model.EnergyTypeCodes.Trim(',')))
+            {
+                var energyTypeCodesArray = model.EnergyTypeCodes.Trim(',').Split(',');
+                query = query.Where(s => energyTypeCodesArray.Contains(s.EnergyType.F_EnergyItemCode));
+            }
+            //model.HourResult = query.ToList();
+            model.NewMonthResult = query.ToList();
+
+            #region Chart Result
+
+            List<ChartSeriesItem> seriesList = new List<ChartSeriesItem>();
+
+            var energyTypeGroups = model.NewMonthResult.GroupBy(s => s.EnergyType);//group by energy type
+            foreach (var item in energyTypeGroups)
+            {
+                ChartSeriesItem seriesItem = new ChartSeriesItem();
+                seriesItem.name = item.Key.F_EnergyItemName;
+
+                var buildGroups = item.GroupBy(s => s.Room.Institute);//group by build to sum the amount of energy in this data 
+                foreach (var buildGroup in buildGroups)
+                {
+                    ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
+                    dataItem.id = buildGroup.Key.Id.ToString();
+                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.y = buildGroup.Sum(s => s.EnergyValue);
+                    dataItem.unit = item.Key.F_EnergyItemUnit;
+                    seriesItem.data.Add(dataItem);
+                }
+
+                seriesList.Add(seriesItem);
             }
             model.ChartSeries = JsonConvert.SerializeObject(seriesList);
 
@@ -451,6 +753,183 @@ namespace CC.EDM.Domain.Services
 
         }
 
+        #endregion
+
+        #region Buildings
+        public void QueryByHourForBuildings(QueryModel model)
+        {
+
+            var query = NewEdmDb.EnergyItemHourResults
+                .Include(s => s.Room)
+                 .Where(s => 1 == 1);
+
+            if (model.Rooms != null && model.Rooms.Count > 0)
+            {
+                query = query.Where(s => model.Rooms.Contains(s.Room.BuildingId.ToString()));
+            }
+            if (model.StartDate != null)
+            {
+                query = query.Where(s => s.StartDate >= model.StartDate);
+            }
+            if (model.EndDate != null)
+            {
+                query = query.Where(s => s.EndDate <= model.EndDate);
+            }
+            if (!string.IsNullOrEmpty(model.EnergyTypeCodes)
+                && !string.IsNullOrEmpty(model.EnergyTypeCodes.Trim(',')))
+            {
+                var energyTypeCodesArray = model.EnergyTypeCodes.Trim(',').Split(',');
+                query = query.Where(s => energyTypeCodesArray.Contains(s.EnergyType.F_EnergyItemCode));
+            }
+            //model.HourResult = query.ToList();
+            model.NewHourResult = query.ToList();
+
+            #region Chart Result
+
+            List<ChartSeriesItem> seriesList = new List<ChartSeriesItem>();
+
+            var energyTypeGroups = model.NewHourResult.GroupBy(s => s.EnergyType);//group by energy type
+            foreach (var item in energyTypeGroups)
+            {
+                ChartSeriesItem seriesItem = new ChartSeriesItem();
+                seriesItem.name = item.Key.F_EnergyItemName;
+
+                var buildGroups = item.GroupBy(s => s.Room.Building);//group by build to sum the amount of energy in this data 
+                foreach (var buildGroup in buildGroups)
+                {
+                    ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
+                    dataItem.id = buildGroup.Key.Id.ToString();
+                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.y = buildGroup.Sum(s => s.EnergyValue);
+                    dataItem.unit = item.Key.F_EnergyItemUnit;
+                    seriesItem.data.Add(dataItem);
+                }
+
+                seriesList.Add(seriesItem);
+            }
+            model.ChartSeries = JsonConvert.SerializeObject(seriesList);
+
+            #endregion
+
+        }
+        public void QueryByDayForBuildings(QueryModel model)
+        {
+
+            var query = NewEdmDb.EnergyItemDayResults
+                .Include(s => s.Room)
+                 .Where(s => 1 == 1);
+            //.Where(s => codes.Contains(s.F_BuildID));
+
+            if (model.Rooms != null && model.Rooms.Count > 0)
+            {
+                //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+                query = query.Where(s => model.Rooms.Contains(s.Room.BuildingId.ToString()));
+            }
+            if (model.StartDate != null)
+            {
+                query = query.Where(s => s.StartDate >= model.StartDate);
+            }
+            if (model.EndDate != null)
+            {
+                query = query.Where(s => s.EndDate <= model.EndDate);
+            }
+            if (!string.IsNullOrEmpty(model.EnergyTypeCodes)
+                && !string.IsNullOrEmpty(model.EnergyTypeCodes.Trim(',')))
+            {
+                var energyTypeCodesArray = model.EnergyTypeCodes.Trim(',').Split(',');
+                query = query.Where(s => energyTypeCodesArray.Contains(s.EnergyType.F_EnergyItemCode));
+            }
+            //model.HourResult = query.ToList();
+            model.NewDayResult = query.ToList();
+
+            #region Chart Result
+
+            List<ChartSeriesItem> seriesList = new List<ChartSeriesItem>();
+
+            var energyTypeGroups = model.NewDayResult.GroupBy(s => s.EnergyType);//group by energy type
+            foreach (var item in energyTypeGroups)
+            {
+                ChartSeriesItem seriesItem = new ChartSeriesItem();
+                seriesItem.name = item.Key.F_EnergyItemName;
+
+                var buildGroups = item.GroupBy(s => s.Room.Building);//group by build to sum the amount of energy in this data 
+                foreach (var buildGroup in buildGroups)
+                {
+                    ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
+                    dataItem.id = buildGroup.Key.Id.ToString();
+                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.y = buildGroup.Sum(s => s.EnergyValue);
+                    dataItem.unit = item.Key.F_EnergyItemUnit;
+                    seriesItem.data.Add(dataItem);
+                }
+
+                seriesList.Add(seriesItem);
+            }
+            model.ChartSeries = JsonConvert.SerializeObject(seriesList);
+
+            #endregion
+
+        }
+        public void QueryByMonthForBuildings(QueryModel model)
+        {
+
+            var query = NewEdmDb.EnergyItemMonthResult
+                .Include(s => s.Room)
+                 .Where(s => 1 == 1);
+            //.Where(s => codes.Contains(s.F_BuildID));
+
+            if (model.Rooms != null && model.Rooms.Count > 0)
+            {
+                //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+                query = query.Where(s => model.Rooms.Contains(s.Room.BuildingId.ToString()));
+            }
+            if (model.StartDate != null)
+            {
+                query = query.Where(s => s.StartDate >= model.StartDate);
+            }
+            if (model.EndDate != null)
+            {
+                query = query.Where(s => s.EndDate <= model.EndDate);
+            }
+            if (!string.IsNullOrEmpty(model.EnergyTypeCodes)
+                && !string.IsNullOrEmpty(model.EnergyTypeCodes.Trim(',')))
+            {
+                var energyTypeCodesArray = model.EnergyTypeCodes.Trim(',').Split(',');
+                query = query.Where(s => energyTypeCodesArray.Contains(s.EnergyType.F_EnergyItemCode));
+            }
+            //model.HourResult = query.ToList();
+            model.NewMonthResult = query.ToList();
+
+            #region Chart Result
+
+            List<ChartSeriesItem> seriesList = new List<ChartSeriesItem>();
+
+            var energyTypeGroups = model.NewMonthResult.GroupBy(s => s.EnergyType);//group by energy type
+            foreach (var item in energyTypeGroups)
+            {
+                ChartSeriesItem seriesItem = new ChartSeriesItem();
+                seriesItem.name = item.Key.F_EnergyItemName;
+
+                var buildGroups = item.GroupBy(s => s.Room.Building);//group by build to sum the amount of energy in this data 
+                foreach (var buildGroup in buildGroups)
+                {
+                    ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
+                    dataItem.id = buildGroup.Key.Id.ToString();
+                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.y = buildGroup.Sum(s => s.EnergyValue);
+                    dataItem.unit = item.Key.F_EnergyItemUnit;
+                    seriesItem.data.Add(dataItem);
+                }
+
+                seriesList.Add(seriesItem);
+            }
+            model.ChartSeries = JsonConvert.SerializeObject(seriesList);
+
+            #endregion
+
+        }
+
+        #endregion
 
     }
 }

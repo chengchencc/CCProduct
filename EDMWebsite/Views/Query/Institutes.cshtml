@@ -302,7 +302,7 @@
 
                 })
 
-                var roomzNodes =@Html.Raw(ViewData["BuildingNodes"]) ;
+                @*var roomzNodes =@Html.Raw(ViewData["BuildingNodes"]) ;
                 roomzTreeObj = $.fn.zTree.init($("#treeRooms"), setting, roomzNodes);
                 $("#modal-room-ok").click(function () {
                     //var nodes = zTreeObj.selectNode();
@@ -336,7 +336,7 @@
                         $("#advancedQuery").html("高级搜索选项<i class='ace-icon fa fa-chevron-down' style='font-size: 10px;'></i>");
                     }
 
-                });
+                });*@
 
                 var series = @Html.Raw(Model.ChartSeries);
 
