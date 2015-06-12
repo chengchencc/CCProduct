@@ -21,7 +21,12 @@ namespace CC.EDM.UnitTest
             SyncDataService syncService = new SyncDataService();
             syncService.SyncEnergyItemData();
         }
-
+        [Fact]
+        public void Sync_Hour_Test()
+        {
+            SyncDataService syncService = new SyncDataService();
+            syncService.SyncEnergyHourData();
+        }
 
     }
 }

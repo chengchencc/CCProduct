@@ -27,10 +27,11 @@ namespace CC.EDM.Domain.Services
         public WriteableSqlDbContext NewEdmDb { get; set; }
 
         private List<RoomHosts> _roomHostsCache;
-        public List<RoomHosts> RoomHostsCache {
+        public List<RoomHosts> RoomHostsCache
+        {
             get
             {
-                if (_roomHostsCache==null)
+                if (_roomHostsCache == null)
                 {
                     _roomHostsCache = NewEdmDb.RoomHosts.ToList();
                 }
@@ -76,11 +77,11 @@ namespace CC.EDM.Domain.Services
             {
                 var sql = "select a.id id,a.macip macip,a.port port,"
             + " value-(select ifnull(max(b.value),a.value)  from tb_data b where b.id < a.id and a.macip=b.macip and a.port = b.port) as value"
-            +" ,a.time from tb_data a"
-            +" where time>=STR_TO_DATE('{0}', '%Y%m%d%H%i%s') and time <STR_TO_DATE('{1}', '%Y%m%d%H%i%s')"
+            + " ,a.time from tb_data a"
+            + " where time>=STR_TO_DATE('{0}', '%Y%m%d%H%i%s') and time <STR_TO_DATE('{1}', '%Y%m%d%H%i%s')"
             + " order by id limit {2},{3}";
-              
-                sql = string.Format(sql,lastedDateTime.ToStringWithFullTime(),SyncDateTime.ToStringWithFullTime(),index,processCount);
+
+                sql = string.Format(sql, lastedDateTime.ToStringWithFullTime(), SyncDateTime.ToStringWithFullTime(), index, processCount);
 
                 var syncOriginalList = MysqlDb.Database.SqlQuery<tb_data>(sql).ToList();
 
@@ -107,12 +108,12 @@ namespace CC.EDM.Domain.Services
                             //要是一个控制器对应多个房间的时候，这里只给第一个房间赋值上value
                             var room = roomHost.Rooms.FirstOrDefault();
                             var energyTypeItem = roomHost.EnergyType;
-                            if (room != null &&energyTypeItem!=null)
+                            if (room != null && energyTypeItem != null)
                             {
-                                EnergyItemResult energyItem = GenerateEnergyItem(item, room,energyTypeItem);
-                                if (energyItem!=null)
+                                EnergyItemResult energyItem = GenerateEnergyItem(item, room, energyTypeItem);
+                                if (energyItem != null)
                                 {
-                                    NewData.Add(energyItem);                                    
+                                    NewData.Add(energyItem);
                                 }
                             }
                         }
@@ -143,8 +144,49 @@ namespace CC.EDM.Domain.Services
 
         }
 
+        public void SyncEnergyHourData()
+        {
+            var lastSyncDateTime = DateTime.Now;
+            var SyncDateTime = DateTime.Now;
 
+            var data = from a in NewEdmDb.EnergyItemResults
+                       where a.StartDate > lastSyncDateTime && a.StartDate < SyncDateTime
+                       group a by new { a.StartDate.Year,a.StartDate.Month,a.StartDate.Day, 
+                           a.StartDate.Hour,a.Room,a.EnergyType } into g
+                       select new { hourSum = g.Sum(a => a.EnergyValue), 
+                           year = g.Key.Year,
+                           month=g.Key.Month,
+                           day=g.Key.Day, 
+                           hour = g.Key.Hour,
+                       room=g.Key.Room,
+                       energyType=g.Key.EnergyType};
+            var cc = data.ToList();
 
+            List<EnergyItemHourResult> SyncList = new List<EnergyItemHourResult>();
+            foreach (var item in cc)
+            {
+                var energyHourItem = new EnergyItemHourResult();
+                energyHourItem.StartDate = new DateTime(item.year, item.month, item.day, item.hour,0,0);
+                energyHourItem.EnergyValue = item.hourSum;
+                energyHourItem.EnergyType = item.energyType;
+                energyHourItem.Room = item.room;
+                SyncList.Add(energyHourItem);
+            }
+            NewEdmDb.EnergyItemHourResults.AddRange(SyncList);
+            NewEdmDb.SaveChanges();
+            
+           
+        }
+
+        public void SyncEnergyDayData()
+        {
+
+        }
+
+        public void SyncEnergyMonthData()
+        {
+
+        }
 
 
         #region Helpers
@@ -156,7 +198,7 @@ namespace CC.EDM.Domain.Services
             energyItem.EnergyDeviceCode = item.id.ToString();
             energyItem.EnergyValue = Convert.ToDecimal(item.value);
             energyItem.Room = room;
-           // energyItem.Status = EntityStatus.Enabled;
+            // energyItem.Status = EntityStatus.Enabled;
 
             //var energyType = EnergyPortsCache.SingleOrDefault(s => s.Port == item.port);
             //if (energyType == null)
