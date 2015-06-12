@@ -11,10 +11,10 @@ namespace EDMWebsite.Models.DbModels
     public class EnergyPorts : EntityBase
     {
         [Display(Name = "端口号")]
-        //[Index(IsUnique = true)]
+       // [Index(IsUnique = true)]
         public string Port { get; set; }
 
-        public EnergyType Energy { get; set; }
+        public virtual EnergyType Energy { get; set; }
     }
 
 }

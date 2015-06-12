@@ -101,13 +101,12 @@
 <script src="~/Content/ace_admin1.3.1/docs/assets/js/language/html.js"></script>
 <script src="~/Content/ace_admin1.3.1/docs/assets/js/language/css.js"></script>
 <script src="~/Content/ace_admin1.3.1/docs/assets/js/language/javascript.js"></script>
+<script src="~/Content/ace_admin1.3.1/assets/js/jquery.gritter.min.js"></script>
 
-
-@*<script src="~/Content/ace_admin1.3.1/assets/js/uncompressed/select2.js"></script>*@
+<script src="~/Content/ace_admin1.3.1/assets/js/uncompressed/select2.js"></script>
 <script src="~/Content/ace_admin1.3.1/assets/js/uncompressed/chosen.jquery.js"></script>
 
 <script type="text/javascript">
-
     $(function () {
         //set chose select style
         $('.chosen-select').chosen({ allow_single_deselect: true });
@@ -119,9 +118,9 @@
                             })
                             }).trigger('resize.chosen');
 
-        //$("select").select2();
+        $(".select2").select2();
 
-        var oTable1 = $(".data-table").DataTable({
+        var oTable = $(".data-table").DataTable({
             bAutoWidth: false,
             //"aoColumns": [
             //  { "bSortable": false },
@@ -207,6 +206,16 @@
 
 
     })
+
+    function Notificate(title,text) {
+        $.gritter.add({
+            // (string | mandatory) the heading of the notification
+            title: title,
+            // (string | mandatory) the text inside the notification
+            text: text
+        });
+    }
+
 
 </script>
 

@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
-using EDMWebsite.Migrations;
+//using EDMWebsite.Migrations;
 using EDMWebsite.Models.DbModels;
 
 
@@ -22,7 +22,7 @@ namespace EDMWebsite
         {
             //Database.SetInitializer( );
             //Database.SetInitializer<WriteableSqlDbContext>(new DropCreateDatabaseAlways<WriteableSqlDbContext>());
-            Database.SetInitializer<WriteableSqlDbContext>(new MigrateDatabaseToLatestVersion<WriteableSqlDbContext, Configuration>());
+            //Database.SetInitializer<WriteableSqlDbContext>(new MigrateDatabaseToLatestVersion<WriteableSqlDbContext, CC.EDM.Model.Migrations.Configuration>());
         }
 
         public DbSet<Comdict> Comdicts { get; set; }
@@ -37,9 +37,9 @@ namespace EDMWebsite
         public DbSet<EnergyType> EnergyTypes { get; set; }
         public DbSet<UnitPrice> UnitPrices { get; set; }
 
-
-
-
+        public DbSet<RoomHosts> RoomHosts { get; set; }
+        public DbSet<EnergyPorts> EnergyPorts { get; set; }
+        public DbSet<SyncDataLog> SyncDataLogs { get; set; }
     }
 
     

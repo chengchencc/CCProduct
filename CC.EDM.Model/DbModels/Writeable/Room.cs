@@ -39,6 +39,7 @@ namespace EDMWebsite.Models.DbModels
 
         public virtual UnitPrice UnitPrice { get; set; }
 
+        public virtual List<RoomHosts> Hosts { get; set; }
 
     }
 

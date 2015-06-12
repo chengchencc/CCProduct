@@ -13,7 +13,11 @@ namespace EDMWebsite.Models.DbModels
         [Display(Name="Mac地址")]
         public string Hosts { get; set; }
 
-        public Room Rooms { get; set; }
+        [Display(Name="端口号")]
+        public string Port { get; set; }
+
+        public virtual EnergyType EnergyType { get; set; }
+        public virtual List<Room> Rooms { get; set; }
     }
 
 }

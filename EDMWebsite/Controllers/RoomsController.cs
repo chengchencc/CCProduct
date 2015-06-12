@@ -91,6 +91,7 @@ namespace EDMWebsite.Controllers
             }
             BindBuildingSelectList();
             BindInstituteSelectList();
+            BindEnergyTypeSelectList();
             return View(room);
         }
 
@@ -136,6 +137,65 @@ namespace EDMWebsite.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [HttpPost]
+        public ActionResult AddRoomHost(RoomHosts roomHost)
+        {
+            var roomId = Request.Form["roomId"];
+            if (string.IsNullOrEmpty(roomId))
+            {
+                return Content("新增保存后才能绑定ip地址与端口号");
+            }
+            else
+            {
+                var roomid = Convert.ToInt32(roomId);
+                var room = db.Rooms.SingleOrDefault(s => s.Id == roomid);
+                var energyItemCode = Request.Form["EnergyType"];
+                var energyItem = db.EnergyTypes.SingleOrDefault(s => s.F_EnergyItemCode == energyItemCode);
+
+                if (room != null && energyItem != null)
+                {
+                    roomHost.Rooms = new List<Room>();
+                    roomHost.Rooms.Add(room);
+                    roomHost.EnergyType = energyItem;
+                    if (room.Hosts == null)
+                    {
+                        room.Hosts = new List<RoomHosts>();
+                    }
+                    room.Hosts.Add(roomHost);
+                   var savedRoomHosts=  db.RoomHosts.Add(roomHost);
+                    db.Entry(room).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Content(savedRoomHosts.Id.ToString());
+                }
+            }
+            //if (ModelState.IsValid)
+            //{
+            //    db.Entry(room).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+            //return View(room);
+            return Content("删除的条目不存在，请刷新页面重试！");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteRoomHost(string id,string roomId)
+        {
+            var roomhostsId = Convert.ToInt32(id);
+            var model = db.RoomHosts.Find(roomhostsId);
+            if (model != null)
+            {
+                db.RoomHosts.Remove(model);
+                db.SaveChanges();
+                return Content("Success");
+            }
+            else
+            {
+                return Content("删除失败，该条目不存在，请刷新页面重试！");
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -172,6 +232,19 @@ namespace EDMWebsite.Controllers
                 instituteSelectList.Add(selectListItem);
             }
             ViewData["Institutes"] = instituteSelectList;
+        }
+
+        private void BindEnergyTypeSelectList()
+        {
+            List<SelectListItem> energyType = new List<SelectListItem>();
+            foreach (var item in db.EnergyTypes)
+            {
+                SelectListItem si = new SelectListItem();
+                si.Text = item.F_EnergyItemName;
+                si.Value = item.F_EnergyItemCode;
+                energyType.Add(si);
+            }
+            ViewData["EnergyType"] = energyType;
         }
 
         #endregion

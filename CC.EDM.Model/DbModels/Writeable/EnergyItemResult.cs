@@ -9,21 +9,24 @@ using System.Web;
 namespace EDMWebsite.Models.DbModels
 {
     //[Table("DbFirstTest")]
-    public class EnergyItemResult : EntityBase
+    public class EnergyItemResult 
     {
+        [Key]
+        public long Id { get; set; }
+
         [Display(Name = "开始时间")]
-        [Index(IsUnique = true)]
+        [Index(IsUnique = false)]
         public DateTime StartDate { get; set; }
 
         [Display(Name = "结束时间")]
-        [Index(IsUnique = true)]
+        [Index(IsUnique = false)]
         public DateTime EndDate { get; set; }
 
         [Display(Name = "能耗值")]
         public decimal EnergyValue { get; set; }
 
         [Display(Name = "能耗单位")]
-        public string  EnergyUnit{ get; set; }
+        public string EnergyUnit { get; set; }
 
         //[Display(Name = "单价")]
         //public UnitPrice UnitPrice { get; set; }

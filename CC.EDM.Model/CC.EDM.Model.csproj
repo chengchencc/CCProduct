@@ -92,6 +92,7 @@
     <Compile Include="DbModels\MySqlModels\tb_menu1.cs" />
     <Compile Include="DbModels\MySqlModels\tb_proname.cs" />
     <Compile Include="DbModels\MySqlModels\tb_user.cs" />
+    <Compile Include="DbModels\Writeable\SyncDataLog.cs" />
     <Compile Include="DbModels\Writeable\EnergyPorts.cs" />
     <Compile Include="DbModels\Writeable\RoomHosts.cs" />
     <Compile Include="DbModels\Writeable\UnitPrice.cs" />
@@ -104,6 +105,14 @@
     <Compile Include="DbModels\Writeable\EnergyItemMonthResult.cs" />
     <Compile Include="DbModels\Writeable\Institute.cs" />
     <Compile Include="DbModels\Writeable\Room.cs" />
+    <Compile Include="Migrations\201506101505541_changedroomhosts.cs" />
+    <Compile Include="Migrations\201506101505541_changedroomhosts.Designer.cs">
+      <DependentUpon>201506101505541_changedroomhosts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506120305044_ChangeRoomModel.cs" />
+    <Compile Include="Migrations\201506120305044_ChangeRoomModel.Designer.cs">
+      <DependentUpon>201506120305044_ChangeRoomModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MysqlConfiguration.cs" />
     <Compile Include="MySqlConfiguration\MySqlConfiguration.cs" />
@@ -189,6 +198,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DbModels\ReadOnly\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201506101505541_changedroomhosts.resx">
+      <DependentUpon>201506101505541_changedroomhosts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506120305044_ChangeRoomModel.resx">
+      <DependentUpon>201506120305044_ChangeRoomModel.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

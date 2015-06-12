@@ -1,104 +1,326 @@
 ﻿@model EDMWebsite.Models.DbModels.Room
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "新增房间";
     Layout = "~/Views/Shared/_AceLayout.cshtml";
 }
 
-<h2>Create</h2>
-<div class="row">
-    <div class="col-md-12">
+<h2>@ViewBag.Title</h2>
+<div id="user-profile-3" class="user-profile row">
+    <div class="col-sm-offset-1 col-sm-10">
+        <div class="tabbable">
+            <ul class="nav nav-tabs padding-16">
+                <li class="active">
+                    <a data-toggle="tab" href="#edit-basic">
+                        <i class="green ace-icon fa fa-pencil-square-o bigger-125"></i>
+                        基本信息
+                    </a>
+                </li>
 
+                <li>
+                    <a data-toggle="tab" href="#edit-settings">
+                        <i class="purple ace-icon fa fa-cog bigger-125"></i>
+                        能耗项目配置
+                    </a>
+                </li>
 
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+                <li>
+                    <a data-toggle="tab" href="#edit-password">
+                        <i class="blue ace-icon fa fa-key bigger-125"></i>
+                        其他信息
+                    </a>
+                </li>
+            </ul>
 
-            <div class="form-horizontal">
-                <h4>Room</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+            <div class="tab-content profile-edit-tab-content">
+                <div id="edit-basic" class="tab-pane in active">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-horizontal">
+                            @Html.AntiForgeryToken()
+                            <h4 class="header blue bolder smaller">一般信息</h4>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "col-sm-3 control-label no-padding-right" })
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "col-xs-12 col-sm-10" } })
+                                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EnumDropDownListFor(model => model.Type, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "col-sm-3 control-label no-padding-right" })
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "col-xs-12 col-sm-10" } })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Area, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Area, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Area, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "col-sm-3 control-label no-padding-right" })
+                                <div class="col-sm-9">
+                                    @Html.EnumDropDownListFor(model => model.Type, htmlAttributes: new { @class = "col-xs-12 col-sm-10" })
+                                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EnumDropDownListFor(model => model.Status, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Area, htmlAttributes: new { @class = "col-sm-3 control-label no-padding-right" })
+                                <div class="col-sm-9">
+                                    @Html.EditorFor(model => model.Area, new { htmlAttributes = new { @class = "col-xs-12 col-sm-10" } })
+                                    @Html.ValidationMessageFor(model => model.Area, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.BuildingId, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.BuildingId, (List<SelectListItem>)ViewData["Buildings"], htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.BuildingId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "col-sm-3 control-label no-padding-right" })
+                                <div class="col-sm-9">
+                                    @Html.EnumDropDownListFor(model => model.Status, htmlAttributes: new { @class = "col-xs-12 col-sm-10" })
+                                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.InstituteId, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.InstituteId, (List<SelectListItem>)ViewData["Institutes"], htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.InstituteId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.BuildingId, htmlAttributes: new { @class = "col-sm-3 control-label no-padding-right" })
+                                <div class="col-sm-9">
+                                    @Html.DropDownListFor(model => model.BuildingId, (List<SelectListItem>)ViewData["Buildings"], htmlAttributes: new { @class = "col-xs-12 col-sm-10" })
+                                    @Html.ValidationMessageFor(model => model.BuildingId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-                @*<div class="form-group">
-                        @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.InstituteId, htmlAttributes: new { @class = "col-sm-3 control-label no-padding-right" })
+                                <div class="col-sm-9">
+                                    @Html.DropDownListFor(model => model.InstituteId, (List<SelectListItem>)ViewData["Institutes"], htmlAttributes: new { @class = "col-xs-12 col-sm-10" })
+                                    @Html.ValidationMessageFor(model => model.InstituteId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.ModifiedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.ModifiedDate, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.ModifiedDate, "", new { @class = "text-danger" })
+                        <div class="clearfix form-actions">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button class="btn btn-info" type="submit">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    保存
+                                </button>
+
+                                &nbsp; &nbsp;
+                                <a href="/Rooms/Index" class="btn">
+                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                    返回列表
+                                </a>
+                            </div>
                         </div>
-                    </div>*@
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-default" />
-                    </div>
+                    }
                 </div>
+
+                <div id="edit-settings" class="tab-pane">
+                    <div class="row">
+
+
+
+                        @using (Html.BeginForm())
+                        {
+                            <div class="widget-box  widget-color-orange">
+                                <div class="widget-header widget-header-small">
+                                    <h6 class="widget-title">
+                                        <i class="ace-icon fa fa-sort"></i>
+                                        能耗分项管理
+                                    </h6>
+                                    <div class="widget-toolbar">
+
+                                        <a href="#" data-action="settings">
+                                            <i class="ace-icon fa fa-cog"></i>
+                                        </a>
+
+                                        <a href="#" id="previewBtn">
+                                            <i class="ace-icon fa fa-refresh"></i>
+                                        </a>
+
+                                        <a href="#" data-action="collapse">
+                                            <i class="ace-icon fa fa-plus" data-icon-show="fa-plus" data-icon-hide="fa-minus"></i>
+                                        </a>
+
+                                        <a href="#" data-action="close">
+                                            <i class="ace-icon fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="widget-body">
+                                    @*toolbox*@
+                                    <div class="widget-toolbox" style="display:none;">
+                                        <div class="btn-toolbar">
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-success btn-white btn-round">
+                                                    <i class="ace-icon fa fa-check bigger-110 green"></i>
+                                                    Approve
+                                                </button>
+
+                                                <button class="btn btn-sm btn-danger btn-white btn-round">
+                                                    <i class="ace-icon fa fa-times bigger-110 red2"></i>
+                                                    Reject
+                                                </button>
+                                            </div>
+
+                                            <div data-toggle="buttons" class="btn-group">
+                                                <label class="btn btn-sm btn-default btn-white btn-round">
+                                                    <i class="icon-only ace-icon fa fa-bold bigger-110"></i>
+
+                                                    <input type="checkbox" value="1">
+                                                </label>
+
+                                                <label class="btn btn-sm btn-default btn-white btn-round">
+                                                    <i class="icon-only ace-icon fa fa-italic bigger-110"></i>
+
+                                                    <input type="checkbox" value="2">
+                                                </label>
+                                            </div>
+
+                                            <div data-toggle="buttons" class="btn-group">
+                                                <label class="btn btn-sm btn-primary btn-white btn-round">
+                                                    <i class="icon-only ace-icon fa fa-align-left bigger-110"></i>
+
+                                                    <input type="radio" value="1">
+                                                </label>
+
+                                                <label class="btn btn-sm btn-primary btn-white btn-round">
+                                                    <i class="icon-only ace-icon fa fa-align-center bigger-110"></i>
+
+                                                    <input type="radio" value="2">
+                                                </label>
+
+                                                <label class="btn btn-sm btn-primary btn-white btn-round">
+                                                    <i class="icon-only ace-icon fa fa-align-right bigger-110"></i>
+
+                                                    <input type="radio" value="3">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <table class="table table-bordered table-hover " id="energyTable">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    IP地址
+                                                </th>
+                                                <th>
+                                                    端口号
+                                                </th>
+                                                <th>
+                                                    能耗类型
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null)
+                                            {
+                                                foreach (var item in Model.Hosts)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Hosts)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Port)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.EnergyType.F_EnergyItemName)
+                                                        </td>
+                                                        <td>
+                                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-xs" })
+                                                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success btn-xs" })
+                                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-xs" })
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-horizontal">
+
+
+                            </div>
+                        }
+
+
+                        <div class="col-xs-12 col-sm-12">
+
+                            <h4 class="header blue bolder smaller">面积相关信息</h4>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-username">在校人数</label>
+
+                                <div class="col-sm-9">
+                                    <input class="col-xs-12 col-sm-10" type="text" id="form-field-username" placeholder="在校人数" value="28144" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-username">总面积</label>
+
+                                <div class="col-sm-9">
+                                    <input class="col-xs-12 col-sm-10" type="text" id="form-field-username" placeholder="总面积" value="482546.00平方米" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-username">建筑总数</label>
+
+                                <div class="col-sm-9">
+                                    <input class="col-xs-12 col-sm-10" type="text" id="form-field-username" placeholder="建筑总数" value="51座" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-username">供冷面积</label>
+
+                                <div class="col-sm-9">
+                                    <input class="col-xs-12 col-sm-10" type="text" id="form-field-username" placeholder="供冷面积" value="10000平方" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-username">供暖面积</label>
+
+                                <div class="col-sm-9">
+                                    <input class="col-xs-12 col-sm-10" type="text" id="form-field-username" placeholder="供暖面积" value="10000平方" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
-        }
+        </div>
     </div>
 </div>
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+
+
+@section Scripts{
+    <script src="~/content/ace_admin1.3.1/assets/js/jquery.maskedinput.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.ip_address').mask('099.099.099.099');
+        })
+    </script>
+}

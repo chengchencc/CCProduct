@@ -411,11 +411,18 @@ namespace CC.EDM.Domain.Services
                  .Where(s => 1 == 1);
             //.Where(s => codes.Contains(s.F_BuildID));
 
-            if (model.Rooms != null && model.Rooms.Count > 0)
+            if (!string.IsNullOrEmpty(model.RoomCodes)
+&& !string.IsNullOrEmpty(model.RoomCodes.Trim(',')))
             {
-                //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
-                query = query.Where(s => model.Rooms.Contains(s.Room.Id.ToString()));
+                var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+                query = query.Where(s => roomCodesArray.Contains(s.Room.Id.ToString()));
             }
+
+            //if (model.Rooms != null && model.Rooms.Count > 0)
+            //{
+            //    //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+            //    query = query.Where(s => model.Rooms.Contains(s.Room.Id.ToString()));
+            //}
             if (model.StartDate != null)
             {
                 query = query.Where(s => s.StartDate >= model.StartDate);
@@ -469,11 +476,17 @@ namespace CC.EDM.Domain.Services
                  .Where(s => 1 == 1);
             //.Where(s => codes.Contains(s.F_BuildID));
 
-            if (model.Rooms != null && model.Rooms.Count > 0)
+            if (!string.IsNullOrEmpty(model.RoomCodes)
+&& !string.IsNullOrEmpty(model.RoomCodes.Trim(',')))
             {
-                //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
-                query = query.Where(s => model.Rooms.Contains(s.Room.InstituteId.ToString()));
+                var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+                query = query.Where(s => roomCodesArray.Contains(s.Room.Id.ToString()));
             }
+            //if (model.Rooms != null && model.Rooms.Count > 0)
+            //{
+            //    //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+            //    query = query.Where(s => model.Rooms.Contains(s.Room.InstituteId.ToString()));
+            //}
             if (model.StartDate != null)
             {
                 query = query.Where(s => s.StartDate >= model.StartDate);
@@ -526,12 +539,17 @@ namespace CC.EDM.Domain.Services
                 .Include(s => s.Room)
                  .Where(s => 1 == 1);
             //.Where(s => codes.Contains(s.F_BuildID));
-
-            if (model.Rooms != null && model.Rooms.Count > 0)
+            if (!string.IsNullOrEmpty(model.RoomCodes)
+&& !string.IsNullOrEmpty(model.RoomCodes.Trim(',')))
             {
-                //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
-                query = query.Where(s => model.Rooms.Contains(s.Room.InstituteId.ToString()));
+                var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+                query = query.Where(s => roomCodesArray.Contains(s.Room.Id.ToString()));
             }
+            //if (model.Rooms != null && model.Rooms.Count > 0)
+            //{
+            //    //var roomCodesArray = model.RoomCodes.Trim(',').Split(',');
+            //    query = query.Where(s => model.Rooms.Contains(s.Room.InstituteId.ToString()));
+            //}
             if (model.StartDate != null)
             {
                 query = query.Where(s => s.StartDate >= model.StartDate);

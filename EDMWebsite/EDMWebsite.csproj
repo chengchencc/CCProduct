@@ -2147,6 +2147,8 @@
     <Content Include="Views\Account\AddUser.cshtml" />
     <Content Include="Views\Account\LoginByUserName.cshtml" />
     <Content Include="Views\Query\Institutes.cshtml" />
+    <Content Include="Views\Rooms\Create - Old.cshtml" />
+    <Content Include="Views\Rooms\Edit - Old.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

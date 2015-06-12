@@ -62,15 +62,15 @@
     <Compile Include="Consts\CompanyInfo.cs" />
     <Compile Include="Consts\DateTimeFormat.cs" />
     <Compile Include="Consts\EncodingNames.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Log\LogHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestfulClient.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="Utilities\Encoder.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="Log\NLog.config">
