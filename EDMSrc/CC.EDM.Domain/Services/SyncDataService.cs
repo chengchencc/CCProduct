@@ -18,8 +18,10 @@ namespace CC.EDM.Domain.Services
 {
     public interface ISyncDataService
     {
-
-
+        void SyncEnergyItemData();
+        void SyncEnergyHourData();
+        void SyncEnergyDayData();
+        void SyncEnergyMonthData();
     }
     public class SyncDataService : ISyncDataService
     {
@@ -51,6 +53,16 @@ namespace CC.EDM.Domain.Services
                 return _energyPortsCache;
             }
         }
+        private string _syncComdictType = "SyncData";
+        private string _lastSyncComdictKeyForEnergyItem = "LastSyncDateTimeForEnergyItem";
+        private string _lastSyncComdictKeyForHour = "LastSyncDateTimeForEnergyHour";
+        private string _lastSyncComdictKeyForDay = "LastSyncDateTimeForEnergyDay";
+        private string _lastSyncComdictKeyForMonth = "LastSyncDateTimeForEnergyMonth";
+
+        private string _lastLastSyncComdictKeyForEnergyItem = "LastLastSyncDateTimeForEnergyItem";
+        private string _lastLastSyncComdictKeyForHour = "LastLastSyncDateTimeForEnergyHour";
+        private string _lastLastSyncComdictKeyForDay = "LastLastSyncDateTimeForEnergyDay";
+        private string _lastLastSyncComdictKeyForMonth = "LastLastSyncDateTimeForEnergyMonth";
 
 
         public SyncDataService()
@@ -63,11 +75,8 @@ namespace CC.EDM.Domain.Services
 
         public void SyncEnergyItemData()
         {
-            var lastedDataModel = NewEdmDb.Comdicts.SingleOrDefault(s => s.Type == "同步数据" && s.Key == "上次同步截止时间");
-            DateTime lastedDateTime = new DateTime(2010, 10, 10);
             DateTime SyncDateTime = DateTime.Now;
-            if (lastedDataModel != null)
-                lastedDateTime = lastedDataModel.Value.ToDateTimeWithFullTime();
+            var lastedDateTime = GetSyncDateTime(_lastSyncComdictKeyForEnergyItem);
 
             var processCount = 10000;
             var index = 0;
@@ -102,7 +111,7 @@ namespace CC.EDM.Domain.Services
                     foreach (var item in syncOriginalList)
                     {
                         //host是唯一的，因为一个控制器对应一个host 所以必须唯一。这里增加RoomHosts的时候要做唯一处理
-                        var roomHost = RoomHostsCache.SingleOrDefault(s => s.Hosts == item.macip);
+                        var roomHost = RoomHostsCache.SingleOrDefault(s => s.Hosts == item.macip && s.Port == item.port);
                         if (roomHost != null)
                         {
                             //要是一个控制器对应多个房间的时候，这里只给第一个房间赋值上value
@@ -139,34 +148,46 @@ namespace CC.EDM.Domain.Services
 
                 }
             }
+            SaveSyncDateTime(lastedDateTime,_lastLastSyncComdictKeyForEnergyItem);
 
-            SaveSyncDateTime(SyncDateTime);
+            SaveSyncDateTime(SyncDateTime, _lastSyncComdictKeyForEnergyItem);
 
         }
 
         public void SyncEnergyHourData()
         {
-            var lastSyncDateTime = DateTime.Now;
-            var SyncDateTime = DateTime.Now;
+            var lastSyncDateTime = GetSyncDateTime(_lastSyncComdictKeyForHour);
+            var SyncDateTime = new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day,DateTime.Now.Hour,0,0) ;
 
             var data = from a in NewEdmDb.EnergyItemResults
-                       where a.StartDate > lastSyncDateTime && a.StartDate < SyncDateTime
-                       group a by new { a.StartDate.Year,a.StartDate.Month,a.StartDate.Day, 
-                           a.StartDate.Hour,a.Room,a.EnergyType } into g
-                       select new { hourSum = g.Sum(a => a.EnergyValue), 
+                       where a.StartDate >= lastSyncDateTime && a.StartDate < SyncDateTime
+                       group a by new
+                       {
+                           a.StartDate.Year,
+                           a.StartDate.Month,
+                           a.StartDate.Day,
+                           a.StartDate.Hour,
+                           a.Room,
+                           a.EnergyType
+                       } into g
+                       select new
+                       {
+                           hourSum = g.Sum(a => a.EnergyValue),
                            year = g.Key.Year,
-                           month=g.Key.Month,
-                           day=g.Key.Day, 
+                           month = g.Key.Month,
+                           day = g.Key.Day,
                            hour = g.Key.Hour,
-                       room=g.Key.Room,
-                       energyType=g.Key.EnergyType};
+                           room = g.Key.Room,
+                           energyType = g.Key.EnergyType
+                       };
             var cc = data.ToList();
 
             List<EnergyItemHourResult> SyncList = new List<EnergyItemHourResult>();
             foreach (var item in cc)
             {
                 var energyHourItem = new EnergyItemHourResult();
-                energyHourItem.StartDate = new DateTime(item.year, item.month, item.day, item.hour,0,0);
+                energyHourItem.StartDate = new DateTime(item.year, item.month, item.day, item.hour, 0, 0);
+                energyHourItem.EndDate = energyHourItem.StartDate;
                 energyHourItem.EnergyValue = item.hourSum;
                 energyHourItem.EnergyType = item.energyType;
                 energyHourItem.Room = item.room;
@@ -174,22 +195,114 @@ namespace CC.EDM.Domain.Services
             }
             NewEdmDb.EnergyItemHourResults.AddRange(SyncList);
             NewEdmDb.SaveChanges();
-            
-           
+
+            SaveSyncDateTime(lastSyncDateTime, _lastLastSyncComdictKeyForHour);
+            SaveSyncDateTime(SyncDateTime,_lastSyncComdictKeyForHour);
         }
 
         public void SyncEnergyDayData()
         {
+            var lastSyncDateTime = GetSyncDateTime(_lastSyncComdictKeyForDay);
+            var SyncDateTime = DateTime.Now.Date;
 
+            var data = from a in NewEdmDb.EnergyItemHourResults
+                       where a.StartDate >= lastSyncDateTime && a.StartDate < SyncDateTime
+                       group a by new
+                       {
+                           a.StartDate.Year,
+                           a.StartDate.Month,
+                           a.StartDate.Day,
+                           a.Room,
+                           a.EnergyType
+                       } into g
+                       select new
+                       {
+                           hourSum = g.Sum(a => a.EnergyValue),
+                           year = g.Key.Year,
+                           month = g.Key.Month,
+                           day = g.Key.Day,
+                           room = g.Key.Room,
+                           energyType = g.Key.EnergyType
+                       };
+            var cc = data.ToList();
+
+            List<EnergyItemDayResult> SyncList = new List<EnergyItemDayResult>();
+            foreach (var item in cc)
+            {
+                var energyDayItem = new EnergyItemDayResult();
+                energyDayItem.StartDate = new DateTime(item.year, item.month, item.day, 0, 0, 0);
+                energyDayItem.EndDate = energyDayItem.StartDate;
+                energyDayItem.EnergyValue = item.hourSum;
+                energyDayItem.EnergyType = item.energyType;
+                energyDayItem.Room = item.room;
+                SyncList.Add(energyDayItem);
+            }
+            NewEdmDb.EnergyItemDayResults.AddRange(SyncList);
+            NewEdmDb.SaveChanges();
+
+            SaveSyncDateTime(lastSyncDateTime, _lastLastSyncComdictKeyForDay);
+            SaveSyncDateTime(SyncDateTime,_lastSyncComdictKeyForDay);
         }
 
         public void SyncEnergyMonthData()
         {
+            var lastSyncDateTime = GetSyncDateTime(_lastSyncComdictKeyForMonth);
+            var SyncDateTime = new DateTime(DateTime.Now.Year,DateTime.Now.Month,1,0,0,0);
+
+            var data = from a in NewEdmDb.EnergyItemDayResults
+                       where a.StartDate >= lastSyncDateTime && a.StartDate < SyncDateTime
+                       group a by new
+                       {
+                           a.StartDate.Year,
+                           a.StartDate.Month,
+                           a.Room,
+                           a.EnergyType
+                       } into g
+                       select new
+                       {
+                           hourSum = g.Sum(a => a.EnergyValue),
+                           year = g.Key.Year,
+                           month = g.Key.Month,
+                           room = g.Key.Room,
+                           energyType = g.Key.EnergyType
+                       };
+            var cc = data.ToList();
+
+            List<EnergyItemMonthResult> SyncList = new List<EnergyItemMonthResult>();
+            foreach (var item in cc)
+            {
+                var energyMonthItem = new EnergyItemMonthResult();
+                energyMonthItem.StartDate = new DateTime(item.year, item.month, 1, 0, 0, 0);
+                energyMonthItem.EndDate = energyMonthItem.StartDate;
+                energyMonthItem.EnergyValue = item.hourSum;
+                energyMonthItem.EnergyType = item.energyType;
+                energyMonthItem.Room = item.room;
+                SyncList.Add(energyMonthItem);
+            }
+            NewEdmDb.EnergyItemMonthResult.AddRange(SyncList);
+            NewEdmDb.SaveChanges();
+
+            SaveSyncDateTime(lastSyncDateTime, _lastLastSyncComdictKeyForMonth);
+            SaveSyncDateTime(SyncDateTime,_lastSyncComdictKeyForMonth);
 
         }
 
+        public void ClearSyncData()
+        {
+            
+        }
 
         #region Helpers
+        private DateTime GetSyncDateTime(string key)
+        {
+            var lastedDataModel = NewEdmDb.Comdicts.SingleOrDefault(s => s.Type == _syncComdictType && s.Key == key);
+            DateTime lastedDateTime = new DateTime(2010, 10, 10);
+            if (lastedDataModel != null)
+                lastedDateTime = lastedDataModel.Value.ToDateTimeWithFullTime();
+            return lastedDateTime;
+        }
+
+
         private EnergyItemResult GenerateEnergyItem(tb_data item, Room room, EnergyType energyTypeItem)
         {
             EnergyItemResult energyItem = new EnergyItemResult();
@@ -230,9 +343,10 @@ namespace CC.EDM.Domain.Services
 
         }
 
-        private void SaveSyncDateTime(DateTime SyncDateTime)
+        private void SaveSyncDateTime(DateTime SyncDateTime,string key)
         {
-            var SyncTimeComdict = NewEdmDb.Comdicts.SingleOrDefault(s => s.Type == "同步数据" && s.Key == "上次同步截止时间");
+            //var SyncTimeComdict = NewEdmDb.Comdicts.SingleOrDefault(s => s.Type == "同步数据" && s.Key == "上次同步截止时间");
+            var SyncTimeComdict = NewEdmDb.Comdicts.SingleOrDefault(s => s.Type == _syncComdictType && s.Key == key);
 
             if (SyncTimeComdict != null)
             {
@@ -241,7 +355,8 @@ namespace CC.EDM.Domain.Services
             }
             else
             {
-                SyncTimeComdict = new Comdict() { CreateDate = DateTime.Now, Key = "上次同步截止时间", Type = "同步数据", Value = SyncDateTime.ToStringWithFullTime() };
+                //SyncTimeComdict = new Comdict() { CreateDate = DateTime.Now, Key = "上次同步截止时间", Type = "同步数据", Value = SyncDateTime.ToStringWithFullTime() };
+                SyncTimeComdict = new Comdict() { CreateDate = DateTime.Now, Key = key, Type = _syncComdictType, Value = SyncDateTime.ToStringWithFullTime() };
                 NewEdmDb.Comdicts.Add(SyncTimeComdict);
                 NewEdmDb.SaveChanges();
             }

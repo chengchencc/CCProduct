@@ -66,19 +66,6 @@
                                 <div class="col-sm-2">
                                     @Html.EnumDropDownListFor(model => model.StatisticWay, new { @class = "col-xs-12 col-sm-12" })
                                 </div>
-                                @*<label for="statisticMethod" class="col-sm-1 control-label no-padding-right">统计类型</label>
-                                    <div class="col-sm-2">
-                                        <select class="col-xs-12 col-sm-12" id="statisticMethod">
-                                            <option value="0">能耗项求和统计</option>
-                                            <option value="1">能耗项对比统计</option>
-                                        </select>
-                                        @{
-                                                                       var a = new List<SelectListItem>();
-                                                                       a.Add(new SelectListItem() { Text = "能耗项求和统计", Value = "0" });
-                                                                       a.Add(new SelectListItem() { Text = "能耗项对比统计", Value = "1" });
-                                        }
-
-                                    </div>*@
                                 <div class="col-sm-3">
                                 </div>
                                 <div class="col-md-3">  </div>
@@ -93,22 +80,21 @@
             <ul class="nav nav-tabs">
                 <li><a data-toggle="tab" href="#tab1"><i class="blue ace-icon fa fa-calendar bigger-120"></i> 表格</a></li>
                 <li class="active"><a data-toggle="tab" href="#tab2"><i class="light-red ace-icon fa fa-bar-chart-o bigger-120"></i> 图形</a></li>
-                @*<li><a data-toggle="tab" href="#tab3">Tab3</a></li>*@
             </ul>
 
             <div class="tab-content no-padding">
                 <div id="tab1" class="tab-pane">
                     @if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐时能耗)
                     {
-                        @Html.Partial("_HourResultPartial", Model.HourResult)
+                        @Html.Partial("_RoomHourResultPartial", Model.NewHourResult)
                     }
                     else if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐日能耗)
                     {
-                        @Html.Partial("_DayResultPartial", Model.DayResult)
+                        @Html.Partial("_RoomDayResultPartial", Model.NewDayResult)
                     }
                     else if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐月能耗)
                     {
-                        @Html.Partial("_MonthResultPartial", Model.MonthResult)
+                        @Html.Partial("_RoomMonthResultPartial", Model.NewMonthResult)
                     }
 
                 </div>

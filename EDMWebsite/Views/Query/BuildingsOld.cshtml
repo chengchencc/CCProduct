@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="submit" class="btn btn-primary btn-sm" id="simple-query-btn">查询</button>
-                                    <a href="#" id="advancedQuery">高级搜索选项 <i class="ace-icon fa fa-chevron-down" style="font-size: 10px;"></i></a>
+                                    <a href="#" id="advancedQuery" style="display:none">高级搜索选项 <i class="ace-icon fa fa-chevron-down" style="font-size: 10px;"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -68,26 +68,6 @@
                                 <label for="statisticDensity" class="col-sm-1 control-label no-padding-right">统计密度</label>
                                 <div class="col-sm-2">
                                     @Html.EnumDropDownListFor(model => model.StatisticWay, new { @class = "col-xs-12 col-sm-12" })
-
-                                    @*<select class="col-xs-12 col-sm-12 " id="statisticDensity">
-                                            <option>逐时能耗</option>
-                                            <option>逐日能耗</option>
-                                            <option>逐月能耗</option>
-                                        </select>*@
-                                </div>
-                                @*<label for="statisticMethod" class="col-sm-1 control-label no-padding-right">统计类型</label>
-                                    <div class="col-sm-2">
-                                        <select class="col-xs-12 col-sm-12" id="statisticMethod">
-                                            <option value="0">能耗项求和统计</option>
-                                            <option value="1">能耗项对比统计</option>
-                                        </select>
-                                        @{
-                                                               var a = new List<SelectListItem>();
-                                                               a.Add(new SelectListItem() { Text = "能耗项求和统计", Value = "0" });
-                                                               a.Add(new SelectListItem() { Text = "能耗项对比统计", Value = "1" });
-                                        }
-
-                                    </div>*@
                                 <div class="col-sm-3">
                                 </div>
                                 <div class="col-md-3">  </div>
@@ -102,7 +82,6 @@
             <ul class="nav nav-tabs">
                 <li><a data-toggle="tab" href="#tab1"><i class="blue ace-icon fa fa-calendar bigger-120"></i> 表格</a></li>
                 <li class="active"><a data-toggle="tab" href="#tab2"><i class="light-red ace-icon fa fa-bar-chart-o bigger-120"></i> 图形</a></li>
-                @*<li><a data-toggle="tab" href="#tab3">Tab3</a></li>*@
             </ul>
 
             <div class="tab-content no-padding">
@@ -135,30 +114,6 @@
                         </div>
 
                     </div>
-
-                </div>
-                <div id="tab3" class="tab-pane ">
-
-                    <table class="table table-striped table-bordered table-hover">
-                        <thead>
-                            <tr onclick="alert('aaaa')">
-                                <th class="text-center">时间</th>
-                                <th class="text-center">能耗值</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model != null && Model.Result != null)
-                            {
-                                foreach (KeyValuePair<string, string> item in Model.Result)
-                                {
-                            <tr class="gradeU">
-                                <td class="text-right">@item.Key</td>
-                                <td class="center">@item.Value</td>
-                            </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
 
                 </div>
 

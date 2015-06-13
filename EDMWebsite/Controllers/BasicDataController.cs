@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using CC.EDM.Domain.Services;
 using CC.EDM.Model.RealEDMDb;
 
 namespace EDMWebsite.Controllers
 {
+    [Authorize(Roles="admin")]
     public class BasicDataController : Controller
     {
         public RealEDMDbContext EDMContext { get; set; }
         public WriteableSqlDbContext WSDb { get; set; }
-        public BasicDataController()
+        public ISyncDataService SyncDataService { get; set; }
+        public BasicDataController( ISyncDataService syncDataService)
         {
             EDMContext = new RealEDMDbContext();
+            SyncDataService = syncDataService;
         }
         // GET: BasicData
         public ActionResult Index()
@@ -38,7 +43,21 @@ namespace EDMWebsite.Controllers
             return View();
         }
 
+        public ActionResult SyncData()
+        {
 
+            return View();
+        }
+
+        public ActionResult SyncAllData()
+        {
+            SyncDataService.SyncEnergyItemData();
+            SyncDataService.SyncEnergyHourData();
+            SyncDataService.SyncEnergyDayData();
+            SyncDataService.SyncEnergyMonthData();
+
+            return Content("同步完成");
+        }
 
     }
 }
