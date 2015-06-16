@@ -6,16 +6,17 @@ using System.Web;
 using System.Web.Mvc;
 using CC.EDM.Domain.Services;
 using CC.EDM.Model.RealEDMDb;
+using EDMWebsite.Models;
 
 namespace EDMWebsite.Controllers
 {
-    [Authorize(Roles="admin")]
+    [Authorize(Roles = "admin")]
     public class BasicDataController : Controller
     {
         public RealEDMDbContext EDMContext { get; set; }
         public WriteableSqlDbContext WSDb { get; set; }
         public ISyncDataService SyncDataService { get; set; }
-        public BasicDataController( ISyncDataService syncDataService)
+        public BasicDataController(ISyncDataService syncDataService)
         {
             EDMContext = new RealEDMDbContext();
             SyncDataService = syncDataService;
@@ -47,6 +48,21 @@ namespace EDMWebsite.Controllers
         {
 
             return View();
+        }
+
+        public ActionResult MySqlTest()
+        {
+            var result = string.Empty;
+            using (DeviceDbContext db = new DeviceDbContext())
+            {
+                var tbdata = db.tb_data.Take(10).ToList();
+
+                foreach (var item in tbdata)
+                {
+                    result += item.macip;
+                }
+            }
+            return Content(result);
         }
 
         public ActionResult SyncAllData()

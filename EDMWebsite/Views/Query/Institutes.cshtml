@@ -87,17 +87,17 @@
             <div class="tab-content no-padding">
                 <div id="tab1" class="tab-pane">
                     @if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐时能耗)
-                        {
-                        @Html.Partial("_HourResultPartial", Model.HourResult)
-                        }
-                        else if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐日能耗)
-                        {
-                        @Html.Partial("_DayResultPartial", Model.DayResult)
-                        }
-                        else if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐月能耗)
-                        {
-                        @Html.Partial("_MonthResultPartial", Model.MonthResult)
-                        }
+                    {
+                        @Html.Partial("_RoomHourResultPartial", Model.NewHourResult)
+                    }
+                    else if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐日能耗)
+                    {
+                        @Html.Partial("_RoomDayResultPartial", Model.NewDayResult)
+                    }
+                    else if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐月能耗)
+                    {
+                        @Html.Partial("_RoomMonthResultPartial", Model.NewMonthResult)
+                    }
 
                 </div>
                 <div id="tab2" class="tab-pane active">

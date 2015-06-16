@@ -71,6 +71,7 @@ namespace CC.EDM.Domain.Services
             NewEdmDb = new WriteableSqlDbContext();
             NewEdmDb.Database.Log = s => CC.Product.Core.LogHelper.WriteInfo(s);
             MysqlDb.Database.Log = s => CC.Product.Core.LogHelper.WriteInfo(s);
+            this.MysqlDb.Database.CommandTimeout = 30000;
         }
 
         public void SyncEnergyItemData()

@@ -21,21 +21,20 @@
             <div class="col-sm-12">
                 @*<div class="widget-box">
 
-                    <div class="widget-body" style="padding:10px;">
-                        <div class="widget-main" style="padding:10px;">*@
+            <div class="widget-body" style="padding:10px;">
+                <div class="widget-main" style="padding:10px;">*@
 
                 @using (Html.BeginForm("BuildingsOld", "Query", FormMethod.Post, new { @class = "form-horizontal", style = "padding-top:10px;" }))
                 {
                     @Html.HiddenFor(model => model.ActiveTabId);
                     @Html.HiddenFor(model => model.RoomCodes)
 
-
                     @*<div class="row " style="margin-bottom:20px">
-                            <div class="col-sm-offset-3 col-sm-6">
-                                @Html.TextBoxFor(model => model.Rooms, new { @class = "col-xs-12 col-sm-12 tag-input-style", multiple = "", onfocus = "$('#modal-form-room').modal('toggle')" ,placeholder="请选择建筑物......"})
-                                @Html.HiddenFor(model => model.RoomCodes)
-                            </div>
-                        </div>*@
+                    <div class="col-sm-offset-3 col-sm-6">
+                        @Html.TextBoxFor(model => model.Rooms, new { @class = "col-xs-12 col-sm-12 tag-input-style", multiple = "", onfocus = "$('#modal-form-room').modal('toggle')" ,placeholder="请选择建筑物......"})
+                        @Html.HiddenFor(model => model.RoomCodes)
+                    </div>
+                </div>*@
 
                     <div class="row">
                         <div id="smartSearch">
@@ -68,62 +67,61 @@
                                 <label for="statisticDensity" class="col-sm-1 control-label no-padding-right">统计密度</label>
                                 <div class="col-sm-2">
                                     @Html.EnumDropDownListFor(model => model.StatisticWay, new { @class = "col-xs-12 col-sm-12" })
-                                <div class="col-sm-3">
+                                    <div class="col-sm-3">
+                                    </div>
+                                    <div class="col-md-3">  </div>
                                 </div>
-                                <div class="col-md-3">  </div>
                             </div>
                         </div>
                     </div>
-
                 }
-            </div>
-        </div>
-        <div class="row">
-            <ul class="nav nav-tabs">
-                <li><a data-toggle="tab" href="#tab1"><i class="blue ace-icon fa fa-calendar bigger-120"></i> 表格</a></li>
-                <li class="active"><a data-toggle="tab" href="#tab2"><i class="light-red ace-icon fa fa-bar-chart-o bigger-120"></i> 图形</a></li>
-            </ul>
+                <div class="row">
+                    <ul class="nav nav-tabs">
+                        <li><a data-toggle="tab" href="#tab1"><i class="blue ace-icon fa fa-calendar bigger-120"></i> 表格</a></li>
+                        <li class="active"><a data-toggle="tab" href="#tab2"><i class="light-red ace-icon fa fa-bar-chart-o bigger-120"></i> 图形</a></li>
+                    </ul>
 
-            <div class="tab-content no-padding">
-                <div id="tab1" class="tab-pane">
-                    @if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐时能耗)
-                    {
+                    <div class="tab-content no-padding">
+                        <div id="tab1" class="tab-pane">
+                            @if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐时能耗)
+                        {
                         @Html.Partial("_HourResultPartial", Model.HourResult)
-                    }
-                    else if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐日能耗)
-                    {
+                        }
+                        else if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐日能耗)
+                        {
                         @Html.Partial("_DayResultPartial", Model.DayResult)
-                    }
-                    else if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐月能耗)
-                    {
+                        }
+                        else if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐月能耗)
+                        {
                         @Html.Partial("_MonthResultPartial", Model.MonthResult)
-                    }
+                        }
+
+                        </div>
+                        <div id="tab2" class="tab-pane active">
+                            <div class="row">
+                                <div class="btn-group col-xs-12">
+                                    <button type="button" id="btn-column" class="btn btn-white btn-sm btn-primary">柱状图</button>
+                                    <button type="button" id="btn-line" class="btn btn-white btn-sm btn-primary">线形图</button>
+                                    <button type="button" id="btn-pie" class="btn btn-white btn-sm btn-primary">饼状图</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div id="chartContainer" class="text-center col-xs-12">
+                                    <!-- chart container-->
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
-                <div id="tab2" class="tab-pane active">
-                    <div class="row">
-                        <div class="btn-group col-xs-12">
-                            <button type="button" id="btn-column" class="btn btn-white btn-sm btn-primary">柱状图</button>
-                            <button type="button" id="btn-line" class="btn btn-white btn-sm btn-primary">线形图</button>
-                            <button type="button" id="btn-pie" class="btn btn-white btn-sm btn-primary">饼状图</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div id="chartContainer" class="text-center col-xs-12">
-                            <!-- chart container-->
-                        </div>
-
-                    </div>
-
-                </div>
-
             </div>
 
         </div>
-
     </div>
 </div>
-
 <div id="modal-form" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">

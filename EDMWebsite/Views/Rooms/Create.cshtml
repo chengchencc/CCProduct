@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_AceLayout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+@*<h2>@ViewBag.Title</h2>*@
 <div id="user-profile-3" class="user-profile row">
     <div class="col-sm-offset-1 col-sm-10">
         <div class="tabbable">
@@ -13,23 +13,10 @@
                 <li class="active">
                     <a data-toggle="tab" href="#edit-basic">
                         <i class="green ace-icon fa fa-pencil-square-o bigger-125"></i>
-                        基本信息
+                        新增房间信息
                     </a>
                 </li>
 
-                <li>
-                    <a data-toggle="tab" href="#edit-settings">
-                        <i class="purple ace-icon fa fa-cog bigger-125"></i>
-                        能耗项目配置
-                    </a>
-                </li>
-
-                <li>
-                    <a data-toggle="tab" href="#edit-password">
-                        <i class="blue ace-icon fa fa-key bigger-125"></i>
-                        其他信息
-                    </a>
-                </li>
             </ul>
 
             <div class="tab-content profile-edit-tab-content">
@@ -38,7 +25,7 @@
                     {
                         <div class="form-horizontal">
                             @Html.AntiForgeryToken()
-                            <h4 class="header blue bolder smaller">一般信息</h4>
+                            <h4 class="header blue bolder smaller">基本信息</h4>
 
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
@@ -114,199 +101,6 @@
                         </div>
 
                     }
-                </div>
-
-                <div id="edit-settings" class="tab-pane">
-                    <div class="row">
-
-
-
-                        @using (Html.BeginForm())
-                        {
-                            <div class="widget-box  widget-color-orange">
-                                <div class="widget-header widget-header-small">
-                                    <h6 class="widget-title">
-                                        <i class="ace-icon fa fa-sort"></i>
-                                        能耗分项管理
-                                    </h6>
-                                    <div class="widget-toolbar">
-
-                                        <a href="#" data-action="settings">
-                                            <i class="ace-icon fa fa-cog"></i>
-                                        </a>
-
-                                        <a href="#" id="previewBtn">
-                                            <i class="ace-icon fa fa-refresh"></i>
-                                        </a>
-
-                                        <a href="#" data-action="collapse">
-                                            <i class="ace-icon fa fa-plus" data-icon-show="fa-plus" data-icon-hide="fa-minus"></i>
-                                        </a>
-
-                                        <a href="#" data-action="close">
-                                            <i class="ace-icon fa fa-times"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="widget-body">
-                                    @*toolbox*@
-                                    <div class="widget-toolbox" style="display:none;">
-                                        <div class="btn-toolbar">
-                                            <div class="btn-group">
-                                                <button class="btn btn-sm btn-success btn-white btn-round">
-                                                    <i class="ace-icon fa fa-check bigger-110 green"></i>
-                                                    Approve
-                                                </button>
-
-                                                <button class="btn btn-sm btn-danger btn-white btn-round">
-                                                    <i class="ace-icon fa fa-times bigger-110 red2"></i>
-                                                    Reject
-                                                </button>
-                                            </div>
-
-                                            <div data-toggle="buttons" class="btn-group">
-                                                <label class="btn btn-sm btn-default btn-white btn-round">
-                                                    <i class="icon-only ace-icon fa fa-bold bigger-110"></i>
-
-                                                    <input type="checkbox" value="1">
-                                                </label>
-
-                                                <label class="btn btn-sm btn-default btn-white btn-round">
-                                                    <i class="icon-only ace-icon fa fa-italic bigger-110"></i>
-
-                                                    <input type="checkbox" value="2">
-                                                </label>
-                                            </div>
-
-                                            <div data-toggle="buttons" class="btn-group">
-                                                <label class="btn btn-sm btn-primary btn-white btn-round">
-                                                    <i class="icon-only ace-icon fa fa-align-left bigger-110"></i>
-
-                                                    <input type="radio" value="1">
-                                                </label>
-
-                                                <label class="btn btn-sm btn-primary btn-white btn-round">
-                                                    <i class="icon-only ace-icon fa fa-align-center bigger-110"></i>
-
-                                                    <input type="radio" value="2">
-                                                </label>
-
-                                                <label class="btn btn-sm btn-primary btn-white btn-round">
-                                                    <i class="icon-only ace-icon fa fa-align-right bigger-110"></i>
-
-                                                    <input type="radio" value="3">
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <table class="table table-bordered table-hover " id="energyTable">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    IP地址
-                                                </th>
-                                                <th>
-                                                    端口号
-                                                </th>
-                                                <th>
-                                                    能耗类型
-                                                </th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (Model != null)
-                                            {
-                                                foreach (var item in Model.Hosts)
-                                                {
-                                                    <tr>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.Hosts)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.Port)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.EnergyType.F_EnergyItemName)
-                                                        </td>
-                                                        <td>
-                                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-xs" })
-                                                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success btn-xs" })
-                                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-xs" })
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-
-
-                            <div class="form-horizontal">
-
-
-                            </div>
-                        }
-
-
-                        <div class="col-xs-12 col-sm-12">
-
-                            <h4 class="header blue bolder smaller">面积相关信息</h4>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="form-field-username">在校人数</label>
-
-                                <div class="col-sm-9">
-                                    <input class="col-xs-12 col-sm-10" type="text" id="form-field-username" placeholder="在校人数" value="28144" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="form-field-username">总面积</label>
-
-                                <div class="col-sm-9">
-                                    <input class="col-xs-12 col-sm-10" type="text" id="form-field-username" placeholder="总面积" value="482546.00平方米" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="form-field-username">建筑总数</label>
-
-                                <div class="col-sm-9">
-                                    <input class="col-xs-12 col-sm-10" type="text" id="form-field-username" placeholder="建筑总数" value="51座" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="form-field-username">供冷面积</label>
-
-                                <div class="col-sm-9">
-                                    <input class="col-xs-12 col-sm-10" type="text" id="form-field-username" placeholder="供冷面积" value="10000平方" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="form-field-username">供暖面积</label>
-
-                                <div class="col-sm-9">
-                                    <input class="col-xs-12 col-sm-10" type="text" id="form-field-username" placeholder="供暖面积" value="10000平方" />
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
                 </div>
 
             </div>

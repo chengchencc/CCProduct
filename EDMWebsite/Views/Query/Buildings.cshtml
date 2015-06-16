@@ -84,15 +84,15 @@
                 <div id="tab1" class="tab-pane">
                     @if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐时能耗)
                     {
-                        @Html.Partial("_HourResultPartial", Model.HourResult)
+                        @Html.Partial("_RoomHourResultPartial", Model.NewHourResult)
                     }
                     else if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐日能耗)
                     {
-                        @Html.Partial("_DayResultPartial", Model.DayResult)
+                        @Html.Partial("_RoomDayResultPartial", Model.NewDayResult)
                     }
                     else if (Model.StatisticWay == EDMWebsite.Models.ViewModels.StatisticWay.逐月能耗)
                     {
-                        @Html.Partial("_MonthResultPartial", Model.MonthResult)
+                        @Html.Partial("_RoomMonthResultPartial", Model.NewMonthResult)
                     }
 
                 </div>

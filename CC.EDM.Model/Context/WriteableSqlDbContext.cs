@@ -22,7 +22,7 @@ namespace EDMWebsite
         {
             //Database.SetInitializer( );
             //Database.SetInitializer<WriteableSqlDbContext>(new DropCreateDatabaseAlways<WriteableSqlDbContext>());
-            //Database.SetInitializer<WriteableSqlDbContext>(new MigrateDatabaseToLatestVersion<WriteableSqlDbContext, CC.EDM.Model.Migrations.Configuration>());
+            Database.SetInitializer<WriteableSqlDbContext>(new MigrateDatabaseToLatestVersion<WriteableSqlDbContext, CC.EDM.Model.Migrations.Configuration>());
         }
 
         public DbSet<Comdict> Comdicts { get; set; }

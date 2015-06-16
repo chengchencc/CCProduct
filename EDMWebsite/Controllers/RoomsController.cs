@@ -123,6 +123,11 @@ namespace EDMWebsite.Controllers
             {
                 return HttpNotFound();
             }
+
+            BindBuildingSelectList();
+            BindInstituteSelectList();
+            BindEnergyTypeSelectList();
+
             return View(room);
         }
 
@@ -144,10 +149,16 @@ namespace EDMWebsite.Controllers
             var roomId = Request.Form["roomId"];
             if (string.IsNullOrEmpty(roomId))
             {
-                return Content("新增保存后才能绑定ip地址与端口号");
+                return Content("错误:新增保存后才能绑定ip地址与端口号");
             }
             else
             {
+                if (db.RoomHosts.Any(s=>s.Hosts == roomHost.Hosts && s.Port == roomHost.Port))
+                {
+                    return Content("错误:已经建立ip为"+roomHost.Hosts+"port为"+roomHost.Port+"的配置，不能重复添加！");
+                }
+
+
                 var roomid = Convert.ToInt32(roomId);
                 var room = db.Rooms.SingleOrDefault(s => s.Id == roomid);
                 var energyItemCode = Request.Form["EnergyType"];
@@ -176,7 +187,7 @@ namespace EDMWebsite.Controllers
             //    return RedirectToAction("Index");
             //}
             //return View(room);
-            return Content("删除的条目不存在，请刷新页面重试！");
+            return Content("错误:条目不存在，请刷新页面重试！");
         }
 
         [HttpPost]
