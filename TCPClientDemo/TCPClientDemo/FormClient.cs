@@ -23,6 +23,7 @@ namespace TCPClientDemo
         BackgroundWorker connectWork = new BackgroundWorker();
         private string serverIP = "127.0.0.1";
         private int port = 8866;
+        private int _receivedBytesCount = 500;
         public FormClient()
         {
             InitializeComponent();
@@ -113,9 +114,9 @@ namespace TCPClientDemo
                 }
                 //获取Begin方法的返回值所有输入/输出参数
                 d.EndInvoke(out receiveString, result);
-                if(receiveString == null)
+                if (receiveString == null)
                 {
-                    if(!isExit)
+                    if (!isExit)
                         MessageBox.Show("与服务器失去联系");
                     break;
                 }
@@ -132,6 +133,9 @@ namespace TCPClientDemo
                     case "talk":    //格式： talk,用户名,对话信息
                         AddTalkMessage(splitString[1] + "：\r\n");
                         AddTalkMessage(receiveString.Substring(splitString[0].Length + splitString[1].Length + 2));
+                        break;
+                    default:
+                        AddTalkMessage(receiveString + "\r\n");
                         break;
                 }
             }
@@ -188,8 +192,12 @@ namespace TCPClientDemo
         {
             try
             {
-                bw.Write(message);
+                //bw.Write(message);
+                //bw.Flush();
+                var bytes = Encoding.Default.GetBytes(message);
+                bw.Write(bytes, 0, bytes.Length);
                 bw.Flush();
+
             }
             catch
             {
@@ -199,13 +207,15 @@ namespace TCPClientDemo
 
         private void btn_SendMessage_Click(object sender, EventArgs e)
         {
-            if (lst_OnlineUser.SelectedIndex != -1)
-            {
-                AsyncSendMessage("Talk," + lst_OnlineUser.SelectedItem + "," + rtf_SendMessage.Text + "\r\n");
-                rtf_SendMessage.Clear();
-            }
-            else
-                MessageBox.Show("请先在[当前在线]中选择一个对话者");
+            //if (lst_OnlineUser.SelectedIndex != -1)
+            //{
+            //    AsyncSendMessage("Talk," + lst_OnlineUser.SelectedItem + "," + rtf_SendMessage.Text + "\r\n");
+            //    rtf_SendMessage.Clear();
+            //}
+            //else
+            //    MessageBox.Show("请先在[当前在线]中选择一个对话者");
+            AsyncSendMessage("Talk," + lst_OnlineUser.SelectedItem + "," + rtf_SendMessage.Text + "\r\n");
+            rtf_SendMessage.Clear();
         }
 
         delegate void ConnectServerDelegate();
@@ -230,8 +240,22 @@ namespace TCPClientDemo
                 //TODO:change
                 //receiveMessage = br.ReadString();
 
-                var readbytes = Encoding.Default.GetBytes(br.ReadString());
-                receiveMessage = Encoding.Default.GetString( readbytes);
+                byte[] received = new byte[_receivedBytesCount];
+                var receivedCount = br.Read(received, 0, _receivedBytesCount);
+                var readbytes = received.Take(receivedCount).ToArray();
+
+
+                //var readbytes = Encoding.Default.GetBytes(br.ReadString());
+                receiveMessage = string.Empty;
+                foreach (var item in readbytes)
+                {
+                    var byteString = Convert.ToString(item, 16);
+                    if (byteString.Length < 2)
+                        byteString=byteString.Insert(0, "0");
+                    receiveMessage += byteString;
+                }
+
+                //receiveMessage = Encoding.Default.GetString( readbytes);
             }
             catch (Exception ex)
             {
