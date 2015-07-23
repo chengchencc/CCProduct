@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCPServerDemo", "TCPServerDemo\TCPServerDemo.csproj", "{F757A8E1-3714-419D-9AFD-CAC828C9120F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcpClientDemo", "TcpClientDemo\TcpClientDemo.csproj", "{25CA8FAC-5D69-49F0-8F7B-62503FDD3E17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskBarTest", "TaskBarTest\TaskBarTest.csproj", "{E469F51D-0782-41D0-9FB2-E2CE954DD89B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F757A8E1-3714-419D-9AFD-CAC828C9120F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F757A8E1-3714-419D-9AFD-CAC828C9120F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F757A8E1-3714-419D-9AFD-CAC828C9120F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F757A8E1-3714-419D-9AFD-CAC828C9120F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25CA8FAC-5D69-49F0-8F7B-62503FDD3E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25CA8FAC-5D69-49F0-8F7B-62503FDD3E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25CA8FAC-5D69-49F0-8F7B-62503FDD3E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25CA8FAC-5D69-49F0-8F7B-62503FDD3E17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E469F51D-0782-41D0-9FB2-E2CE954DD89B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E469F51D-0782-41D0-9FB2-E2CE954DD89B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E469F51D-0782-41D0-9FB2-E2CE954DD89B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E469F51D-0782-41D0-9FB2-E2CE954DD89B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
