@@ -76,7 +76,7 @@ namespace TCPClientDemo
                 //将网络流作为二进制读写对象
                 br = new BinaryReader(networkStream);
                 bw = new BinaryWriter(networkStream);
-                AsyncSendMessage("Login," + txt_UserName.Text);
+                //AsyncSendMessage("Login," + txt_UserName.Text);
                 Thread threadReceive = new Thread(new ThreadStart(ReceiveData));
                 threadReceive.IsBackground = true;
                 threadReceive.Start();
@@ -194,7 +194,12 @@ namespace TCPClientDemo
             {
                 //bw.Write(message);
                 //bw.Flush();
-                var bytes = Encoding.Default.GetBytes(message);
+                //var bytes = Encoding.Default.GetBytes(message);
+
+                var bytes = Enumerable.Range(0, message.Length)
+                 .Where(x => x % 2 == 0)
+                 .Select(x => Convert.ToByte(message.Substring(x, 2), 16))
+                 .ToArray();
                 bw.Write(bytes, 0, bytes.Length);
                 bw.Flush();
 
@@ -214,7 +219,8 @@ namespace TCPClientDemo
             //}
             //else
             //    MessageBox.Show("请先在[当前在线]中选择一个对话者");
-            AsyncSendMessage("Talk," + lst_OnlineUser.SelectedItem + "," + rtf_SendMessage.Text + "\r\n");
+            //AsyncSendMessage("Talk," + lst_OnlineUser.SelectedItem + "," + rtf_SendMessage.Text + "\r\n");
+            AsyncSendMessage(rtf_SendMessage.Text);
             rtf_SendMessage.Clear();
         }
 
@@ -243,7 +249,8 @@ namespace TCPClientDemo
                 byte[] received = new byte[_receivedBytesCount];
                 var receivedCount = br.Read(received, 0, _receivedBytesCount);
                 var readbytes = received.Take(receivedCount).ToArray();
-
+                if (receivedCount == 0)
+                    return;
 
                 //var readbytes = Encoding.Default.GetBytes(br.ReadString());
                 receiveMessage = string.Empty;
