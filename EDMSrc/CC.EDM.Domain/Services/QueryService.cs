@@ -450,12 +450,12 @@ namespace CC.EDM.Domain.Services
                 ChartSeriesItem seriesItem = new ChartSeriesItem();
                 seriesItem.name = item.Key.F_EnergyItemName;
 
-                var buildGroups = item.GroupBy(s => s.Room);//group by build to sum the amount of energy in this data 
+                var buildGroups = item.OrderBy(s=>s.StartDate).GroupBy(s => s.StartDate);//group by build to sum the amount of energy in this data 
                 foreach (var buildGroup in buildGroups)
                 {
                     ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
-                    dataItem.id = buildGroup.Key.Id.ToString();
-                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.id = buildGroup.Key.ToString("yyyy-MM-dd HH");
+                    dataItem.name = buildGroup.Key.ToString("HH") + "时";
                     dataItem.y = buildGroup.Sum(s => s.EnergyValue);
                     dataItem.unit = item.Key.F_EnergyItemUnit;
                     seriesItem.data.Add(dataItem);
@@ -514,12 +514,12 @@ namespace CC.EDM.Domain.Services
                 ChartSeriesItem seriesItem = new ChartSeriesItem();
                 seriesItem.name = item.Key.F_EnergyItemName;
 
-                var buildGroups = item.GroupBy(s => s.Room);//group by build to sum the amount of energy in this data 
+                var buildGroups = item.OrderBy(s=>s.StartDate).GroupBy(s => s.StartDate);//group by build to sum the amount of energy in this data 
                 foreach (var buildGroup in buildGroups)
                 {
                     ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
-                    dataItem.id = buildGroup.Key.Id.ToString();
-                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.id = buildGroup.Key.ToString("yyyy-MM-dd");
+                    dataItem.name = buildGroup.Key.ToString("dd") + "日";
                     dataItem.y = buildGroup.Sum(s => s.EnergyValue);
                     dataItem.unit = item.Key.F_EnergyItemUnit;
                     seriesItem.data.Add(dataItem);
@@ -577,12 +577,12 @@ namespace CC.EDM.Domain.Services
                 ChartSeriesItem seriesItem = new ChartSeriesItem();
                 seriesItem.name = item.Key.F_EnergyItemName;
 
-                var buildGroups = item.GroupBy(s => s.Room);//group by build to sum the amount of energy in this data 
+                var buildGroups = item.OrderBy(s => s.StartDate).GroupBy(s => s.StartDate);//group by build to sum the amount of energy in this data 
                 foreach (var buildGroup in buildGroups)
                 {
                     ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
-                    dataItem.id = buildGroup.Key.Id.ToString();
-                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.id = buildGroup.Key.ToString("yyyy-MM");
+                    dataItem.name = buildGroup.Key.ToString("MM") + "月";
                     dataItem.y = buildGroup.Sum(s => s.EnergyValue);
                     dataItem.unit = item.Key.F_EnergyItemUnit;
                     seriesItem.data.Add(dataItem);
@@ -636,12 +636,12 @@ namespace CC.EDM.Domain.Services
                 ChartSeriesItem seriesItem = new ChartSeriesItem();
                 seriesItem.name = item.Key.F_EnergyItemName;
 
-                var buildGroups = item.GroupBy(s => s.Room.Institute);//group by build to sum the amount of energy in this data 
+                var buildGroups = item.OrderBy(s=>s.StartDate).GroupBy(s => s.StartDate);//group by build to sum the amount of energy in this data 
                 foreach (var buildGroup in buildGroups)
                 {
                     ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
-                    dataItem.id = buildGroup.Key.Id.ToString();
-                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.id = buildGroup.Key.ToString("yyyy-MM-dd HH");
+                    dataItem.name = buildGroup.Key.ToString("HH") + "时";
                     dataItem.y = buildGroup.Sum(s => s.EnergyValue);
                     dataItem.unit = item.Key.F_EnergyItemUnit;
                     seriesItem.data.Add(dataItem);
@@ -694,12 +694,12 @@ namespace CC.EDM.Domain.Services
                 ChartSeriesItem seriesItem = new ChartSeriesItem();
                 seriesItem.name = item.Key.F_EnergyItemName;
 
-                var buildGroups = item.GroupBy(s => s.Room.Institute);//group by build to sum the amount of energy in this data 
+                var buildGroups = item.OrderBy(s=>s.StartDate).GroupBy(s => s.StartDate);//group by build to sum the amount of energy in this data 
                 foreach (var buildGroup in buildGroups)
                 {
                     ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
-                    dataItem.id = buildGroup.Key.Id.ToString();
-                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.id = buildGroup.Key.ToString("yyyy-MM-dd");
+                    dataItem.name = buildGroup.Key.ToString("dd") + "日";
                     dataItem.y = buildGroup.Sum(s => s.EnergyValue);
                     dataItem.unit = item.Key.F_EnergyItemUnit;
                     seriesItem.data.Add(dataItem);
@@ -752,12 +752,12 @@ namespace CC.EDM.Domain.Services
                 ChartSeriesItem seriesItem = new ChartSeriesItem();
                 seriesItem.name = item.Key.F_EnergyItemName;
 
-                var buildGroups = item.GroupBy(s => s.Room.Institute);//group by build to sum the amount of energy in this data 
+                var buildGroups = item.OrderBy(s=>s.StartDate).GroupBy(s => s.StartDate);//group by build to sum the amount of energy in this data 
                 foreach (var buildGroup in buildGroups)
                 {
                     ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
-                    dataItem.id = buildGroup.Key.Id.ToString();
-                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.id = buildGroup.Key.ToString("yyyy-MM");
+                    dataItem.name = buildGroup.Key.ToString("MM") + "月";
                     dataItem.y = buildGroup.Sum(s => s.EnergyValue);
                     dataItem.unit = item.Key.F_EnergyItemUnit;
                     seriesItem.data.Add(dataItem);
@@ -812,12 +812,12 @@ namespace CC.EDM.Domain.Services
                 ChartSeriesItem seriesItem = new ChartSeriesItem();
                 seriesItem.name = item.Key.F_EnergyItemName;
 
-                var buildGroups = item.GroupBy(s => s.Room.Building);//group by build to sum the amount of energy in this data 
+                var buildGroups = item.OrderBy(s=>s.StartDate).GroupBy(s => s.StartDate);//group by build to sum the amount of energy in this data 
                 foreach (var buildGroup in buildGroups)
                 {
                     ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
-                    dataItem.id = buildGroup.Key.Id.ToString();
-                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.id = buildGroup.Key.ToString("yyyy-MM-dd HH");
+                    dataItem.name = buildGroup.Key.ToString("HH") + "时";
                     dataItem.y = buildGroup.Sum(s => s.EnergyValue);
                     dataItem.unit = item.Key.F_EnergyItemUnit;
                     seriesItem.data.Add(dataItem);
@@ -870,12 +870,12 @@ namespace CC.EDM.Domain.Services
                 ChartSeriesItem seriesItem = new ChartSeriesItem();
                 seriesItem.name = item.Key.F_EnergyItemName;
 
-                var buildGroups = item.GroupBy(s => s.Room.Building);//group by build to sum the amount of energy in this data 
+                var buildGroups = item.OrderBy(s=>s.StartDate).GroupBy(s => s.StartDate);//group by build to sum the amount of energy in this data 
                 foreach (var buildGroup in buildGroups)
                 {
                     ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
-                    dataItem.id = buildGroup.Key.Id.ToString();
-                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.id = buildGroup.Key.ToString("yyyy-MM-dd");
+                    dataItem.name = buildGroup.Key.ToString("dd") + "日";
                     dataItem.y = buildGroup.Sum(s => s.EnergyValue);
                     dataItem.unit = item.Key.F_EnergyItemUnit;
                     seriesItem.data.Add(dataItem);
@@ -928,12 +928,12 @@ namespace CC.EDM.Domain.Services
                 ChartSeriesItem seriesItem = new ChartSeriesItem();
                 seriesItem.name = item.Key.F_EnergyItemName;
 
-                var buildGroups = item.GroupBy(s => s.Room.Building);//group by build to sum the amount of energy in this data 
+                var buildGroups = item.OrderBy(s=>s.StartDate).GroupBy(s => s.StartDate);//group by build to sum the amount of energy in this data 
                 foreach (var buildGroup in buildGroups)
                 {
                     ChartSeriesDataItem dataItem = new ChartSeriesDataItem();
-                    dataItem.id = buildGroup.Key.Id.ToString();
-                    dataItem.name = buildGroup.Key.Name;
+                    dataItem.id = buildGroup.Key.ToString("yyyy-MM");
+                    dataItem.name = buildGroup.Key.ToString("MM") + "月";
                     dataItem.y = buildGroup.Sum(s => s.EnergyValue);
                     dataItem.unit = item.Key.F_EnergyItemUnit;
                     seriesItem.data.Add(dataItem);

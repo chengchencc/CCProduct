@@ -14,6 +14,9 @@ namespace EDMWebsite.Models.ViewModels
             DayResult = new List<T_EC_EnergyItemDayResult>();
             HourResult = new List<T_EC_EnergyItemHourResult>();
             MonthResult = new List<T_EC_EnergyItemMonthResult>();
+            NewHourResult = new List<EnergyItemHourResult>();
+            NewDayResult = new List<EnergyItemDayResult>();
+            NewMonthResult = new List<EnergyItemMonthResult>();
         }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

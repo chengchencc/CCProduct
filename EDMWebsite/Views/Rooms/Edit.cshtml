@@ -16,19 +16,19 @@
                     </a>
                 </li>
 
-                <li >
+                <li>
                     <a data-toggle="tab" href="#edit-settings">
                         <i class="purple ace-icon fa fa-cog bigger-125"></i>
                         能耗项目配置
                     </a>
                 </li>
 
-                <li>
-                    <a data-toggle="tab" href="#edit-password">
-                        <i class="blue ace-icon fa fa-key bigger-125"></i>
-                        其他信息
-                    </a>
-                </li>
+                @*<li>
+                        <a data-toggle="tab" href="#edit-password">
+                            <i class="blue ace-icon fa fa-key bigger-125"></i>
+                            其他信息
+                        </a>
+                    </li>*@
             </ul>
 
             <div class="tab-content profile-edit-tab-content">
@@ -227,7 +227,7 @@
                                                     </td>
                                                     <td>
                                                         @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-xs",roomhostId=item.Id })
-                                                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success btn-xs" })*@
+                                                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success btn-xs" })*@
                                                         @*@Html.ActionLink("删除", "#", new { id = item.Id }, new { @class = "btn btn-danger btn-xs btn-delete-host", roomhostId = item.Id })*@
                                                         <a href="#" class="btn btn-danger btn-xs btn-delete-host" roomhostid=@item.Id>删除</a>
                                                     </td>
@@ -244,10 +244,10 @@
 
                         <form id="add-roomhost-form">
                             <div class="form-horizontal">
-                                @Html.Hidden("roomId",Model.Id)
+                                @Html.Hidden("roomId", Model.Id)
                                 <div class="col-xs-12 col-sm-12">
 
-                                    <h4 class="header blue bolder smaller">新增对应关系</h4>
+                                    <h4 class="header blue bolder smaller">新增能耗项目配置</h4>
 
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label no-padding-right" for="form-field-username">IP地址</label>
@@ -280,9 +280,17 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <a href="#" class="btn btn-primary" id="addRoomHost">增加</a>
+                                <div class="clearfix form-actions">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <a href="#" class="btn btn-primary" id="addRoomHost">增加</a>
+                                        &nbsp; &nbsp;
+                                        <a href="/Rooms/Index" class="btn">
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            返回列表
+                                        </a>
+                                    </div>
                                 </div>
+
                             </div>
                         </form>
 
@@ -302,24 +310,52 @@
 @section Scripts{
     <script src="~/content/ace_admin1.3.1/assets/js/jquery.maskedinput.min.js"></script>
     <script type="text/javascript">
-        
+
         $(function () {
 
             //var roomhostTable = $("#roomHostTable").dataTable();
             //$('.input-mask-ip').mask('999.999.999.999');
             //$('.energyType_chosen').addClass("col-xs-12 col-sm-10");
 
-            $(".btn-delete-host").click(function () {
+            $("#roomHostTable").on("click", ".btn-delete-host", function () {
+                var $el = $(this);
                 var roomHostId = $(this).attr("roomhostId");
                 var roomId = $("#roomId").val();
-                $.post("/Rooms/DeleteRoomHost", { id: roomHostId,roomId:roomId }, function (xhr) {
+                $.post("/Rooms/DeleteRoomHost", { id: roomHostId, roomId: roomId }, function (xhr) {
                     if (xhr == "Success") {
                         Notificate("提示", "删除成功！")
+                        $el.parent().parent().remove();
                     }
                 });
             });
 
+            //$(".btn-delete-host").click(function () {
+            //    var $el = $(this);
+            //    var roomHostId = $(this).attr("roomhostId");
+            //    var roomId = $("#roomId").val();
+            //    $.post("/Rooms/DeleteRoomHost", { id: roomHostId, roomId: roomId }, function (xhr) {
+            //        if (xhr == "Success") {
+            //            Notificate("提示", "删除成功！")
+            //            $el.parent().parent().remove();
+            //        }
+            //    });
+            //});
+
             $("#addRoomHost").click(function () {
+                var ip = $("#Hosts").val();
+                var port = $("#Port").val();
+                var energyTypeName = $("#EnergyType option:selected").text();
+
+                if (ip==undefined || ip=="") {
+                    alert("ip地址不能为空");
+                    return;
+                }
+                if (port == undefined || port == "") {
+                    alert("端口号不能为空");
+                    return;
+                }
+
+
                 var datastring = $("#add-roomhost-form").serialize();
                 $.ajax({
                     type: "POST",
@@ -329,13 +365,18 @@
                         //var obj = jQuery.parseJSON(data); if the dataType is not specified as json uncomment this
                         // do what ever you want with the server response
                         //alert("Success");
-                        if (data == "删除的条目不存在，请刷新页面重试！") {
+                        if (data.indexOf("错误") > -1) {
                             Notificate("提示", data);
                         } else {
                             var id = data;
-                            var ip = $("#Hosts").val();
-                            var port = $("#Port").val();
+                            Notificate("提示", "添加成功！");
                             //TODO:增加到列表上
+                            var html = '<tr>' + '<td>' + ip + '</td>' + '<td>' + port + '</td>' + '<td>' + energyTypeName + '</td>' + '<td><a href="#" class="btn btn-danger btn-xs btn-delete-host" roomhostid=' + id + '>删除</a></td>' + '</tr>';
+
+
+                            $("#roomHostTable > tbody").append(html);
+
+
                         }
                     },
                     error: function (errormsg) {
