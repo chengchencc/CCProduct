@@ -22,11 +22,13 @@ namespace TCPClientDemo
         private BinaryWriter bw;
         BackgroundWorker connectWork = new BackgroundWorker();
         private string serverIP = "127.0.0.1";
-        private int port = 8866;
+        private int port = 8866;//23456;
         private int _receivedBytesCount = 500;
         public FormClient()
         {
             InitializeComponent();
+
+            port = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["TcpPort"]);
             this.StartPosition = FormStartPosition.CenterScreen;
             Random r = new Random((int)DateTime.Now.Ticks);
             txt_UserName.Text = "user" + r.Next(100, 999);
@@ -204,9 +206,9 @@ namespace TCPClientDemo
                 bw.Flush();
 
             }
-            catch
+            catch(Exception ex)
             {
-                AddStatus("发送失败");
+                AddStatus("发送失败"+ex.Message);
             }
         }
 
