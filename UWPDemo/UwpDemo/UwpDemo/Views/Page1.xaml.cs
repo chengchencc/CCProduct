@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UwpDemo.Models;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,9 +24,31 @@ namespace UwpDemo.Views
     /// </summary>
     public sealed partial class Page1 : Page
     {
+        public ObservableCollection<Contact> ViewModel;
         public Page1()
         {
             this.InitializeComponent();
+
+            ContactRepositories contactRep = new ContactRepositories();
+            ViewModel = contactRep.All();
+            if (ViewModel.Count>0)
+            {
+                MasterListView.ItemsSource = ViewModel;
+            }
+
+
         }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+
+
+        }
+
     }
+
+
+
+
 }
