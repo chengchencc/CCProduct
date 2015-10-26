@@ -1,0 +1,54 @@
+﻿<Page
+    x:Class="UwpDemo.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UwpDemo"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="button1"></Button>
+                        <Button Content="button1"></Button>
+                    </StackPanel>
+                </Grid>
+            </CommandBar.Content>
+            <AppBarButton Icon="Accept" Label="appbarbutton"/>
+            <AppBarButton Icon="Cancel" Label="appbarbutton"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <CommandBar x:Name="topbar" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+                <AppBarButton Icon="Edit" Label="Edit"/>
+                <AppBarButton Icon="Delete" Label="Delete"/>
+                <AppBarSeparator/>
+                <AppBarToggleButton Icon="Sort" Label="Sort"/>
+                <CommandBar.SecondaryCommands>
+                    <AppBarButton Label="Menu Item 1"/>
+                    <AppBarButton Label="Menu Item 2"/>
+                    <AppBarButton Label="Menu Item 3"/>
+                </CommandBar.SecondaryCommands>
+                <CommandBar.Content>
+                <TextBlock Text="CommandBar Page"></TextBlock>
+                    <!--<ctl:PageHeader>
+                        <ctl:PageHeader.HeaderContent>
+                            <TextBlock Text="COMMANDBAR PAGE" Style="{ThemeResource PageTitleTextBlockStyle}" TextWrapping="NoWrap"/>
+                        </ctl:PageHeader.HeaderContent>
+                    </ctl:PageHeader>-->
+                </CommandBar.Content>
+            </CommandBar>
+
+            <Grid Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True">
+                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Your App Content"/>
+            </Grid>
+
+        </Grid>
+</Page>
