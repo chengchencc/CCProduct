@@ -17,13 +17,13 @@ using Windows.UI.Xaml.Navigation;
 using UwpDemo.Controls;
 using UwpDemo.Views;
 
-namespace UwpDemo
+namespace UwpDemo.Views.WayBook
 {
     /// <summary>
     /// The "chrome" layer of the app that provides top-level navigation with
     /// proper keyboarding navigation.
     /// </summary>
-    public sealed partial class AppShell : Page
+    public sealed partial class MainAppShell : Page
     {
         // Declare the top level nav items
         private List<NavMenuItem> navlist = new List<NavMenuItem>(
@@ -67,14 +67,14 @@ namespace UwpDemo
                 },
             });
 
-        public static AppShell Current = null;
+        public static MainAppShell Current = null;
 
         /// <summary>
         /// Initializes a new instance of the AppShell, sets the static 'Current' reference,
         /// adds callbacks for Back requests and changes in the SplitView's DisplayMode, and
         /// provide the nav menu list with the data to display.
         /// </summary>
-        public AppShell()
+        public MainAppShell()
         {
             this.InitializeComponent();
 
@@ -332,8 +332,7 @@ namespace UwpDemo
 
         private void ListBoxItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage), null, new Windows.UI.Xaml.Media.Animation.CommonNavigationTransitionInfo());
-
+            this.Frame.Navigate(typeof(MainPage),null,new Windows.UI.Xaml.Media.Animation.CommonNavigationTransitionInfo());
         }
     }
 }

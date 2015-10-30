@@ -1,0 +1,18 @@
+﻿<Page
+    x:Class="UwpDemo.Views.WebViewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UwpDemo.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <WebView Name="wv" FrameNavigationStarting="wv_FrameNavigationStarting" NavigationStarting="wv_NavigationStarting"></WebView>
+        <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Name="status" Grid.Row="1"></TextBlock>
+    </Grid>
+</Page>

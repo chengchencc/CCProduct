@@ -350,14 +350,14 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="12,10,12,12">
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Grid>
+            <Grid Margin="0,0,0,10" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
@@ -366,32 +366,61 @@
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" >
-                    <Image Source="ms-appx:///Assets/timg.jpg" Stretch="Fill" Width="80" Height="80"/>
-                    <TextBlock Text="华为吧" Style="{StaticResource SampleHeaderTextStyle}" VerticalAlignment="Bottom"/>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,0" >
+                    <Rectangle Width="50" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="{ThemeResource SystemListLowColor}"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
 
-                        <TextBlock Text="关注：" VerticalAlignment="Bottom"></TextBlock>
-                        <TextBlock Text="1000000" VerticalAlignment="Bottom" Foreground="#FFF35151"></TextBlock>
-                        <TextBlock Text="帖子：" VerticalAlignment="Bottom"></TextBlock>
-                        <TextBlock Text="1000000" VerticalAlignment="Bottom" Foreground="#FFF95959"/>
+                    <Image Source="ms-appx:///Assets/timg.jpg" Stretch="Fill" Width="80" Height="80" Margin="10,0,0,0"/>
+                    <StackPanel  VerticalAlignment="Bottom" Margin="20,0,0,0">
 
-                        <Button Content="+加关注" >
-                            <Button.Background>
-                                <SolidColorBrush Color="{ThemeResource SystemBaseLowColor}"/>
-                            </Button.Background>
-                        </Button>
+                        <TextBlock Text="华为吧" Style="{StaticResource SampleHeaderTextStyle}" VerticalAlignment="Bottom" FontFamily="Microsoft YaHei" FontWeight="Bold" Margin="-10,0,0,0"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <TextBlock Text="关注：" VerticalAlignment="Bottom"></TextBlock>
+                            <TextBlock Text="1000000" VerticalAlignment="Bottom" Foreground="#FFF35151"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="帖子：" VerticalAlignment="Bottom"></TextBlock>
+                            <TextBlock Text="1000000" VerticalAlignment="Bottom" Foreground="#FFF95959"/>
+                        </StackPanel>
+
+                    </StackPanel>
+
+
+
+                </StackPanel>
+                <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button  Content="+加关注" HorizontalAlignment="Right">
+                        <Button.Foreground>
+                            <SolidColorBrush Color="{ThemeResource SystemChromeMediumLowColor}"/>
+                        </Button.Foreground>
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFD81D1D" Offset="1"/>
+                                <GradientStop Color="#FFFF2323" Offset="1"/>
+                                <GradientStop Color="#FFFF9A9A"/>
+                                <GradientStop Color="#FFFF7B7B" Offset="0.527"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+
+                    <StackPanel Orientation="Horizontal" BorderThickness="1" Padding="1" Height="44">
+                        <StackPanel.BorderBrush>
+                            <SolidColorBrush Color="{ThemeResource SystemChromeBlackMediumLowColor}"/>
+                        </StackPanel.BorderBrush>
+                        <Button Content="签到" Height="40" Background="#FF3D91F5" Margin="0,0,5,0"></Button>
+                        <StackPanel>
+                            <TextBlock Text="10月27日"></TextBlock>
+                            <TextBlock Text="漏签0天"></TextBlock>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
 
-                <StackPanel Grid.Column="1" HorizontalAlignment="Right" Visibility="Collapsed">
-                    <Button Content="关注" />
-                    <Button Content="签到"></Button>
-                </StackPanel>
-                <StackPanel Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed">
-                    <TextBlock Text="关注：1000000"></TextBlock>
-                    <TextBlock Text="帖子：1000000"></TextBlock>
-                </StackPanel>
             </Grid>
 
 
@@ -525,7 +554,22 @@
                 </Pivot>
             </ScrollViewer>
 
-            <TextBlock x:Name="StatusBlock" Grid.Row="2" Margin="12, 10, 12, 10" Visibility="Collapsed"/>
+            <CommandBar Grid.Row="2">
+                <AppBarButton Icon="Refresh" Label="刷新"></AppBarButton>
+                <AppBarButton Icon="Find" Label="吧内搜索"></AppBarButton>
+
+                <AppBarSeparator/>
+                
+                <AppBarToggleButton Icon="View" Label="关注"></AppBarToggleButton>
+                <AppBarButton Icon="MapPin" Label="签到"></AppBarButton>
+
+                <CommandBar.SecondaryCommands>
+                    
+                </CommandBar.SecondaryCommands>
+            </CommandBar>
+            
+            
+            <!--<TextBlock x:Name="StatusBlock" Grid.Row="2" Text="status" Margin="12, 10, 12, 10" Visibility="Visible"/>-->
         </Grid>
     </Grid>
 </Page>
