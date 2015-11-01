@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UwpDemo.Views.WayBook;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -25,6 +26,16 @@ namespace UwpDemo
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void OpenDemoButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(AppShell),null,new Windows.UI.Xaml.Media.Animation.SlideNavigationTransitionInfo());
+        }
+
+        private void OpenWaybookButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(WayBookMainPage),null, new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
         }
     }
 }

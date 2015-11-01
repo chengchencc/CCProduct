@@ -1,5 +1,5 @@
 ﻿<Page x:Name="Root"
-      x:Class="UwpDemo.AppShell"
+      x:Class="UwpDemo.Views.WayBook.MainAppShell"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="using:UwpDemo"
@@ -103,7 +103,7 @@
                             </Grid>
                         </ListBoxItem>
 
-                        <ListBoxItem Padding="0,11,12,13" Tapped="ListBoxItem_Tapped" >
+                        <ListBoxItem Padding="0,11,12,13" Tapped="ListBoxItem_Tapped">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="48" />

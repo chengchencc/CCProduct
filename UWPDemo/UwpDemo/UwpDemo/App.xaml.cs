@@ -51,53 +51,65 @@ namespace UwpDemo
             }
 #endif
 
-            //Frame rootFrame = Window.Current.Content as Frame;
-            AppShell appShell = Window.Current.Content as AppShell;
-
-
+            Frame rootFrame = Window.Current.Content as Frame;
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
-            //if (rootFrame == null)
-            if (appShell == null)
+            if (rootFrame == null)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
-                //rootFrame = new Frame();
-                appShell = new AppShell();
+                rootFrame = new Frame();
 
-
-                appShell.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
-
-                //rootFrame.NavigationFailed += OnNavigationFailed;
-                appShell.AppFrame.NavigationFailed += OnNavigationFailed;
-
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    //TODO: Load state from previously suspended application
-                }
+                rootFrame.NavigationFailed += OnNavigationFailed;
 
                 // Place the frame in the current Window
-                //Window.Current.Content = rootFrame;
-                Window.Current.Content = appShell;
-            }
+                Window.Current.Content = rootFrame;
 
-            //if (rootFrame.Content == null)
+                if (rootFrame.Content == null)
+                {
+                    //    // When the navigation stack isn't restored navigate to the first page,
+                    //    // configuring the new page by passing required information as a navigation
+                    //    // parameter
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                }
+            }
+                // Ensure the current window is active
+                Window.Current.Activate();
+
+            //AppShell appShell = Window.Current.Content as AppShell;
+
+
+
+            //if (appShell == null)
             //{
-            //    // When the navigation stack isn't restored navigate to the first page,
-            //    // configuring the new page by passing required information as a navigation
-            //    // parameter
-            //    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+
+            //    appShell = new AppShell();
+
+
+            //    appShell.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
+
+            //    appShell.AppFrame.NavigationFailed += OnNavigationFailed;
+
+
+            //    if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            //    {
+            //        //TODO: Load state from previously suspended application
+            //    }
+
+
+            //    Window.Current.Content = appShell;
             //}
 
-            if (appShell.AppFrame.Content == null)
-            {
-                appShell.AppFrame.Navigate(typeof(LandingPage), e.Arguments, new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
-            }
+
+
+            //if (appShell.AppFrame.Content == null)
+            //{
+            //    appShell.AppFrame.Navigate(typeof(LandingPage), e.Arguments, new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
+            //}
 
 
 
-            // Ensure the current window is active
-            Window.Current.Activate();
+            //// Ensure the current window is active
+            //Window.Current.Activate();
         }
 
         /// <summary>
@@ -105,7 +117,7 @@ namespace UwpDemo
         /// </summary>
         /// <param name="sender">The Frame which failed navigation</param>
         /// <param name="e">Details about the navigation failure</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }

@@ -6,49 +6,79 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Page.BottomAppBar>
-        <CommandBar>
-            <CommandBar.Content>
-                <Grid>
-                    <StackPanel Orientation="Horizontal">
-                        <Button Content="button1"></Button>
-                        <Button Content="button1"></Button>
-                    </StackPanel>
-                </Grid>
-            </CommandBar.Content>
-            <AppBarButton Icon="Accept" Label="appbarbutton"/>
-            <AppBarButton Icon="Cancel" Label="appbarbutton"/>
-        </CommandBar>
-    </Page.BottomAppBar>
+    <Page.Resources>
+        <DataTemplate x:Name="FunctionBtn">
 
-        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <CommandBar x:Name="topbar" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
-                <AppBarButton Icon="Edit" Label="Edit"/>
-                <AppBarButton Icon="Delete" Label="Delete"/>
-                <AppBarSeparator/>
-                <AppBarToggleButton Icon="Sort" Label="Sort"/>
-                <CommandBar.SecondaryCommands>
-                    <AppBarButton Label="Menu Item 1"/>
-                    <AppBarButton Label="Menu Item 2"/>
-                    <AppBarButton Label="Menu Item 3"/>
-                </CommandBar.SecondaryCommands>
-                <CommandBar.Content>
-                <TextBlock Text="CommandBar Page"></TextBlock>
-                    <!--<ctl:PageHeader>
-                        <ctl:PageHeader.HeaderContent>
-                            <TextBlock Text="COMMANDBAR PAGE" Style="{ThemeResource PageTitleTextBlockStyle}" TextWrapping="NoWrap"/>
-                        </ctl:PageHeader.HeaderContent>
-                    </ctl:PageHeader>-->
-                </CommandBar.Content>
-            </CommandBar>
+        </DataTemplate>
+    </Page.Resources>
 
-            <Grid Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True">
-                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Your App Content"/>
-            </Grid>
 
-        </Grid>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Background="{x:Null}" Name="OpenDemoButton" Click="OpenDemoButton_Click">
+                <StackPanel Orientation="Vertical">
+                    <Ellipse 
+                             Width ="140"
+                             Height="140"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             Margin="4,4,4,4">
+                        <Ellipse.Fill>
+                            <ImageBrush Stretch="Uniform" ImageSource="Assets/timg.jpg"/>
+                        </Ellipse.Fill>
+
+                    </Ellipse>
+                    <!-- Phase 2: TextBlock with contact name-->
+                    <TextBlock 
+                               Margin="4,-50,0,4"
+                               Text="Demo" 
+                               Style="{ThemeResource BodyTextBlockStyle}" 
+                               HorizontalAlignment="Center" FontFamily="华文行楷.ttf#STXingkai" FontSize="18.667">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{ThemeResource SystemAltHighColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <!-- Phase 3: TextBlock with contact job title-->
+                    <!--<TextBlock x:Name="Position" 
+                               Text="position" 
+                               Margin="4,4,0,4"
+                               Style="{ThemeResource BodyTextBlockStyle}"
+                               FontSize="12"
+                               Foreground="Gray"
+                               HorizontalAlignment="Center"/>-->
+                </StackPanel>
+            </Button>
+            <Button Name="OpenWaybookButton" Click="OpenWaybookButton_Click">
+                <Button.Background>
+                    <SolidColorBrush Color="{ThemeResource SystemBaseMediumLowColor}"/>
+                </Button.Background>
+                <StackPanel Orientation="Vertical">
+                    <Ellipse 
+                             Width ="140"
+                             Height="140"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             Margin="4,4,4,4">
+                        <Ellipse.Fill>
+                            <SolidColorBrush Color="{ThemeResource SystemAltHighColor}"/>
+                        </Ellipse.Fill>
+
+                    </Ellipse>
+                    <!-- Phase 2: TextBlock with contact name-->
+                    <TextBlock 
+                               Margin="4,-50,0,4"
+                               Text="WayBook" 
+                               Style="{ThemeResource BodyTextBlockStyle}" 
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+
+    </Grid>
 </Page>
