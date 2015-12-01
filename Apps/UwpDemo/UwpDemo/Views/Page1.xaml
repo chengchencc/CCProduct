@@ -1,0 +1,100 @@
+﻿<Page
+    x:Class="UwpDemo.Views.Page1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UwpDemo.Views"
+     xmlns:ctl="using:UwpDemo.Controls"
+    xmlns:data="using:UwpDemo.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <!-- When using x:Bind, you need to set x:DataType -->
+        <DataTemplate x:Name="ContactListViewTemplate" x:DataType="data:Contact">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Ellipse x:Name="Ellipse"
+                         Grid.RowSpan="2"
+                         Width ="32"
+                         Height="32"
+                         Margin="6"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         Fill="LightGray"/>
+                <TextBlock Grid.Column="1"
+                           Text="{x:Bind FirstName}" 
+                           x:Phase="1"  
+                           Style="{ThemeResource BaseTextBlockStyle}"
+                           Margin="12,6,0,0"/>
+                <TextBlock  Grid.Column="1"
+                            Grid.Row="1"
+                            Text="{x:Bind LastName}" 
+                            x:Phase="2"
+                            Style="{ThemeResource BodyTextBlockStyle}"
+                            Margin="12,0,0,6"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <CommandBar x:Name="topbar" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+            <AppBarButton Icon="Edit" Label="Edit"/>
+            <AppBarButton Icon="Delete" Label="Delete"/>
+            <AppBarSeparator/>
+            <AppBarToggleButton Icon="Sort" Label="Sort"/>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Menu Item 1"/>
+                <AppBarButton Label="Menu Item 2"/>
+                <AppBarButton Label="Menu Item 3"/>
+            </CommandBar.SecondaryCommands>
+            <CommandBar.Content>
+                <ctl:PageHeader>
+                        <ctl:PageHeader.HeaderContent>
+                            <TextBlock Text="page1" Style="{ThemeResource PageTitleTextBlockStyle}" TextWrapping="NoWrap"/>
+                        </ctl:PageHeader.HeaderContent>
+                    </ctl:PageHeader>
+            </CommandBar.Content>
+        </CommandBar>
+
+        <Grid Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True">
+
+            <!--SelectionMode="Extended"
+                  ItemClick="OnItemClick"
+                  SelectionChanged="OnSelectionChanged"-->
+            <ListView x:Name="MasterListView" 
+                  
+                  IsItemClickEnabled="True"
+                  ShowsScrollingPlaceholders="False"
+                  ItemTemplate="{StaticResource ContactListViewTemplate }"
+                  Grid.Row="1">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Grid>
+        <CommandBar Grid.Row="2">
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton Icon="Accept" Label="appbarbutton"/>
+            <AppBarButton Icon="Cancel" Label="appbarbutton"/>
+
+        </CommandBar>
+    </Grid>
+
+</Page>
