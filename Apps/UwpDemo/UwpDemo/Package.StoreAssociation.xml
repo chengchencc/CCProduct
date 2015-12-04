@@ -358,11 +358,13 @@
     <Language Code="zu-za" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>44482ChengChen.437726208B0A9</MainPackageIdentityName>
+    <MainPackageIdentityName>44482ChengChen.UWP</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>济南公交</ReservedName>
+      <ReservedName>济南公交UWP</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
-  <AccountPackageIdentityNames />
-  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH6CHCS" />
+  <AccountPackageIdentityNames>
+    <MainPackageIdentityName>44482ChengChen.437726208B0A9</MainPackageIdentityName>
+  </AccountPackageIdentityNames>
+  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH6JL3R" />
 </StoreAssociation>

@@ -1,4 +1,6 @@
-MainPackage=F:\MyCodes\Test\App\UWPDemo\UwpDemo\UwpDemo\bin\ARM\Release\Upload\UwpDemo_1.1.1.0_ARM.appx
-SymbolPackage=F:\MyCodes\Test\App\UWPDemo\UwpDemo\UwpDemo\AppPackages\UwpDemo_1.1.1.0\UwpDemo_1.1.1.0_ARM.appxsym
-ResourcePack=F:\MyCodes\Test\App\UWPDemo\UwpDemo\UwpDemo\_scale-100.appx
-ResourcePack=F:\MyCodes\Test\App\UWPDemo\UwpDemo\UwpDemo\_scale-240.appx
+MainPackage=F:\MyCodes\CC.Product\Apps\UwpDemo\UwpDemo\bin\ARM\Release\Upload\UwpDemo_1.1.1.0_ARM.appx
+SymbolPackage=F:\MyCodes\CC.Product\Apps\UwpDemo\UwpDemo\AppPackages\UwpDemo_1.1.1.0\UwpDemo_1.1.1.0_ARM.appxsym
+ResourcePack=F:\MyCodes\CC.Product\Apps\UwpDemo\UwpDemo\_scale-100.appx
+ResourcePack=F:\MyCodes\CC.Product\Apps\UwpDemo\UwpDemo\_scale-125.appx
+ResourcePack=F:\MyCodes\CC.Product\Apps\UwpDemo\UwpDemo\_scale-150.appx
+ResourcePack=F:\MyCodes\CC.Product\Apps\UwpDemo\UwpDemo\_scale-240.appx

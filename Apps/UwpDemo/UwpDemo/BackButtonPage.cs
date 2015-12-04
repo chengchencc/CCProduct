@@ -28,7 +28,7 @@ namespace UwpDemo
 
             }
 
-
+            //this.Background = (Brush)this.Resources["SystemControlBackgroundAccentBrush"];
             base.OnNavigatedTo(e);
         }
 

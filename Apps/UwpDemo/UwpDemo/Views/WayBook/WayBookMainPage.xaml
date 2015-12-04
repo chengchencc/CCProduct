@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:UwpDemo"
     mc:Ignorable="d"
+    Background="{ThemeResource SystemControlBackgroundAccentBrush}"
     >
 
     <Page.Resources>
@@ -318,7 +319,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
+            <!--<VisualStateGroup>
                 <VisualState x:Name="MobileLayout">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0" />
@@ -336,7 +337,7 @@
                         <Setter Target="SearchBox.Width" Value="200" />
                     </VisualState.Setters>
                 </VisualState>
-            </VisualStateGroup>
+            </VisualStateGroup>-->
             <VisualStateGroup x:Name="AdaptiveStates" CurrentStateChanged="AdaptiveStates_CurrentStateChanged">
                 <VisualState x:Name="DefaultState">
                     <VisualState.StateTriggers>
@@ -394,7 +395,7 @@
                         </AppBarButton.Flyout>
                     </AppBarButton>
 
-                    <AutoSuggestBox x:Name="SearchBox"  
+                    <AutoSuggestBox x:Name="SearchBox"  Visibility="Collapsed"
                                 VerticalAlignment="Center" Width="250" Margin="4,4,8,4" 
                                 QueryIcon="Find" PlaceholderText="enter a search term"
                                 TextChanged="AutoSuggestBox_TextChanged"
@@ -404,11 +405,11 @@
                 </Grid>
             </Pivot.RightHeader>
 
-            <PivotItem Margin="0" Name="BusLinePivot" Loaded="BusLinePivot_Loaded" Background="White" FontFamily="Microsoft YaHei" >
+            <PivotItem Margin="0" Name="BusLinePivot"  Loaded="BusLinePivot_Loaded" Background="White" FontFamily="Microsoft YaHei" >
                 <PivotItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <FontIcon Glyph="&#xEB47;"  FontSize="20" Foreground="White" />
-                        <TextBlock Text="公交线路"   FontSize="20" Foreground="White" />
+                        <FontIcon Glyph="&#xEB47;" Foreground="White" />
+                        <TextBlock Text="公交线路"    Foreground="White" />
                     </StackPanel>
 
                 </PivotItem.Header>
