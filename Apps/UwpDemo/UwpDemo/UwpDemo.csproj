@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{E5E05B14-279F-492A-B196-FE0D119B6821}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UwpDemo</RootNamespace>
+    <AssemblyName>UwpDemo</AssemblyName>
+    <DefaultLanguage>zh-cn</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PackageCertificateKeyFile>UwpDemo_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>B62FF17AA596B40C8F5450A7494345BCC89681EF</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
+    <AppxBundle>Always</AppxBundle>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ad1.jpg" />
+    <Content Include="Assets\bart.jpg" />
+    <Content Include="Assets\DarkGray.png" />
+    <Content Include="Assets\HubBackground.theme-dark.png" />
+    <Content Include="Assets\HubBackground.theme-light.png" />
+    <Content Include="Assets\icon_bus.png" />
+    <Content Include="Assets\ic_drawer.png" />
+    <Content Include="Assets\LightGray.png" />
+    <Content Include="Assets\Logo.scale-100.png" />
+    <Content Include="Assets\Logo.scale-125.png" />
+    <Content Include="Assets\Logo.scale-200.png" />
+    <Content Include="Assets\MediumGray.png" />
+    <Content Include="Assets\RecentlySearchedBusLines.json" />
+    <None Include="BaiduWebPlayer\images\图片信息参考文档.pdf" />
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppShell.xaml.cs">
+      <DependentUpon>AppShell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NavMenuListView.cs" />
+    <Compile Include="Controls\PageHeader.xaml.cs">
+      <DependentUpon>PageHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TabHeader.xaml.cs">
+      <DependentUpon>TabHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BackButtonPage.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\WayBook\BusLine.cs" />
+    <Compile Include="Models\WayBook\RealTimeBus.cs" />
+    <Compile Include="Models\WayBook\RecentlySearchedBusLinesSource.cs" />
+    <Compile Include="Models\WayBook\StationInfo.cs" />
+    <Compile Include="Models\WayBook\WayBookBase.cs" />
+    <Compile Include="NavMenuItem.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BusService.cs" />
+    <Compile Include="Services\DataServices.cs" />
+    <Compile Include="Services\RegionServices.cs" />
+    <Compile Include="Services\UrlServices.cs" />
+    <Compile Include="Utilities\CCHttpClient.cs" />
+    <Compile Include="Utilities\HttpClientWapper.cs" />
+    <Compile Include="Utilities\RestfulClient.cs" />
+    <Compile Include="Utilities\UserStorage.cs" />
+    <Compile Include="Views\BaiduYun\IndexPage.xaml.cs">
+      <DependentUpon>IndexPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BaiduYun\VideoPage.xaml.cs">
+      <DependentUpon>VideoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BaiduYun\PhotoPage.xaml.cs">
+      <DependentUpon>PhotoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BaiduYun\VideoPlayPage.xaml.cs">
+      <DependentUpon>VideoPlayPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicPage.xaml.cs">
+      <DependentUpon>BasicPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicSubPage.xaml.cs">
+      <DependentUpon>BasicSubPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CommandBarPage.xaml.cs">
+      <DependentUpon>CommandBarPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomFunctionPage.xaml.cs">
+      <DependentUpon>CustomFunctionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DrillInPage.xaml.cs">
+      <DependentUpon>DrillInPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LandingPage.xaml.cs">
+      <DependentUpon>LandingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page1.xaml.cs">
+      <DependentUpon>Page1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PivotPage1.xaml.cs">
+      <DependentUpon>PivotPage1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubjectPage.xaml.cs">
+      <DependentUpon>SubjectPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WayBook\MainAppShell.xaml.cs">
+      <DependentUpon>MainAppShell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WayBook\RealTimeLineDetail.xaml.cs">
+      <DependentUpon>RealTimeLineDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WayBook\WayBookMainPage.xaml.cs">
+      <DependentUpon>WayBookMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WebViewPage.xaml.cs">
+      <DependentUpon>WebViewPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="UwpDemo_StoreKey.pfx" />
+    <None Include="UwpDemo_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\sketch_busicon.png" />
+    <Content Include="Assets\sketch_finish.png" />
+    <Content Include="Assets\sketch_start.png" />
+    <Content Include="Assets\SmallLogo.scale-100.png" />
+    <Content Include="Assets\SmallLogo.scale-200.png" />
+    <Content Include="Assets\SmallLogo.scale-240.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Square71x71Logo.scale-125.png" />
+    <Content Include="Assets\Square71x71Logo.scale-150.png" />
+    <Content Include="Assets\SquareLogo.scale-150.png" />
+    <Content Include="Assets\staitonlist_station.png" />
+    <Content Include="Assets\staitonlist_stationline.png" />
+    <Content Include="Assets\staitonlist_station_coming_solid.png" />
+    <Content Include="Assets\staitonlist_station_noline.png" />
+    <Content Include="Assets\stationlist_finishi_bubble.png" />
+    <Content Include="Assets\stationlist_start_bubble.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-200.png" />
+    <Content Include="Assets\StoreLogo.scale-240.png" />
+    <Content Include="Assets\timg.jpg" />
+    <Content Include="Assets\triangle.png" />
+    <Content Include="Assets\WideLogo.scale-240.png" />
+    <None Include="Package.StoreAssociation.xml" />
+    <Content Include="BaiduWebPlayer\BaiduWebPlayerPage.html" />
+    <Content Include="BaiduWebPlayer\images\controlbar\background.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\capLeft.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\capRight.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\ccButton.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\ccButtonOver.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\divider.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\durationBackground.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\elapsedBackground.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\fullscreenButton.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\fullscreenButtonOver.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\hdButton.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\hdButtonOver.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\muteButton.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\muteButtonOver.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\nextButton.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\nextButtonOver.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\normalscreenButton.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\normalscreenButtonOver.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\pauseButton.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\pauseButtonOver.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\playButton.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\playButtonOver.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\prevButton.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\prevButtonOver.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\timeSliderBuffer.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\timeSliderBufferCapLeft.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\timeSliderBufferCapRight.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\timeSliderCapLeft.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\timeSliderCapRight.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\timeSliderProgress.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\timeSliderProgressCapLeft.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\timeSliderProgressCapRight.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\timeSliderRail.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\timeSliderRailCapLeft.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\timeSliderRailCapRight.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\timeSliderThumb.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\unmuteButton.png" />
+    <Content Include="BaiduWebPlayer\images\controlbar\unmuteButtonOver.png" />
+    <Content Include="BaiduWebPlayer\images\display\background.png" />
+    <Content Include="BaiduWebPlayer\images\display\bufferIcon.png" />
+    <Content Include="BaiduWebPlayer\images\display\capLeft.png" />
+    <Content Include="BaiduWebPlayer\images\display\capRight.png" />
+    <Content Include="BaiduWebPlayer\images\display\errorIcon.png" />
+    <Content Include="BaiduWebPlayer\images\display\playIcon.png" />
+    <Content Include="BaiduWebPlayer\images\display\playIconOver.png" />
+    <Content Include="BaiduWebPlayer\images\display\replayIcon.png" />
+    <Content Include="BaiduWebPlayer\images\display\replayIconOver.png" />
+    <Content Include="BaiduWebPlayer\images\dock\button.png" />
+    <Content Include="BaiduWebPlayer\images\dock\buttonActive.png" />
+    <Content Include="BaiduWebPlayer\images\dock\buttonOver.png" />
+    <Content Include="BaiduWebPlayer\images\dock\divider.png" />
+    <Content Include="BaiduWebPlayer\images\playlist\divider.png" />
+    <Content Include="BaiduWebPlayer\images\playlist\item.png" />
+    <Content Include="BaiduWebPlayer\images\playlist\itemActive.png" />
+    <Content Include="BaiduWebPlayer\images\playlist\itemImage.png" />
+    <Content Include="BaiduWebPlayer\images\playlist\sliderCapBottom.png" />
+    <Content Include="BaiduWebPlayer\images\playlist\sliderCapTop.png" />
+    <Content Include="BaiduWebPlayer\images\playlist\sliderRail.png" />
+    <Content Include="BaiduWebPlayer\images\playlist\sliderRailCapBottom.png" />
+    <Content Include="BaiduWebPlayer\images\playlist\sliderRailCapTop.png" />
+    <Content Include="BaiduWebPlayer\images\playlist\sliderThumb.png" />
+    <Content Include="BaiduWebPlayer\images\playlist\sliderThumbCapBottom.png" />
+    <Content Include="BaiduWebPlayer\images\playlist\sliderThumbCapTop.png" />
+    <Content Include="BaiduWebPlayer\images\py\skin-builder.py" />
+    <Content Include="BaiduWebPlayer\images\skins\skin-min.xml" />
+    <Content Include="BaiduWebPlayer\images\tooltip\arrow.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\background.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\capBottom.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\capBottomLeft.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\capBottomRight.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\capLeft.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\capRight.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\capTop.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\capTopLeft.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\capTopRight.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\menuOption.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\menuOptionActive.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\menuOptionOver.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\menuTopCC.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\menuTopHD.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\volumeCapBottom.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\volumeCapTop.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\volumeProgress.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\volumeProgressCapBottom.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\volumeProgressCapTop.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\volumeRail.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\volumeRailCapBottom.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\volumeRailCapTop.png" />
+    <Content Include="BaiduWebPlayer\images\tooltip\volumeThumb.png" />
+    <Content Include="BaiduWebPlayer\js\cyberplayer.html5.min.js" />
+    <Content Include="BaiduWebPlayer\js\cyberplayer.min.js" />
+    <Content Include="BaiduWebPlayer\js\JavaScript1.js" />
+    <Content Include="BaiduWebPlayer\player\cyberplayer.flash.swf" />
+    <Content Include="Properties\Default.rd.xml" />
+    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="AppShell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\PageHeader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TabHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\PivotStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Styles\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BaiduYun\IndexPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BaiduYun\VideoPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BaiduYun\PhotoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BaiduYun\VideoPlayPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BasicPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BasicSubPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CommandBarPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CustomFunctionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DrillInPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LandingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Page1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PivotPage1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubjectPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WayBook\MainAppShell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WayBook\RealTimeLineDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WayBook\WayBookMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WebViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BaiduWebPlayer\doc\" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

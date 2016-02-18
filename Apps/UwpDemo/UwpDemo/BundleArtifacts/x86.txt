@@ -1,0 +1,2 @@
+MainPackage=F:\MyCodes\CC.Product\Apps\UwpDemo\UwpDemo\bin\x86\Release\UwpDemo_1.1.1.0_x86.appx
+SymbolPackage=F:\MyCodes\CC.Product\Apps\UwpDemo\UwpDemo\AppPackages\UwpDemo_1.1.1.0_Test\UwpDemo_1.1.1.0_x86.appxsym

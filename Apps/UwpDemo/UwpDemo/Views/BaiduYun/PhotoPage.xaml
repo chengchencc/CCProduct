@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="UwpDemo.Views.BaiduYun.PhotoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UwpDemo.Views.BaiduYun"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="" Name="title"></TextBlock>
+        </StackPanel>
+        
+        <ScrollViewer Grid.Row="1">
+            <!--<TextBlock Name="HtmlString" Style="{ThemeResource BodyTextBlockStyle}" IsTextSelectionEnabled="True"></TextBlock>-->
+            <GridView Name="ImageView" ItemsSource="{x:Bind Images}" >
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="local:Info">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="{x:Bind Path=thumbs.url1}" Stretch="None"></Image>
+                        </StackPanel>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+
+
+        </ScrollViewer>
+
+    </Grid>
+</Page>
